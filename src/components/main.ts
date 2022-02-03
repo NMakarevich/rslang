@@ -7,11 +7,11 @@ class Main {
         </div>
         <nav class='header__nav nav'>
           <ul class='nav__list'>
-            <li class='nav__item' id='home'><a href="/">Главная</a></li>
-            <li class='nav__item' id='dictionary'><a href="#/dictionary">Словарь</a></li>
-            <li class='nav__item' id='games'><a href="#/games">Игры</a></li>
-            <li class='nav__item' id='about'><a href="#/about">О приложении</a></li>
-            <li class='nav__item' id='team'><a href="#/team">Команда</a></li>
+            <li class='nav__item' id='home'><a class='nav__link' href="/">Главная</a></li>
+            <li class='nav__item' id='dictionary'><a class='nav__link' href="#/dictionary">Словарь</a></li>
+            <li class='nav__item' id='games'><a class='nav__link' href="#/games">Игры</a></li>
+            <li class='nav__item' id='about'><a class='nav__link' href="#/about">О приложении</a></li>
+            <li class='nav__item' id='team'><a class='nav__link' href="#/team">Команда</a></li>
           </ul>
         </nav>
         <h1 class='header__title'>RS Lang</h1>

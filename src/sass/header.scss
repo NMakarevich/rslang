@@ -51,6 +51,7 @@
     bottom: 80px;
     display: block;
     width: 200px;
+    background-color: #B3B3B3;
     opacity: 0;
     transition: all 0.5s;
   }
@@ -63,6 +64,14 @@
       padding: 10px;
       cursor: pointer;
     }
+    &__link {
+      text-decoration: none;
+      color: black;
+    }
+  }
+  &__link {
+    text-decoration: none;
+    color: black;
   }
   &.open {
     .header__burger::before {
