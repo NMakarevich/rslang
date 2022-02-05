@@ -39,6 +39,7 @@ class Main {
 
   eventListener() {
     this.burger.addEventListener('click', this.toggleBurger);
+    document.addEventListener('click', this.closeBurger);
   }
 
   get burger(): HTMLElement {
@@ -52,6 +53,17 @@ class Main {
       return;
     }
     header.classList.add('open');
+  };
+  closeBurger = (event: Event) => {
+    if (!event.target || !event.currentTarget) return;
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('header__burger')) return;
+
+    const header = document.querySelector('.header') as HTMLElement;
+    if (header.classList.contains('open')) {
+      header.classList.remove('open');
+      return;
+    }
   };
 }
 
