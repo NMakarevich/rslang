@@ -61,10 +61,11 @@
       list-style: none;
     }
     &__item {
-      padding: 10px;
       cursor: pointer;
     }
     &__link {
+      display: block;
+      padding: 10px;
       text-decoration: none;
       color: black;
     }
