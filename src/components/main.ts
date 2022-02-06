@@ -25,9 +25,9 @@ class Main {
         <a class='footer__school' href="https://rs.school"></a>
         <nav class='footer__nav nav'>
           <ul class='nav__list'>
-            <li class='nav__item'><a class='nav__link' href="" target="_blank">lisaliza6428</a></li>
-            <li class='nav__item'><a class='nav__link' href="" target="_blank">NMakarevich</a></li>
-            <li class='nav__item'><a class='nav__link' href="" target="_blank">natakers</a></li>
+            <li class='nav__item'><a class='nav__link' href="http://github.com/lisaliza6428" target="_blank">lisaliza6428</a></li>
+            <li class='nav__item'><a class='nav__link' href="http://github.com/nmakarevich" target="_blank">NMakarevich</a></li>
+            <li class='nav__item'><a class='nav__link' href="http://github.com/natakers" target="_blank">natakers</a></li>
           </ul>
         </nav>
         <span class='footer__year'>2022</span>
