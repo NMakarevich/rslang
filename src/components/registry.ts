@@ -2,12 +2,13 @@ import Login from './login';
 
 class Registry extends Login {
   name: HTMLInputElement;
+
   constructor() {
     super();
     this.name = document.createElement('input');
   }
-  override render = (): string => {
-    return `
+
+  override render = (): string => `
     <div class='main__registry'>
       <h2 сlass='main__title'>Регистрация</h2>
       <form class='main__form'>
@@ -16,7 +17,7 @@ class Registry extends Login {
       <a class='login__link' href='#/login'>Вход</a>
     </div>
     `;
-  };
+
   override insertInputs(): string {
     super.insertInputs();
     this.name.type = 'text';
@@ -30,7 +31,7 @@ class Registry extends Login {
   }
 
   registry = async () => {
-    //await registryUser(this.name.value, this.email.value, this.password.value);
+    // await registryUser(this.name.value, this.email.value, this.password.value);
   };
 }
 

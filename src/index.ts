@@ -6,5 +6,6 @@ window.addEventListener('load', () => {
   const main = new Main();
   document.body.innerHTML = main.render();
   main.eventListener();
-  new Router();
+  const router = new Router();
+  router.run();
 });

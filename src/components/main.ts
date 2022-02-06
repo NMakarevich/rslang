@@ -1,6 +1,5 @@
 class Main {
-  render = (): string => {
-    return `<header class='header'>
+  render = (): string => `<header class='header'>
       <div class="container">
         <div class='header__burger'>
           <span class='header__burger-line'></span>
@@ -35,7 +34,6 @@ class Main {
       </div>
     </footer>
     `;
-  };
 
   eventListener() {
     this.burger.addEventListener('click', this.toggleBurger);
@@ -54,6 +52,7 @@ class Main {
     }
     header.classList.add('open');
   };
+
   closeBurger = (event: Event) => {
     if (!event.target || !event.currentTarget) return;
     const target = event.target as HTMLElement;
@@ -62,7 +61,6 @@ class Main {
     const header = document.querySelector('.header') as HTMLElement;
     if (header.classList.contains('open')) {
       header.classList.remove('open');
-      return;
     }
   };
 }

@@ -1,23 +1,20 @@
 import routes from './routes';
-class Router {
-  constructor() {
-    this.run();
-  }
 
+class Router {
   run = () => {
     const id = location.hash.slice(2) || '/';
     this.loadComponent(id);
 
     window.addEventListener('hashchange', () => {
-      const id = location.hash.slice(2) || '/';
-      this.pushToHistory(id);
+      const pageId = location.hash.slice(2) || '/';
+      this.pushToHistory(pageId);
     });
   };
 
   loadComponent(id: string) {
-    const component = routes.find((route) => route.path === id)!.component || routes[0]!.component;
+    const component = routes.find((route) => route.path === id)?.component || routes[0]?.component;
 
-    (document.querySelector('.main .container') as HTMLElement).innerHTML = component.render();
+    (document.querySelector('.main .container') as HTMLElement).innerHTML = component?.render() as string;
   }
 
   pushToHistory(id: string) {

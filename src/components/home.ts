@@ -1,7 +1,5 @@
 const home = {
-  render: (): string => {
-    return ``;
-  },
+  render: (): string => '',
 };
 
 export default home;
