@@ -11,7 +11,9 @@ class Login {
     this.submit = document.createElement('input');
   }
 
-  render = (): string => `
+  render = () => {
+    const mainContainer = document.querySelector('.main .container') as HTMLElement;
+    mainContainer.innerHTML = `
     <div class='main__login'>
       <h2 сlass='main__title'>Вход</h2>
       <form class='main__form'>
@@ -19,6 +21,7 @@ class Login {
       </form>
       <a class='registry__link' href='#/registry'>Регистрация</a>
     </div>`;
+  };
 
   insertInputs(): string {
     this.email.type = 'email';

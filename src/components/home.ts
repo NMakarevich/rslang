@@ -1,5 +1,8 @@
 const home = {
-  render: (): string => '',
+  render: () => {
+    const mainContainer = document.querySelector('.main .container') as HTMLElement;
+    mainContainer.innerHTML = '';
+  },
 };
 
 export default home;

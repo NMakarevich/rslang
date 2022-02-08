@@ -1,5 +1,7 @@
 const team = {
-  render: (): string => `
+  render: () => {
+    const mainContainer = document.querySelector('.main .container') as HTMLElement;
+    mainContainer.innerHTML = `
     <div class='main__team team'>
       <h2 class='main__title'>О команде</h2> 
       <div class="team__container">
@@ -35,7 +37,8 @@ const team = {
         </div>
       </div>
     </div>
-    `,
+    `;
+  },
 };
 
 export default team;

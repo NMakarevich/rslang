@@ -8,7 +8,9 @@ class Registry extends Login {
     this.name = document.createElement('input');
   }
 
-  override render = (): string => `
+  override render = () => {
+    const mainContainer = document.querySelector('.main .container') as HTMLElement;
+    mainContainer.innerHTML = `
     <div class='main__registry'>
       <h2 сlass='main__title'>Регистрация</h2>
       <form class='main__form'>
@@ -17,6 +19,7 @@ class Registry extends Login {
       <a class='login__link' href='#/login'>Вход</a>
     </div>
     `;
+  };
 
   override insertInputs(): string {
     super.insertInputs();

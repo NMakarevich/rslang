@@ -14,7 +14,7 @@ class Router {
   loadComponent(id: string) {
     const component = routes.find((route) => route.path === id)?.component || routes[0]?.component;
 
-    (document.querySelector('.main .container') as HTMLElement).innerHTML = component?.render() as string;
+    component?.render();
   }
 
   pushToHistory(id: string) {
