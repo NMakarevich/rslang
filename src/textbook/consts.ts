@@ -1,4 +1,6 @@
-export const textbookContainer = document.getElementById('textbook-container');
+export const textbookWrapper = document.getElementById('textbook-wrapper');
+export const textbookHeader = document.getElementById('textbook-header');
+export const pagesAmount = 30;
 
 export type ICards = {
   audio: string;

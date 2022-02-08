@@ -1,16 +1,71 @@
 body,
-p {
+p,
+h1,
+h2,
+h3 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-size: 20px;
 }
-
-#textbook-container {
-  max-width: 900px;
+.textbook {
+  position: relative;
+  max-width: 1000px;
+  width: 100%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+#textbook-header {
+  padding: 10px 0;
+  position: fixed;
+  z-index: 5;
+  width: inherit;
+  max-width: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #b3b3b3;
+  border: 1px solid black;
+
+  * {
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  :first-child {
+    margin-left: 10px;
+  }
+  :last-child {
+    margin-right: 10px;
+  }
+  @media screen and (max-width: 770px) {
+    display: block;
+    flex-direction: column;
+    align-content: space-between;
+    column-gap: 0;
+  }
+}
+.navigation {
+  margin-left: 20px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+}
+#textbook-wrapper {
+  width: inherit;
+  max-width: inherit;
+  margin-top: 50px;
 }
 ul {
+  margin-block-start: 0px;
+  padding-inline-start: 0px;
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -20,13 +75,20 @@ ul {
   width: 100%;
   height: 270px;
   border: 1px solid black;
-  margin: 10px;
+  margin: 10px 0;
   flex-direction: row;
   justify-content: space-between;
   column-gap: 10px;
   border-radius: 10px;
+  @media screen and (max-width: 950px) {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    height: auto;
+    column-gap: 0;
+  }
 }
-.content-wrapper {
+.card-wrapper {
   margin: auto 0 auto 20px;
 }
 .word-title {
@@ -38,8 +100,15 @@ ul {
   height: 270px;
   object-fit: cover;
   border-radius: 0 10px 10px 0;
+  @media screen and (max-width: 950px) {
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    margin-top: 10px;
+  }
 }
 .word-wrapper {
+  display: flex;
+  align-items: center;
   * {
     margin-right: 25px;
   }
@@ -50,4 +119,21 @@ ul {
 }
 .word-transcription {
   color: grey;
+}
+.sound {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ffffff;
+  background-image: url("../textbook/sound.svg");
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.5s;
+  &.active {
+    transition: 0.5s;
+    transform: scale(1.3);
+    border: 2px solid #07d400;
+    z-index: 0;
+  }
 }
