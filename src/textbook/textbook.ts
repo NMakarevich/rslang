@@ -1,10 +1,12 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable class-methods-use-this */
 import './textbook.scss';
-import { textbookWrapper, ICards } from './consts';
+import {
+  textbookWrapper, ICards, authorization,
+} from './consts';
 import { getWords, getWord } from './api-requests';
+import { localStorageUtil } from './localStorageUtil';
 
-let authorized = false;
 let isPlay = false;
 
 export class Cards {
@@ -13,11 +15,11 @@ export class Cards {
   group: number;
 
   constructor() {
-    this.page = 0;
-    this.group = 0;
+    this.page = localStorageUtil.getPage();
+    this.group = localStorageUtil.getChapter();
   }
 
-  render() {
+  render(): void {
     let html = '';
     let data: ICards[];
     (async () => {
@@ -38,7 +40,8 @@ export class Cards {
                       <p class="word-title">Пример:</p>
                       <p>${card.textExample}</p>
                       <p>${card.textExampleTranslate}</p>
-                      ${this.checkAuthorization()}
+                      <button type="button" class = "add-to-difficult" id="${card.id}">Добавить в сложные</button>
+                      <button type="button" class = "add-to-studied" id="${card.id}">Добавить в изученные</button>
                   </div>
                   <img class="word-image" src="https://rslang-team32.herokuapp.com/${card.image}" alt="">
                 </li>`;
@@ -47,25 +50,46 @@ export class Cards {
       .then(() => {
         if (!textbookWrapper) return;
         textbookWrapper.innerHTML = `<ul class = "words-list">${html}</ul>`;
-        this.play();
+        this.playAudio();
+        this.addToDifficult();
+        this.addToStudied();
+        const selectPage = document.getElementById('select-page') as HTMLSelectElement;
+        const selectChapter = document.getElementById('select-chapter') as HTMLSelectElement;
+        selectPage.value = `${this.page + 1}`;
+        selectChapter.value = `${this.group + 1}`;
       });
   }
 
-  checkAuthorization() {
-    if (authorized) {
-      return `<button type="button">Добавить в сложные</button>
-              <button type="button">Удалить слово</button>`;
-    }
-    return '';
+  addToDifficult() {
+    const addbtns = document.querySelectorAll('.add-to-difficult');
+    addbtns.forEach((btn) => btn.addEventListener('click', () => {
+      if (authorization.authorized) {
+        console.log('Добавить в сложные');
+      } else {
+        this.showModalWindow();
+      }
+    }));
   }
 
-  play() {
+  addToStudied() {
+    const deletebtns = document.querySelectorAll('.add-to-studied');
+    deletebtns.forEach((btn) => btn.addEventListener('click', () => {
+      if (authorization.authorized) {
+        console.log('Добавить в изученные');
+      } else {
+        this.showModalWindow();
+      }
+    }));
+  }
+
+  playAudio() {
     const btns = document.querySelectorAll('.sound');
     for (let i = 0; i < btns.length; i += 1) {
       btns[i]?.addEventListener('click', () => {
         let data: ICards;
         (async () => {
-          data = await getWord(btns[i]?.id);
+          console.log(btns[i]?.id);
+          data = await getWord(`${btns[i]?.id}`);
         })().then(() => {
           const audio = new Audio();
           const playlist = [
@@ -98,6 +122,16 @@ export class Cards {
         });
       });
     }
+  }
+
+  showModalWindow() {
+    const div = document.createElement('div');
+    div.innerText = 'Это действие доступно только после регистрации';
+    div.className = 'modal-window';
+    document.body.appendChild(div);
+    setTimeout((() => {
+      document.body.removeChild(div);
+    }), 2000);
   }
 }
 

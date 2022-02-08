@@ -1,8 +1,11 @@
-import { textbookHeader, pagesAmount } from './consts';
+import {
+  textbookHeader, pagesAmount,
+} from './consts';
 import { cards } from './textbook';
+import { localStorageUtil } from './localStorageUtil';
 
 class TextbookNavigation {
-  render() {
+  render(): void {
     const html = `<div class="textbook-header">
                     <div class="controls">
                       <select id="select-chapter">
@@ -43,13 +46,14 @@ class TextbookNavigation {
 const textbookNavigation = new TextbookNavigation();
 textbookNavigation.render();
 
-const selectPage = document.getElementById('select-page') as HTMLSelectElement;
+export const selectPage = document.getElementById('select-page') as HTMLSelectElement;
 selectPage.addEventListener('change', () => {
   cards.page = +selectPage.value - 1;
   cards.render();
+  localStorageUtil.putPage(`${cards.page}`);
 });
 
-const selectChapter = document.getElementById('select-chapter') as HTMLSelectElement;
+export const selectChapter = document.getElementById('select-chapter') as HTMLSelectElement;
 selectChapter.addEventListener('change', () => {
   if (+selectChapter.value === 7) {
     console.log('Difficult words');
@@ -58,22 +62,26 @@ selectChapter.addEventListener('change', () => {
   cards.page = 0;
   selectPage.value = '1';
   cards.render();
+  localStorageUtil.putChapter(`${cards.group}`);
+  localStorageUtil.putPage('0');
 });
 
-const backBTN = document.getElementById('back-btn') as HTMLElement;
+export const backBTN = document.getElementById('back-btn') as HTMLElement;
 backBTN.addEventListener('click', () => {
   if (+selectPage.value > 1) {
     selectPage.value = `${+selectPage.value - 1}`;
     cards.page -= 1;
     cards.render();
+    localStorageUtil.putPage(`${cards.page}`);
   }
 });
 
-const nextBTN = document.getElementById('next-btn') as HTMLElement;
+export const nextBTN = document.getElementById('next-btn') as HTMLElement;
 nextBTN.addEventListener('click', () => {
   if (+selectPage.value < 30) {
     selectPage.value = `${+selectPage.value + 1}`;
     cards.page += 1;
     cards.render();
+    localStorageUtil.putPage(`${cards.page}`);
   }
 });

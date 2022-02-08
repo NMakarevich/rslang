@@ -2,6 +2,10 @@ export const textbookWrapper = document.getElementById('textbook-wrapper');
 export const textbookHeader = document.getElementById('textbook-header');
 export const pagesAmount = 30;
 
+export const authorization = {
+  authorized: false,
+};
+
 export type ICards = {
   audio: string;
   audioMeaning: string;
