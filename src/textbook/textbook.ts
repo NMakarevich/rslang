@@ -1,9 +1,7 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable class-methods-use-this */
 import './textbook.scss';
-import {
-  textbookWrapper, ICards, authorization,
-} from './consts';
+import { ICards, authorization } from './consts';
 import { getWords, getWord } from './api-requests';
 import { localStorageUtil } from './localStorageUtil';
 
@@ -23,10 +21,11 @@ export class Cards {
     let html = '';
     let data: ICards[];
     (async () => {
-      data = (await getWords(this.page, this.group));
-    })().then(() => {
-      data.forEach((card: ICards) => {
-        html += `<li class="word-card">
+      data = await getWords(this.page, this.group);
+    })()
+      .then(() => {
+        data.forEach((card: ICards) => {
+          html += `<li class="word-card">
                   <div class="card-wrapper">
                       <div class="word-wrapper">
                           <button type="button" class="sound" id="${card.id}"></button>
@@ -45,9 +44,10 @@ export class Cards {
                   </div>
                   <img class="word-image" src="https://rslang-team32.herokuapp.com/${card.image}" alt="">
                 </li>`;
-      });
-    })
+        });
+      })
       .then(() => {
+        const textbookWrapper = document.getElementById('textbook-wrapper');
         if (!textbookWrapper) return;
         textbookWrapper.innerHTML = `<ul class = "words-list">${html}</ul>`;
         this.playAudio();
@@ -62,24 +62,28 @@ export class Cards {
 
   addToDifficult() {
     const addbtns = document.querySelectorAll('.add-to-difficult');
-    addbtns.forEach((btn) => btn.addEventListener('click', () => {
-      if (authorization.authorized) {
-        console.log('Добавить в сложные');
-      } else {
-        this.showModalWindow();
-      }
-    }));
+    addbtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (authorization.authorized) {
+          console.log('Добавить в сложные');
+        } else {
+          this.showModalWindow();
+        }
+      });
+    });
   }
 
   addToStudied() {
     const deletebtns = document.querySelectorAll('.add-to-studied');
-    deletebtns.forEach((btn) => btn.addEventListener('click', () => {
-      if (authorization.authorized) {
-        console.log('Добавить в изученные');
-      } else {
-        this.showModalWindow();
-      }
-    }));
+    deletebtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (authorization.authorized) {
+          console.log('Добавить в изученные');
+        } else {
+          this.showModalWindow();
+        }
+      });
+    });
   }
 
   playAudio() {
@@ -88,7 +92,6 @@ export class Cards {
       btns[i]?.addEventListener('click', () => {
         let data: ICards;
         (async () => {
-          console.log(btns[i]?.id);
           data = await getWord(`${btns[i]?.id}`);
         })().then(() => {
           const audio = new Audio();
@@ -129,11 +132,10 @@ export class Cards {
     div.innerText = 'Это действие доступно только после регистрации';
     div.className = 'modal-window';
     document.body.appendChild(div);
-    setTimeout((() => {
+    setTimeout(() => {
       document.body.removeChild(div);
-    }), 2000);
+    }, 2000);
   }
 }
 
 export const cards = new Cards();
-cards.render();
