@@ -1,8 +1,8 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable class-methods-use-this */
-import './textbook.scss';
+import '../../sass/textbook.scss';
 import { ICards, authorization } from './consts';
-import { getWords, getWord } from './api-requests';
+import { getWords, getWord } from '../api-requests';
 import { localStorageUtil } from './localStorageUtil';
 
 let isPlay = false;

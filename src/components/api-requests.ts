@@ -1,4 +1,4 @@
-import { baseUrl, ICards } from './consts';
+import { baseUrl, ICards } from './textbook/consts';
 
 export async function getWords(page: number, group: number): Promise<ICards[]> {
   const response: Response = await fetch(`${baseUrl}/words?page=${page}&group=${group}`);
