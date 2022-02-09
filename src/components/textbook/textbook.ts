@@ -1,5 +1,6 @@
-/* eslint-disable no-loop-func */
 /* eslint-disable class-methods-use-this */
+/* eslint-disable no-loop-func */
+
 import '../../sass/textbook.scss';
 import { ICards } from './consts';
 import { getWords } from '../api-requests';
