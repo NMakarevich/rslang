@@ -1,3 +1,4 @@
+import main from '../main';
 import Login from './login';
 
 class Registry extends Login {
@@ -9,8 +10,7 @@ class Registry extends Login {
   }
 
   override render = () => {
-    const mainContainer = document.querySelector('.main .container') as HTMLElement;
-    mainContainer.innerHTML = `
+    main.mainContainer.innerHTML = `
     <div class='main__registry'>
       <h2 сlass='main__title'>Регистрация</h2>
       <form class='main__form'>

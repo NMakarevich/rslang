@@ -44,6 +44,10 @@ class Main {
     return document.querySelector('.header__burger') as HTMLElement;
   }
 
+  get mainContainer(): HTMLElement {
+    return document.querySelector('.main .container') as HTMLElement;
+  }
+
   toggleBurger = () => {
     const header = document.querySelector('.header') as HTMLElement;
     if (header.classList.contains('open')) {
@@ -65,4 +69,5 @@ class Main {
   };
 }
 
-export default Main;
+const main = new Main();
+export default main;

@@ -1,3 +1,5 @@
+import main from '../main';
+
 class Login {
   email: HTMLInputElement;
 
@@ -12,8 +14,7 @@ class Login {
   }
 
   render = () => {
-    const mainContainer = document.querySelector('.main .container') as HTMLElement;
-    mainContainer.innerHTML = `
+    main.mainContainer.innerHTML = `
     <div class='main__login'>
       <h2 сlass='main__title'>Вход</h2>
       <form class='main__form'>

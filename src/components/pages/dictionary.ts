@@ -1,7 +1,8 @@
+import main from '../main';
+
 class Dictionary {
   render = async () => {
-    const mainContainer = document.querySelector('.main .container') as HTMLElement;
-    mainContainer.innerHTML = `
+    main.mainContainer.innerHTML = `
     <div class='main__dictionary'>
       <h2 сlass='main__title'>Словарь</h2>
       <div class="textbook">

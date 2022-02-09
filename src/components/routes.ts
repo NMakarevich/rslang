@@ -1,10 +1,10 @@
-import home from './home';
-import Dictionary from './dictionary';
-import about from './about';
-import Registry from './registry';
-import Login from './login';
-import team from './team';
-import games from './games';
+import home from './pages/home';
+import Dictionary from './pages/dictionary';
+import about from './pages/about';
+import Registry from './pages/registry';
+import Login from './pages/login';
+import team from './pages/team';
+import games from './pages/games';
 
 const routes = [
   { path: '/', component: home },
