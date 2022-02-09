@@ -22,3 +22,11 @@ export type ICards = {
   textExampleTranslate: string;
   listProps: Array<Object>;
 };
+
+export type IUserInfo = {
+  message: string,
+  token: string,
+  refreshToken: string,
+  userId: string,
+  name: string
+};

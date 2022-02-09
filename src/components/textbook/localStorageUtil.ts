@@ -1,4 +1,4 @@
-import { authorization } from './consts';
+import { authorization, IUserInfo } from './consts';
 
 export class LocalStorageUtil {
   keyChapter: string;
@@ -45,7 +45,7 @@ export class LocalStorageUtil {
     return '';
   }
 
-  putUserInfo(info) {
+  putUserInfo(info: IUserInfo) {
     localStorage.setItem(this.keyUserInfo, JSON.stringify(info));
   }
 

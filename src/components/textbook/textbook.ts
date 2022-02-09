@@ -5,6 +5,12 @@ import { ICards, authorization } from './consts';
 import { getWords, getWord } from '../api-requests';
 import { localStorageUtil } from './localStorageUtil';
 
+const textbook = document.createElement('div');
+textbook.className = 'textbook';
+textbook.innerHTML = `<div id="textbook-header"></div>
+                 <div id="textbook-wrapper"></div>`;
+// document.body.appendChild(textbook);
+
 let isPlay = false;
 
 export class Cards {
@@ -65,7 +71,7 @@ export class Cards {
     addbtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         if (authorization.authorized) {
-          console.log('Добавить в сложные');
+          // console.log('Добавить в сложные');
         } else {
           this.showModalWindow();
         }
@@ -78,7 +84,7 @@ export class Cards {
     deletebtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         if (authorization.authorized) {
-          console.log('Добавить в изученные');
+          /// console.log('Добавить в изученные');
         } else {
           this.showModalWindow();
         }
@@ -139,3 +145,4 @@ export class Cards {
 }
 
 export const cards = new Cards();
+// cards.render();

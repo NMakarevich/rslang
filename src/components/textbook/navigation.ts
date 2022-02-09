@@ -85,7 +85,7 @@ class TextbookNavigation {
       }
     });
     this.nextBTN.addEventListener('click', () => {
-      if (+this.selectPage.value < 30) {
+      if (+this.selectPage.value < pagesAmount) {
         this.selectPage.value = `${+this.selectPage.value + 1}`;
         cards.page += 1;
         cards.render();
@@ -96,4 +96,5 @@ class TextbookNavigation {
 }
 
 const textbookNavigation = new TextbookNavigation();
+// textbookNavigation.render();
 export default textbookNavigation;
