@@ -13,7 +13,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import"
     ],
     "rules": {
         "import/extensions": "off"

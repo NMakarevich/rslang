@@ -1,5 +1,6 @@
-/* eslint-disable no-loop-func */
 /* eslint-disable class-methods-use-this */
+/* eslint-disable no-loop-func */
+
 import '../../sass/textbook.scss';
 import { ICards, authorization } from './consts';
 import { getWords, getWord } from '../api-requests';
@@ -31,7 +32,7 @@ export class Cards {
     })()
       .then(() => {
         data.forEach((card: ICards) => {
-          html += `<li class="word-card">
+          html += `<div class="word-card">
                   <div class="card-wrapper">
                       <div class="word-wrapper">
                           <button type="button" class="sound" id="${card.id}"></button>
@@ -49,13 +50,13 @@ export class Cards {
                       <button type="button" class = "add-to-studied" id="${card.id}">Добавить в изученные</button>
                   </div>
                   <img class="word-image" src="https://rslang-team32.herokuapp.com/${card.image}" alt="">
-                </li>`;
+                </div>`;
         });
       })
       .then(() => {
         const textbookWrapper = document.getElementById('textbook-wrapper');
         if (!textbookWrapper) return;
-        textbookWrapper.innerHTML = `<ul class = "words-list">${html}</ul>`;
+        textbookWrapper.innerHTML = `<div class = "words-list">${html}</div>`;
         this.playAudio();
         this.addToDifficult();
         this.addToStudied();
