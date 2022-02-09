@@ -17,6 +17,6 @@
         "import"
     ],
     "rules": {
-        "import/extensions": "off"
+
     }
 }
