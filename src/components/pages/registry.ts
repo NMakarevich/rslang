@@ -1,5 +1,6 @@
 import main from '../main';
 import Login from './login';
+import { registryUser } from '../../components/api';
 
 class Registry extends Login {
   name: HTMLInputElement;
@@ -19,6 +20,7 @@ class Registry extends Login {
       <a class='login__link' href='#/login'>Вход</a>
     </div>
     `;
+    this.eventListener();
   };
 
   override insertInputs(): string {
@@ -33,9 +35,19 @@ class Registry extends Login {
     return div.innerHTML;
   }
 
-  registry = async () => {
-    // await registryUser(this.name.value, this.email.value, this.password.value);
-  };
+  async registry(event: Event) {
+    event.preventDefault();
+    await registryUser({
+      name: this.name.value,
+      email: this.email.value,
+      password: this.password.value,
+    });
+    location.href = '#/login';
+  }
+
+  override eventListener() {
+    main.mainContainer.querySelector('.main__form')?.addEventListener('submit', this.registry);
+  }
 }
 
 export default Registry;
