@@ -7,6 +7,12 @@ import { getWords } from '../api-requests';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
 
+/* const textbook = document.createElement('div');
+textbook.className = 'textbook';
+textbook.innerHTML = `<div id="textbook-header"></div>
+                 <div id="textbook-wrapper"></div>`;
+document.body.appendChild(textbook); */
+
 export class Cards {
   page: number;
 
@@ -20,7 +26,7 @@ export class Cards {
   render = async (): Promise<void> => {
     const textbookWrapper = document.getElementById('textbook-wrapper') as HTMLElement;
     if (!textbookWrapper) return;
-    textbookWrapper.innerHTML = '<ul class="words-list"></ul>';
+    textbookWrapper.innerHTML = '<div class="words-list"></div>';
     await getWords(this.page, this.group)
       .then((data) => {
         data.forEach((card: ICards) => {
