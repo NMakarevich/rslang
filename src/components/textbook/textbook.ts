@@ -10,7 +10,8 @@ import Card from './card';
 /* const textbook = document.createElement('div');
 textbook.className = 'textbook';
 textbook.innerHTML = `<div id="textbook-header"></div>
-                 <div id="textbook-wrapper"></div>`;
+                 <div id="textbook-wrapper"></div>
+                 <div id="upButton" hidden></div>`;
 document.body.appendChild(textbook); */
 
 export class Cards {
