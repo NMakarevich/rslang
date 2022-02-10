@@ -1,3 +1,5 @@
+import { ISignIn } from '../../interfaces';
+import { signIn } from '../api';
 import main from '../main';
 
 class Login {
@@ -22,6 +24,7 @@ class Login {
       </form>
       <a class='registry__link' href='#/registry'>Регистрация</a>
     </div>`;
+    this.eventListener();
   };
 
   insertInputs(): string {
@@ -39,9 +42,42 @@ class Login {
     return div.innerHTML;
   }
 
-  login = async () => {
-    // await loginUser(this.email.value, this.password.value);
-  };
+  async signIn(event: Event) {
+    event.preventDefault();
+    await signIn({
+      email: this.email.value,
+      password: this.password.value,
+    })
+      .then((response) => {
+        if (response.status === 403) {
+          throw new Error('wrong email and/or password');
+        }
+        return response.json();
+      })
+      .then((data: ISignIn) => {
+        localStorage.setItem(`rslang-user`, JSON.stringify(data));
+        const e = new CustomEvent('signin', {
+          bubbles: true,
+          detail: data.name,
+        });
+        document.dispatchEvent(e);
+        location.href = '/';
+      })
+      .catch(() => {
+        this.showErrorMessage();
+      });
+  }
+
+  showErrorMessage() {
+    const div = document.createElement('div');
+    div.innerHTML = 'Неверный email и/или пароль';
+    main.mainContainer.append(div);
+    setTimeout(() => div.remove(), 2000);
+  }
+
+  eventListener() {
+    main.mainContainer.querySelector('.main__form')?.addEventListener('submit', this.signIn);
+  }
 }
 
 export default Login;
