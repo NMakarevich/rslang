@@ -3,8 +3,7 @@ import main from './components/main';
 import Router from './components/router';
 
 window.addEventListener('load', () => {
-  document.body.innerHTML = main.render();
-  main.eventListener();
+  main.render();
   const router = new Router();
   router.run();
 });
