@@ -7,14 +7,14 @@ let isPlay = false;
 class Card {
   data: ICards;
 
-  wordCard: HTMLLIElement;
+  wordCard: HTMLElement;
 
   constructor(data: ICards) {
     this.data = data;
-    this.wordCard = document.createElement('li');
+    this.wordCard = document.createElement('div');
   }
 
-  render(): HTMLLIElement {
+  render(): HTMLElement {
     this.wordCard.classList.add('word-card');
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
@@ -30,8 +30,10 @@ class Card {
         <p class="word-title">Пример:</p>
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
+        <div class="button-wrapper">
         <button type="button" class="add-to-difficult" id="${this.data.id}">Добавить в сложные</button>
         <button type="button" class="add-to-studied" id="${this.data.id}">Добавить в изученные</button>
+        </div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
     this.eventListeners();
