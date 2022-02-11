@@ -1,5 +1,8 @@
 @import 'header';
 @import 'footer';
+@import 'forms';
+@import 'games';
+@import 'team';
 
 * {
   box-sizing: border-box;
@@ -16,14 +19,6 @@ body {
   flex-direction: column;
 }
 
-.main {
-  flex: 1;
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-}
-
 .container {
   display: flex;
   justify-content: space-between;
@@ -31,6 +26,17 @@ body {
   width: 100%;
   padding: 20px;
 }
+
+.main {
+  flex: 1;
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+}
+
+
 
 .nav__list {
   margin: 0;
