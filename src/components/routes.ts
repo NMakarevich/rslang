@@ -12,6 +12,8 @@ const routes = [
   { path: 'login', component: new Login() },
   { path: 'dictionary', component: new Dictionary() },
   { path: 'games', component: games },
+  { path: 'games/sprint'},
+  { path: 'games/audio'},
   { path: 'about', component: about },
   { path: 'team', component: team },
 ];
