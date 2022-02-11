@@ -8,13 +8,6 @@ import { getWords, getUserHardWords } from '../api-requests';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
 
-const textbook = document.createElement('div');
-textbook.className = 'textbook';
-textbook.innerHTML = `<div id="textbook-header"></div>
-                 <div id="textbook-wrapper"></div>
-                 <div id="upButton" hidden></div>`;
-document.body.appendChild(textbook);
-
 export class Cards {
   page: number;
 
