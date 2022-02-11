@@ -10,8 +10,8 @@ class Dictionary {
         <div id="textbook-wrapper"></div>
       </div>
     </div>`;
-    textbookNavigation.render();
-    await cards.render();
+    // textbookNavigation.render();
+    // await cards.render();
   };
 }
 
