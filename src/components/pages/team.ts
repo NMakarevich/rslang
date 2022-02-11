@@ -13,6 +13,9 @@ const team = {
             <h3 class='team__name'>Елизавета Иванушенко</h3>
             <a class='team__github' href='http://github.com/lisaliza6428' target='_blank'>lisaliza6428</a>
             <ul class='team__contribution'>
+              <li class='team__contribution-item'>
+                Работа со словарем
+              </li>
             </ul>
           </div>
         </div>
@@ -23,6 +26,9 @@ const team = {
             <h3 class='team__name'>Николай Макаревич</h3>
             <a class='team__github' href='http://github.com/nmakarevich' target='_blank'>NMakarevich</a>
             <ul class='team__contribution'>
+              <li class='team__contribution-item'>
+                Верстка страниц учебника
+              </li>
             </ul>
           </div>
         </div>
@@ -33,6 +39,9 @@ const team = {
             <h3 class='team__name'>Наталья Керсновская</h3>
             <a class='team__github' href='http://github.com/natakers' target='_blank'>natakers</a>
             <ul class='team__contribution'>
+              <li class='team__contribution-item'>
+                Мини-игра "Спринт"
+              </li>
             </ul>
           </div>
         </div>
