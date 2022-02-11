@@ -13,11 +13,10 @@ class Registry extends Login {
   override render = () => {
     main.mainContainer.innerHTML = `
     <div class='main__registry'>
-      <h2 сlass='main__title'>Регистрация</h2>
+      <h2 сlass='main__title'><a class='main__title-link' href='#/login'>Вход</a> / Регистрация</h2>
       <form class='main__form'>
         ${this.insertInputs()}
       </form>
-      <a class='login__link' href='#/login'>Вход</a>
     </div>
     `;
     this.eventListener();

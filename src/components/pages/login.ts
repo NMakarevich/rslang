@@ -18,11 +18,10 @@ class Login {
   render = () => {
     main.mainContainer.innerHTML = `
     <div class='main__login'>
-      <h2 сlass='main__title'>Вход</h2>
+      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registry'>Регистрация</a></h2>
       <form class='main__form'>
         ${this.insertInputs()}
       </form>
-      <a class='registry__link' href='#/registry'>Регистрация</a>
     </div>`;
     this.eventListener();
   };
