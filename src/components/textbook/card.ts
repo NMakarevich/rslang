@@ -1,5 +1,6 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-underscore-dangle */
 import { getWord, createUserWord, deleteUserWord } from '../api-requests';
 import { authorization, ICards } from './consts';
 import { localStorageUtil } from './localStorageUtil';
@@ -12,27 +13,40 @@ class Card {
 
   wordCard: HTMLElement;
 
+  userID: string;
+
   constructor(data: ICards) {
     this.data = data;
     this.wordCard = document.createElement('div');
+    this.userID = localStorageUtil.getUserInfo().userId;
   }
 
   render(): HTMLElement {
     this.wordCard.classList.add('word-card');
-    let ident = this.data.id;
+    let identificator = this.data.id;
     if (authorization.authorized) {
-      ident = this.data._id;
+      identificator = this.data._id;
     }
+
     let difficultClass = '';
-    let buttonLabel = 'Добавить в сложные';
-    if (this.data.userWord !== undefined) {
+    let difficultButtonText = 'Добавить в сложные';
+    let studiedClass = '';
+    let studiedButtonText = 'Добавить в изученные';
+
+    if (this.data.userWord?.difficulty === 'hard') {
       difficultClass = 'difficult';
-      buttonLabel = 'Удалить из сложных';
+      difficultButtonText = 'Добавлено в сложные';
     }
+
+    if (this.data.userWord?.difficulty === 'easy') {
+      studiedClass = 'studied';
+      studiedButtonText = 'Добавлено в изученные';
+    }
+
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
         <div class="word-wrapper">
-            <button type="button" class="sound" id="${ident}"></button>
+            <button type="button" class="sound" id="${identificator}"></button>
             <span class="word">${this.data.word}</span>
             <span class="word-transcription">${this.data.transcription}</span>
             <span class="word-translate">${this.data.wordTranslate}</span>
@@ -44,8 +58,8 @@ class Card {
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
         <div class="button-wrapper">
-        <button type="button" class="add-to-difficult ${difficultClass}" id="${ident}">${buttonLabel}</button>
-        <button type="button" class="add-to-studied" id="${ident}">Добавить в изученные</button>
+        <button type="button" class="add-to-difficult ${difficultClass}" id="${identificator}">${difficultButtonText}</button>
+        <button type="button" class="add-to-studied ${studiedClass}" id="${identificator}">${studiedButtonText}</button>
         </div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
@@ -70,38 +84,57 @@ class Card {
     this.difficultButton.addEventListener('click', () => {
       this.addToDifficult(this.difficultButton);
     });
-    this.studiedButton.addEventListener('click', this.addToStudied);
+    this.studiedButton.addEventListener('click', () => {
+      this.addToStudied(this.studiedButton);
+    });
   }
 
-  addToDifficult = (button: HTMLButtonElement) => {
-    const id = localStorageUtil.getUserInfo().userId;
+  addToDifficult = async (button: HTMLButtonElement) => {
     if (authorization.authorized) {
       const btn = button;
       if (!btn.classList.contains('difficult')) {
         btn.classList.add('difficult');
         btn.innerText = 'Добавлено в сложные';
         createUserWord({
-          userId: `${id}`,
+          userId: `${this.userID}`,
           wordId: `${this.data._id}`,
-          word: { difficulty: 'hard', optional: { testFieldString: 'test', testFieldBoolean: true } },
+          word: { difficulty: 'hard', optional: {} },
         });
       } else {
         btn.classList.remove('difficult');
         btn.innerText = 'Добавить в сложные';
-        deleteUserWord({
-          userId: `${id}`,
+        await deleteUserWord({
+          userId: `${this.userID}`,
           wordId: `${this.data._id}`,
         });
-        cards.render('difficult');
+        if (localStorageUtil.getChapter() === 6) {
+          cards.render('difficult');
+        }
       }
     } else {
       this.showModalWindow();
     }
   };
 
-  addToStudied = () => {
+  addToStudied = (button: HTMLButtonElement) => {
     if (authorization.authorized) {
-      /// console.log('Добавить в изученные');
+      const btn = button;
+      if (!btn.classList.contains('studied')) {
+        btn.classList.add('studied');
+        btn.innerText = 'Добавлено в изученные';
+        createUserWord({
+          userId: `${this.userID}`,
+          wordId: `${this.data._id}`,
+          word: { difficulty: 'easy', optional: {} },
+        });
+      } else {
+        btn.classList.remove('studied');
+        btn.innerText = 'Добавить в изученные';
+        deleteUserWord({
+          userId: `${this.userID}`,
+          wordId: `${this.data._id}`,
+        });
+      }
     } else {
       this.showModalWindow();
     }

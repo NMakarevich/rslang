@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { pagesAmount } from './consts';
+import { pagesAmount, authorization } from './consts';
 import { cards } from './textbook';
 import { localStorageUtil } from './localStorageUtil';
 
@@ -65,8 +65,9 @@ class TextbookNavigation {
       cards.render('usual');
       localStorageUtil.putPage(`${cards.page}`);
     });
+
     this.selectChapter.addEventListener('change', () => {
-      if (+this.selectChapter.value === 7) {
+      if (+this.selectChapter.value === 7 && authorization.authorized) {
         cards.render('difficult');
       }
       cards.group = +this.selectChapter.value - 1;
@@ -76,6 +77,7 @@ class TextbookNavigation {
       localStorageUtil.putChapter(`${cards.group}`);
       localStorageUtil.putPage('0');
     });
+
     this.backBTN.addEventListener('click', () => {
       if (+this.selectPage.value > 1) {
         this.selectPage.value = `${+this.selectPage.value - 1}`;
@@ -84,6 +86,7 @@ class TextbookNavigation {
         localStorageUtil.putPage(`${cards.page}`);
       }
     });
+
     this.nextBTN.addEventListener('click', () => {
       if (+this.selectPage.value < pagesAmount) {
         this.selectPage.value = `${+this.selectPage.value + 1}`;

@@ -8,9 +8,9 @@ export class LocalStorageUtil {
   keyUserInfo: string;
 
   constructor() {
-    this.keyChapter = 'chapter';
-    this.keyPage = 'page';
-    this.keyUserInfo = 'userInfo';
+    this.keyChapter = 'current-chapter';
+    this.keyPage = 'current-page';
+    this.keyUserInfo = 'rslang-user';
   }
 
   getChapter() {
@@ -50,8 +50,8 @@ export class LocalStorageUtil {
   }
 
   checkAuthorization() {
-    const aut = this.getUserInfo();
-    if (aut !== '') {
+    const authorized = this.getUserInfo();
+    if (authorized !== '') {
       authorization.authorized = true;
     }
   }
@@ -59,3 +59,4 @@ export class LocalStorageUtil {
 
 export const localStorageUtil = new LocalStorageUtil();
 localStorageUtil.checkAuthorization();
+// localStorage.clear();

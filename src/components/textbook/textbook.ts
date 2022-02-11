@@ -1,8 +1,9 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-loop-func */
 
 import '../../sass/textbook.scss';
-import { ICards } from './consts';
+import { ICards, authorization } from './consts';
 import { getWords, getUserHardWords } from '../api-requests';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
@@ -36,7 +37,7 @@ export class Cards {
     if (!textbookWrapper) return;
     textbookWrapper.innerHTML = '<div class="words-list"></div>';
     await fn
-      .then((data) => {
+      .then((data: ICards[]) => {
         data.forEach((card: ICards) => {
           (textbookWrapper.firstElementChild as HTMLUListElement).append(new Card(card).render());
         });
@@ -48,14 +49,22 @@ export class Cards {
         selectChapter.value = `${this.group + 1}`;
       });
   };
+
+  showModalWindow() {
+    const div = document.createElement('div');
+    div.innerText = 'Это действие доступно только после регистрации';
+    div.className = 'modal-window';
+    document.body.appendChild(div);
+    setTimeout(() => {
+      document.body.removeChild(div);
+    }, 2000);
+  }
 }
 
 export const cards = new Cards();
 
-if (localStorageUtil.getChapter() === 6) {
+if (localStorageUtil.getChapter() === 6 && authorization.authorized) {
   cards.render('difficult');
 } else {
   cards.render('usual');
 }
-
-localStorage.clear();

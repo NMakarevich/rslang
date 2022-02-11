@@ -21,7 +21,10 @@ export type ICards = {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
-  userWord?: object;
+  userWord?: {
+    difficulty: string,
+    optional: object
+  };
   listProps: Array<Object>;
 };
 
