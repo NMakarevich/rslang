@@ -62,17 +62,17 @@ class TextbookNavigation {
   eventListeners() {
     this.selectPage.addEventListener('change', () => {
       cards.page = +this.selectPage.value - 1;
-      cards.render();
+      cards.render('usual');
       localStorageUtil.putPage(`${cards.page}`);
     });
     this.selectChapter.addEventListener('change', () => {
       if (+this.selectChapter.value === 7) {
-        // console.log('Difficult words');
+        cards.render('difficult');
       }
       cards.group = +this.selectChapter.value - 1;
       cards.page = 0;
       this.selectPage.value = '1';
-      cards.render();
+      cards.render('usual');
       localStorageUtil.putChapter(`${cards.group}`);
       localStorageUtil.putPage('0');
     });
@@ -80,7 +80,7 @@ class TextbookNavigation {
       if (+this.selectPage.value > 1) {
         this.selectPage.value = `${+this.selectPage.value - 1}`;
         cards.page -= 1;
-        cards.render();
+        cards.render('usual');
         localStorageUtil.putPage(`${cards.page}`);
       }
     });
@@ -88,7 +88,7 @@ class TextbookNavigation {
       if (+this.selectPage.value < pagesAmount) {
         this.selectPage.value = `${+this.selectPage.value + 1}`;
         cards.page += 1;
-        cards.render();
+        cards.render('usual');
         localStorageUtil.putPage(`${cards.page}`);
       }
     });
@@ -96,5 +96,5 @@ class TextbookNavigation {
 }
 
 const textbookNavigation = new TextbookNavigation();
-// textbookNavigation.render();
+textbookNavigation.render();
 export default textbookNavigation;

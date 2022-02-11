@@ -3,16 +3,16 @@
 
 import '../../sass/textbook.scss';
 import { ICards } from './consts';
-import { getWords } from '../api-requests';
+import { getWords, getUserHardWords } from '../api-requests';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
 
-/* const textbook = document.createElement('div');
+const textbook = document.createElement('div');
 textbook.className = 'textbook';
 textbook.innerHTML = `<div id="textbook-header"></div>
                  <div id="textbook-wrapper"></div>
                  <div id="upButton" hidden></div>`;
-document.body.appendChild(textbook); */
+document.body.appendChild(textbook);
 
 export class Cards {
   page: number;
@@ -24,11 +24,18 @@ export class Cards {
     this.group = localStorageUtil.getChapter();
   }
 
-  render = async (): Promise<void> => {
+  render = async (param: string): Promise<void> => {
+    let fn;
+    if (param === 'usual') {
+      fn = getWords(this.page, this.group);
+    } else {
+      fn = getUserHardWords();
+    }
+
     const textbookWrapper = document.getElementById('textbook-wrapper') as HTMLElement;
     if (!textbookWrapper) return;
     textbookWrapper.innerHTML = '<div class="words-list"></div>';
-    await getWords(this.page, this.group)
+    await fn
       .then((data) => {
         data.forEach((card: ICards) => {
           (textbookWrapper.firstElementChild as HTMLUListElement).append(new Card(card).render());
@@ -44,4 +51,11 @@ export class Cards {
 }
 
 export const cards = new Cards();
-// cards.render();
+
+if (localStorageUtil.getChapter() === 6) {
+  cards.render('difficult');
+} else {
+  cards.render('usual');
+}
+
+localStorage.clear();

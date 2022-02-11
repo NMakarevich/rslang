@@ -9,7 +9,8 @@ export type ICards = {
   audio: string;
   audioMeaning: string;
   audioExample: string;
-  id: string;
+  _id?: string;
+  id?: string;
   group: number;
   page: number;
   word: string;
@@ -20,6 +21,7 @@ export type ICards = {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord?: object;
   listProps: Array<Object>;
 };
 
@@ -29,4 +31,10 @@ export type IUserInfo = {
   refreshToken: string,
   userId: string,
   name: string
+};
+
+export type createUserWordData = {
+  userId: string,
+  wordId: string,
+  word?: object
 };

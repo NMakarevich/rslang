@@ -1,6 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
-import { getWord } from '../api-requests';
+import { getWord, createUserWord, deleteUserWord } from '../api-requests';
 import { authorization, ICards } from './consts';
+import { localStorageUtil } from './localStorageUtil';
+import { cards } from './textbook';
 
 let isPlay = false;
 
@@ -16,10 +19,20 @@ class Card {
 
   render(): HTMLElement {
     this.wordCard.classList.add('word-card');
+    let ident = this.data.id;
+    if (authorization.authorized) {
+      ident = this.data._id;
+    }
+    let difficultClass = '';
+    let buttonLabel = 'Добавить в сложные';
+    if (this.data.userWord !== undefined) {
+      difficultClass = 'difficult';
+      buttonLabel = 'Удалить из сложных';
+    }
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
         <div class="word-wrapper">
-            <button type="button" class="sound" id="${this.data.id}"></button>
+            <button type="button" class="sound" id="${ident}"></button>
             <span class="word">${this.data.word}</span>
             <span class="word-transcription">${this.data.transcription}</span>
             <span class="word-translate">${this.data.wordTranslate}</span>
@@ -31,8 +44,8 @@ class Card {
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
         <div class="button-wrapper">
-        <button type="button" class="add-to-difficult" id="${this.data.id}">Добавить в сложные</button>
-        <button type="button" class="add-to-studied" id="${this.data.id}">Добавить в изученные</button>
+        <button type="button" class="add-to-difficult ${difficultClass}" id="${ident}">${buttonLabel}</button>
+        <button type="button" class="add-to-studied" id="${ident}">Добавить в изученные</button>
         </div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
@@ -54,13 +67,33 @@ class Card {
 
   eventListeners() {
     this.soundButton.addEventListener('click', this.playAudio);
-    this.difficultButton.addEventListener('click', this.addToDifficult);
+    this.difficultButton.addEventListener('click', () => {
+      this.addToDifficult(this.difficultButton);
+    });
     this.studiedButton.addEventListener('click', this.addToStudied);
   }
 
-  addToDifficult = () => {
+  addToDifficult = (button: HTMLButtonElement) => {
+    const id = localStorageUtil.getUserInfo().userId;
     if (authorization.authorized) {
-      // console.log('Добавить в сложные');
+      const btn = button;
+      if (!btn.classList.contains('difficult')) {
+        btn.classList.add('difficult');
+        btn.innerText = 'Добавлено в сложные';
+        createUserWord({
+          userId: `${id}`,
+          wordId: `${this.data._id}`,
+          word: { difficulty: 'hard', optional: { testFieldString: 'test', testFieldBoolean: true } },
+        });
+      } else {
+        btn.classList.remove('difficult');
+        btn.innerText = 'Добавить в сложные';
+        deleteUserWord({
+          userId: `${id}`,
+          wordId: `${this.data._id}`,
+        });
+        cards.render('difficult');
+      }
     } else {
       this.showModalWindow();
     }
