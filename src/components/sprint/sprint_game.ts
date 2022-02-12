@@ -9,7 +9,7 @@ export class SprintGame {
         let wrong: Array<IWord> = [];
         console.log(data[count]);
         const sprintContainer = document.createElement('div');
-        sprintContainer.classList.add('sprint__container_game');
+        sprintContainer.classList.add('sprint__container');
         const sprintExit = document.createElement('div');
         sprintExit.classList.add('sprint__exit');
         const sprintExitImg = document.createElement('img');

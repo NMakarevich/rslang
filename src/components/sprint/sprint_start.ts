@@ -39,10 +39,8 @@ export class SprintStart {
         sprintStartBtn.classList.add('sprint__start__btn');
         sprintStartBtn.innerHTML = 'Начать';
         sprintStartBtn.onclick = async () => {
-            
-            sprintContainer.innerHTML = '';
             const arr = getWords(pageWords);
-            sprintContainer.appendChild(new SprintGame().draw(await arr));
+            sprintContainer.replaceWith(new SprintGame().draw(await arr))
             
         }
         sptintStartContainer.appendChild(sprintStartTitle);
