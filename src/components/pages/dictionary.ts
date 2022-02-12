@@ -1,4 +1,6 @@
 import main from '../main';
+import { cards } from '../textbook/textbook';
+import textbookNavigation from '../textbook/navigation';
 
 class Dictionary {
   render = async () => {
@@ -10,8 +12,8 @@ class Dictionary {
         <div id="textbook-wrapper"></div>
       </div>
     </div>`;
-    // textbookNavigation.render();
-    // await cards.render();
+    textbookNavigation.render();
+    await cards.render();
   };
 }
 

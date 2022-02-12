@@ -12,14 +12,20 @@ class Router {
   };
 
   loadComponent(id: string) {
-    const component = routes.find((route) => route.path === id)?.component || routes[0]?.component;
+    const route = routes.find((route) => route.path === id);
+    if (!route) {
+      routes[0]?.component?.render();
+      id = '404';
+      window.history.pushState({ id }, `${id}`);
+      return;
+    }
 
-    component?.render();
+    route?.component?.render();
   }
 
   pushToHistory(id: string) {
     this.loadComponent(id);
-    window.history.pushState({ id }, `${id}`, `#/${id}`);
+    window.history.pushState({ id }, `${id}`);
   }
 }
 
