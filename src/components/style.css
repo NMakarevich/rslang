@@ -1,9 +1,10 @@
-.sprint__container {
+.sprint__container, .sprint__containe_game {
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
 	max-width: 700px;
 }
+
 .sprint__exit {
 	display: flex;
 	align-self: flex-end;
@@ -74,6 +75,7 @@
 	justify-content: space-between;
 	margin-bottom: 50px;
 	width: 50%;
+	align-items: center;
 }
 .sprint__game__extrapoints {
 	display: flex;
@@ -91,8 +93,12 @@
 .none {
 	opacity: 0;
 }
-.sprint__game__voice {}
+.sprint__game__voice {
+	cursor: pointer;
+}
 .sprint__game__vioce_img {
+	width: 30px;
+	height: 22px;
 	background: url('../assets/svg/volume.svg') center center no-repeat;
 	background-size: cover;
 }
@@ -118,6 +124,7 @@
 	justify-content: center;
 	align-items: center;
 	margin: 50px 30px 0;
+	cursor: pointer;
 } 
 .sprint__game__variant_yes {
 	background-color: #99B063;
@@ -130,13 +137,13 @@
 	height: 20px;
 } 
 .answerIcon_yes {
-	background: url('../assets/svg/left.svg') center center no-repeat;
+	background: url('../assets/svg/arrow.png') bottom center no-repeat;
 	background-size: cover;
 }
 .sprint__game__answer_no {} 
 .sprint__game_answerIcon_no {}
 .answerIcon_no {
-	background: url('../assets/svg/right.svg') center center no-repeat;
+	background: url('../assets/svg/arrow.png') top center no-repeat;
 	background-size: cover;
 	border: none;
 }
@@ -156,15 +163,19 @@
 .sprint__result__list_yes {}
 .sprint__result__item {
 	display: flex;
+	align-items: center;
 }
 .sprint__result__item__voice {
 	width: 20px;
-	height: 20px;
+	height: 15px;
 	margin-right: 10px;
+	background: url('../assets/svg/volume.svg') center center no-repeat;
+	background-size: cover;
+
 }
 .sprint__result__item__text {}
 .sprint__result__item {}
-.sprint__result__item__voice {}
+/* .sprint__result__item__voice {} */
 .sprint__result__item__text {}
 .sprint__exit_img {
 	width: 20px;

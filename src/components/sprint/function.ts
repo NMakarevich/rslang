@@ -2,14 +2,16 @@ import { IWord } from "./interfaces/IWord";
 import { SprintResult } from "./sprint_results";
 import { Word } from "./word";
 
-export function addAnswerNo(count: number) {
-    console.log(`word  ${count}`);
+export function addAnswerNo(count: number, translation: number) {
+    console.log(`word  ${count} tra  ${translation}`);
+    // console.log(`tra  ${translation}`);
     
 
 }
 
-export function addAnswerYes(count: number) {
-    console.log(`word  ${count}`);
+export function addAnswerYes(count: number, translation: number) {
+    console.log(`word  ${count} tra  ${translation}`);
+    // console.log(`tra  ${translation}`);
     
 
 }
@@ -68,7 +70,11 @@ export let pageWords = [
 
  export function changeWord(count: number, word: HTMLElement, data: Array<IWord>) {
     count = count + 1;
-    let translation = Math.ceil(Math.random() * 18 + 1) ;
+    let x = Math.random();
+    let translation: number;
+    if (x > 0.33 ) {
+        translation = count;
+    } else translation =  Math.ceil(Math.random() * 10 + 1) ;
     console.log(translation);
     
     let container = document.querySelector('.sprint__word__container1');
@@ -77,8 +83,18 @@ export let pageWords = [
         word = new Word().draw(data[count]!, data[translation]!);// тут надо разобраться
     } else word = document.createElement('div');
     container?.appendChild(word);
-    return count;
+    if (translation == count) {
+        return true;
+    } else return false;
 
+  }
+
+ export function makeNode(html: string, teg: string): HTMLElement {
+    const div = document.createElement(teg);
+    div.innerHTML = html;
+    console.log(div.firstElementChild);
+    
+    return (div.firstElementChild as HTMLElement);
   }
 
   

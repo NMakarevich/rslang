@@ -12,6 +12,8 @@ export class Word {
         sprintGameTranslation.innerHTML = translation.wordTranslate;
         sprintWordCont.appendChild(sprintGameWord);
         sprintWordCont.appendChild(sprintGameTranslation);
+        console.log(sprintWordCont);
+        
         return sprintWordCont;
     }
 }
