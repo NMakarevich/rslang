@@ -99,5 +99,4 @@ class TextbookNavigation {
 }
 
 const textbookNavigation = new TextbookNavigation();
-textbookNavigation.render();
 export default textbookNavigation;
