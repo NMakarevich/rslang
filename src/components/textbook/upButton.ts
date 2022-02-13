@@ -1,6 +1,9 @@
-const upButton = document.getElementById('upButton');
+export default function addUpButton() {
+  const upButton = document.createElement('button');
+  upButton.id = 'upButton';
+  upButton.hidden = true;
 
-if (upButton) {
+  document.body.appendChild(upButton);
   upButton.onclick = () => {
     window.scrollTo(window.pageXOffset, 0);
   };

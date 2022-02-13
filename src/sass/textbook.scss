@@ -18,7 +18,6 @@ h3 {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
 }
 
 #textbook-header {
@@ -80,7 +79,9 @@ h3 {
   &__link {
     width: 160px;
     text-align: center;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 5px;
     border: 1px solid black;
     color: black;
@@ -221,10 +222,12 @@ h3 {
   font-size: 40px;
   color: black;
   position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 10px;
+  bottom: 50px;
+  right: 50px;
+  padding: 15px;
   background-color: rgb(247, 241, 241);
+  border: 1px solid black;
+  border-radius: 10px;
 
   cursor: pointer;
   &::before {

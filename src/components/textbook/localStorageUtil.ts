@@ -39,7 +39,7 @@ export class LocalStorageUtil {
 
   getUserInfo() {
     const infoLS = localStorage.getItem(this.keyUserInfo);
-    if (infoLS !== null) {
+    if (infoLS) {
       return JSON.parse(infoLS);
     }
     return '';
