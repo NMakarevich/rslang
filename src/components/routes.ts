@@ -5,6 +5,7 @@ import Registry from './pages/registry';
 import Login from './pages/login';
 import team from './pages/team';
 import games from './pages/games';
+import sprint from './pages/sprint';
 import page404 from './pages/404';
 
 const routes = [
@@ -14,8 +15,8 @@ const routes = [
   { path: 'login', component: new Login() },
   { path: 'dictionary', component: new Dictionary() },
   { path: 'games', component: games },
-  { path: 'games/sprint' },
-  { path: 'games/audio' },
+  { path: 'games/sprint', component: sprint },
+  { path: 'games/audio', component: null },
   { path: 'about', component: about },
   { path: 'team', component: team },
 ];
