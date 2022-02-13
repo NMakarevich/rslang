@@ -2,55 +2,51 @@ import { IWord } from './interfaces/IWord';
 import SprintResult from './sprint_results';
 import Word from './word';
 
-export function addAnswerNo(count: number, translation: number) {
-  console.log(`word  ${count} tra  ${translation}`);
-  // console.log(`tra  ${translation}`);
+export const audio = new Audio();
+
+export function addAnswerYes(right: Array<IWord>, point: number, data?: IWord) {
+  const sprintGameScore = document.querySelector('.sprint__game__score');
+  let bill = sprintGameScore?.innerHTML;
+  if (data) {
+    right.push(data);
+    bill = String(10 + Number(bill));
+    (sprintGameScore as HTMLElement).innerHTML = bill;
+    sprintGameScore?.classList.add('sprint__game__score_activ');
+  }
+  const points = document.querySelectorAll('.sprint__game__point');
+  if (point === 3) {
+    (points[point - 1] as HTMLElement).classList.add('sprint__game__point_activ');
+    setTimeout(() => {
+      points?.forEach((item) => {
+        (item as HTMLElement).classList.remove('sprint__game__point_activ');
+      });
+    }, 200);
+  } (points[point - 1] as HTMLElement).classList.add('sprint__game__point_activ');
+  setTimeout(() => sprintGameScore?.classList.remove('sprint__game__score_activ'), 1000);
 }
 
-export function addAnswerYes(count: number, translation: number) {
-  console.log(`word  ${count} tra  ${translation}`);
-  // console.log(`tra  ${translation}`);
-}
-
-export const pageWords = [
-  {
-    key: 'group',
-    value: 0,
-  },
-  {
-    key: 'page',
-    value: 0,
-  },
-];
+export const pageWords = {
+  group: 0,
+  page: 0,
+};
 
 const baseUrl = 'https://rslang-team32.herokuapp.com';
 const path = {
   words: '/words',
-  winners: '/winners',
-  engine: '/engine',
 };
 
-const getParam = (params: any[]) => {
-  const param = params.length ? `?${params.map((item) => `${item.key}=${item.value}`).join('&')}` : '';
-  return param;
-};
-
-export async function getWords(params: any[]) {
-  const response = await fetch(`${baseUrl}${path.words}${getParam(params)}`);
+// eslint-disable-next-line no-shadow
+export async function getWords(pageWords: { group: any; page?: number; }) {
+  const response = await fetch(`${baseUrl}${path.words}?group=${pageWords.group}&page=${pageWords.group}`);
   let data;
   if (response.ok) data = await response.json();
   return data;
 }
 
-const words = getWords(pageWords);
-
+// eslint-disable-next-line no-undef
 let time: NodeJS.Timer;
 export function setTimer(right: Array<IWord>, wrong: Array<IWord>) {
-  let seconds = 60;
-  // if (localStorage.getItem('timeGame') ==  'true') {
-
-  // let workTime1 = localStorage.getItem('ltimeInterval');
-  // console.log(workTime1);
+  let seconds = 10;
   time = setInterval(() => {
     if (seconds >= 0) {
       const timerScore = document.querySelector('.sprint__game__timer');
@@ -60,29 +56,28 @@ export function setTimer(right: Array<IWord>, wrong: Array<IWord>) {
     } else {
       clearInterval(time);
       const container = document.querySelector('.sprint__container') as HTMLElement;
-      container.replaceWith(new SprintResult().draw(right, wrong));
-      // (container as HTMLElement).click();
+      container.appendChild(new SprintResult().draw(right, wrong));
     }
     return seconds;
   }, 1000);
-  // }
 }
 
-export function changeWord(count: number, word: HTMLElement, data: Array<IWord>) {
-  count += 1;
+export function changeWord(count: number, data: Array<IWord>) {
+  let newWord;
+  const count1 = count + 1;
   const x = Math.random();
   let translation: number;
-  if (x > 0.33) {
-    translation = count;
-  } else translation = Math.ceil(Math.random() * 10 + 1);
-
+  if (x > 0.333) {
+    translation = count1;
+  } else translation = Math.ceil(Math.random() * 19);
   const container = document.querySelector('.sprint__word__container1');
   (container as HTMLElement).innerHTML = '';
-  if (data[count]) {
-    word = new Word().draw(data[count]!, data[translation]!); // тут надо разобраться
-  } else word = document.createElement('div');
-  container?.appendChild(word);
-  if (translation === count) {
+  if (data[count1]) {
+    newWord = new Word().draw(data[count1]!, data[translation]!); // тут надо разобраться
+    audio.src = `${baseUrl}/${data[count1]!.audio}`;
+  } else return false;
+  container?.appendChild(newWord);
+  if (translation === count1) {
     return true;
   }
   return false;
@@ -91,22 +86,37 @@ export function changeWord(count: number, word: HTMLElement, data: Array<IWord>)
 export function makeNode(html: string, teg: string): HTMLElement {
   const div = document.createElement(teg);
   div.innerHTML = html;
-
   return div.firstElementChild as HTMLElement;
 }
 
-//   export  function timeOf() {
-//     clearInterval(time);
-//   }
+export function shuffle(array: Array<IWord>) {
+  array.sort(() => Math.random() - 0.5);
+  return array;
+}
 
-//   function keyPress(e: Event) {
-//     let keyNum;
-//     if (window.event) {
-//         keyNum = window.event.keyCode;
-//     }
-//     else if (e) {
-//         keyNum = e.which;
-//     }
-//     console.log(keyNum);
+export async function addWords(arrWords: Array<IWord>) {
+  let oldWords = arrWords;
+  pageWords.group += 1;
+  const newWords = shuffle(await getWords(pageWords));
+  oldWords = arrWords.concat(newWords);
+  return oldWords;
+}
+
+// export async function rightAnswer(x, point, right, wrong, arrWords, count) {
+//   let point1 = point;
+//   let count1 = count;
+//   let x1 = x;
+//   let arrWords1 = arrWords;
+//   if (!x) {
+//     if (point1 === 3) {
+//       point1 = 0;
+//     } point1 += 1;
+//     addAnswerYes(right, point, arrWords[count]);
+//   } else wrong.push(arrWords1[count]!);
+//   count1 += 1;
+//   if (count1 === arrWords.length - 2) {
+//     arrWords1 = await addWords(arrWords);
+//   }
+//   x1 = changeWord(count, arrWords);
+//   return x1;
 // }
-// document.onkeydown = keyPress;
