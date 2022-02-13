@@ -1,7 +1,7 @@
 import home from './pages/home';
 import Dictionary from './pages/dictionary';
 import about from './pages/about';
-import Registry from './pages/registry';
+import Registration from './pages/registration';
 import Login from './pages/login';
 import team from './pages/team';
 import games from './pages/games';
@@ -11,7 +11,7 @@ import page404 from './pages/404';
 const routes = [
   { component: page404 },
   { path: '/', component: home },
-  { path: 'registry', component: new Registry() },
+  { path: 'registration', component: new Registration() },
   { path: 'login', component: new Login() },
   { path: 'dictionary', component: new Dictionary() },
   { path: 'games', component: games },

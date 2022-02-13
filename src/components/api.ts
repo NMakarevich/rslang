@@ -1,7 +1,7 @@
 import { baseURL } from '../consts';
 import { IUser } from '../interfaces';
 
-export async function registryUser(user: IUser): Promise<Response> {
+export async function registrationUser(user: IUser): Promise<Response> {
   const response = await fetch(`${baseURL}/users`, {
     method: 'POST',
     headers: {

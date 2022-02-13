@@ -18,7 +18,7 @@ class Login {
   render = () => {
     main.mainContainer.innerHTML = `
     <div class='main__login'>
-      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registry'>Регистрация</a></h2>
+      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registration'>Регистрация</a></h2>
       <form class='main__form'>
         ${this.insertInputs()}
       </form>
@@ -54,13 +54,13 @@ class Login {
         return response.json();
       })
       .then((data: ISignIn) => {
-        localStorage.setItem(`rslang-user`, JSON.stringify(data));
+        localStorage.setItem('rslang-user', JSON.stringify(data));
         const e = new CustomEvent('signin', {
           bubbles: true,
           detail: data.name,
         });
         document.dispatchEvent(e);
-        location.href = '/';
+        window.location.href = '/';
       })
       .catch(() => {
         this.showErrorMessage();
