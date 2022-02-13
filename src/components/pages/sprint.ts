@@ -1,5 +1,5 @@
 import main from '../main';
-import { SprintStart } from '../sprint/sprint_start';
+import SprintStart from '../sprint/sprint_start';
 
 const sprint = {
   render: () => {
