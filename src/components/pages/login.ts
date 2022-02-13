@@ -41,7 +41,7 @@ class Login {
     return div.innerHTML;
   }
 
-  async signIn(event: Event) {
+  signIn = async (event: Event) => {
     event.preventDefault();
     await signIn({
       email: this.email.value,
@@ -65,14 +65,15 @@ class Login {
       .catch(() => {
         this.showErrorMessage();
       });
-  }
+  };
 
-  showErrorMessage() {
+  showErrorMessage = () => {
     const div = document.createElement('div');
+    div.classList.add('form__error');
     div.innerHTML = 'Неверный email и/или пароль';
     main.mainContainer.append(div);
     setTimeout(() => div.remove(), 2000);
-  }
+  };
 
   eventListener() {
     main.mainContainer.querySelector('.main__form')?.addEventListener('submit', this.signIn);
