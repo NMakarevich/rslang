@@ -79,7 +79,9 @@ h3 {
   &__link {
     width: 160px;
     text-align: center;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 5px;
     border: 1px solid black;
     color: black;
@@ -220,7 +222,7 @@ h3 {
   font-size: 40px;
   color: black;
   position: fixed;
-  top: 50px;
+  bottom: 50px;
   right: 50px;
   padding: 15px;
   background-color: rgb(247, 241, 241);
