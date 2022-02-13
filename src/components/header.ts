@@ -24,7 +24,7 @@ class Header {
         <h1 class='header__title'>RS Lang</h1>
         <a href='#/login' class='header__link' id='login' ${userData ? 'hidden' : ''}>Войти</a>
         <div class='header__user'${userData ? '' : 'hidden'}>
-          <span class='header__user-name'>${userData ? JSON.parse(userData)['name'] : ''}</span>
+          <span class='header__user-name'>${userData ? JSON.parse(userData).name : ''}</span>
           <button type='button' class='header__user-button'></button>
       </div> `;
     document.body.append(this.header);
@@ -33,7 +33,7 @@ class Header {
 
   logout = () => {
     localStorage.setItem('rslang-user', '');
-    this.toggleUser();
+    this.toggleUser({ detail: '' } as CustomEvent);
   };
 
   toggleBurger = () => {
@@ -44,9 +44,9 @@ class Header {
     this.header.classList.add('open');
   };
 
-  toggleUser = (event: CustomEventInit = { detail: '' }) => {
+  toggleUser = (event: CustomEventInit<string>) => {
     const userName = this.header.querySelector('.header__user-name') as HTMLSpanElement;
-    userName.textContent = event.detail;
+    userName.textContent = event.detail as string;
     const user = this.header.querySelector('.header__user') as HTMLElement;
     user.hidden = !user.hidden;
     const link = this.header.querySelector('.header__link') as HTMLLinkElement;
