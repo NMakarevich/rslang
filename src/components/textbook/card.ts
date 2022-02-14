@@ -2,7 +2,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
 import { getWord, createUserWord, deleteUserWord } from '../api';
-import { authorization } from '../consts';
 import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
 import { cards } from './textbook';
@@ -25,10 +24,10 @@ class Card {
   render(): HTMLElement {
     this.wordCard.classList.add('word-card');
     let identificator = this.data.id;
-    if (authorization.authorized) {
+    if (localStorageUtil.checkAuthorization()) {
       identificator = this.data._id;
     }
-
+    let typeOfWord = '';
     let difficultClass = '';
     let difficultButtonText = 'Добавить в сложные';
     let studiedClass = '';
@@ -36,16 +35,19 @@ class Card {
 
     if (this.data.userWord?.difficulty === 'hard') {
       difficultClass = 'difficult';
-      difficultButtonText = 'Добавлено в сложные';
+      difficultButtonText = 'Удалить из сложных';
+      typeOfWord = 'Сложное слово';
     }
 
     if (this.data.userWord?.difficulty === 'easy') {
       studiedClass = 'studied';
-      studiedButtonText = 'Добавлено в изученные';
+      studiedButtonText = 'Удалить из изученных';
+      typeOfWord = 'Изученное слово';
     }
 
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
+       <div>${typeOfWord}</div>
         <div class="word-wrapper">
             <button type="button" class="sound" id="${identificator}"></button>
             <span class="word">${this.data.word}</span>
@@ -62,6 +64,7 @@ class Card {
         <button type="button" class="add-to-difficult ${difficultClass}" id="${identificator}">${difficultButtonText}</button>
         <button type="button" class="add-to-studied ${studiedClass}" id="${identificator}">${studiedButtonText}</button>
         </div>
+        <div>Правильных ответов: 0, неправильных ответов: 0</div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
     this.eventListeners();
@@ -91,16 +94,23 @@ class Card {
   }
 
   addToDifficult = async (button: HTMLButtonElement) => {
-    if (authorization.authorized) {
+    if (localStorageUtil.checkAuthorization()) {
       const btn = button;
       if (!btn.classList.contains('difficult')) {
+        if (btn.nextElementSibling?.classList.contains('studied')) {
+          await deleteUserWord({
+            userId: `${this.userID}`,
+            wordId: `${this.data._id}`,
+          });
+        }
         btn.classList.add('difficult');
-        btn.innerText = 'Добавлено в сложные';
-        createUserWord({
+        btn.innerText = 'Удалить из сложных';
+        await createUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data._id}`,
           word: { difficulty: 'hard', optional: {} },
         });
+        await this.updatePage();
       } else {
         btn.classList.remove('difficult');
         btn.innerText = 'Добавить в сложные';
@@ -108,33 +118,39 @@ class Card {
           userId: `${this.userID}`,
           wordId: `${this.data._id}`,
         });
-        if (localStorageUtil.getChapter() === 6) {
-          cards.render('difficult');
-        }
+        await this.updatePage();
       }
     } else {
       this.showModalWindow();
     }
   };
 
-  addToStudied = (button: HTMLButtonElement) => {
-    if (authorization.authorized) {
+  addToStudied = async (button: HTMLButtonElement) => {
+    if (localStorageUtil.checkAuthorization()) {
       const btn = button;
       if (!btn.classList.contains('studied')) {
+        if (btn.previousElementSibling?.classList.contains('difficult')) {
+          await deleteUserWord({
+            userId: `${this.userID}`,
+            wordId: `${this.data._id}`,
+          });
+        }
         btn.classList.add('studied');
-        btn.innerText = 'Добавлено в изученные';
-        createUserWord({
+        btn.innerText = 'Удалить из изученных';
+        await createUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data._id}`,
           word: { difficulty: 'easy', optional: {} },
         });
+        await this.updatePage();
       } else {
         btn.classList.remove('studied');
         btn.innerText = 'Добавить в изученные';
-        deleteUserWord({
+        await deleteUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data._id}`,
         });
+        await this.updatePage();
       }
     } else {
       this.showModalWindow();
@@ -182,6 +198,14 @@ class Card {
     setTimeout(() => {
       document.body.removeChild(div);
     }, 2000);
+  }
+
+  updatePage() {
+    if (localStorageUtil.getChapter() === 6) {
+      cards.render('difficult');
+    } else {
+      cards.render('usual');
+    }
   }
 }
 

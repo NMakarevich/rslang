@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { pagesAmount, authorization } from '../consts';
+import { pagesAmount } from '../consts';
 import { cards } from './textbook';
 import { localStorageUtil } from './localStorageUtil';
 
@@ -67,7 +67,7 @@ class TextbookNavigation {
     });
 
     this.selectChapter.addEventListener('change', () => {
-      if (+this.selectChapter.value === 7 && authorization.authorized) {
+      if (+this.selectChapter.value === 7 && localStorageUtil.checkAuthorization()) {
         cards.render('difficult');
       }
       cards.group = +this.selectChapter.value - 1;

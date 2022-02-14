@@ -1,5 +1,5 @@
 import { IUser, ICards, createUserWordData } from './interfaces';
-import { baseURL, authorization } from './consts';
+import { baseURL } from './consts';
 import { localStorageUtil } from './textbook/localStorageUtil';
 
 export async function registryUser(user: IUser): Promise<Response> {
@@ -28,7 +28,7 @@ export async function signIn(user: IUser): Promise<Response> {
 
 export async function getWords(page: number, group: number): Promise<ICards[]> {
   let res: ICards[];
-  if (authorization.authorized) {
+  if (localStorageUtil.checkAuthorization()) {
     const { token } = localStorageUtil.getUserInfo();
     const { userId } = localStorageUtil.getUserInfo();
     const response: Response = await fetch(`${baseURL}/users/${userId}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20`, {

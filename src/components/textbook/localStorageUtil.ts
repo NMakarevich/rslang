@@ -1,4 +1,3 @@
-import { authorization } from '../consts';
 import { IUserInfo } from '../interfaces';
 
 export class LocalStorageUtil {
@@ -51,10 +50,9 @@ export class LocalStorageUtil {
   }
 
   checkAuthorization() {
-    const authorized = this.getUserInfo();
-    if (authorized !== '') {
-      authorization.authorized = true;
-    }
+    const data = localStorage.getItem('rslang-user');
+    if (data) return true;
+    return false;
   }
 }
 

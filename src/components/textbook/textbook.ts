@@ -3,7 +3,6 @@
 /* eslint-disable no-loop-func */
 
 import '../../sass/textbook.scss';
-import { authorization } from '../consts';
 import { ICards } from '../interfaces';
 import { getWords, getUserHardWords } from '../api';
 import { localStorageUtil } from './localStorageUtil';
@@ -57,7 +56,7 @@ export class Cards {
 
 export const cards = new Cards();
 
-if (localStorageUtil.getChapter() === 6 && authorization.authorized) {
+if (localStorageUtil.getChapter() === 6 && localStorageUtil.checkAuthorization()) {
   cards.render('difficult');
 } else {
   cards.render('usual');
