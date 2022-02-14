@@ -41,14 +41,14 @@ class Login {
     return div.innerHTML;
   }
 
-  signIn = async (event: Event) => {
+  async signIn(event: Event) {
     event.preventDefault();
     await signIn({
       email: this.email.value,
       password: this.password.value,
     })
       .then((response) => {
-        if (response.status === 403) {
+        if (response.status !== 200) {
           throw new Error('wrong email and/or password');
         }
         return response.json();
@@ -63,17 +63,13 @@ class Login {
         window.location.href = '/';
       })
       .catch(() => {
-        this.showErrorMessage();
+        const div = document.createElement('div');
+        div.classList.add('form__error');
+        div.innerHTML = 'Неверный email и/или пароль';
+        main.mainContainer.append(div);
+        setTimeout(() => div.remove(), 2000);
       });
-  };
-
-  showErrorMessage = () => {
-    const div = document.createElement('div');
-    div.classList.add('form__error');
-    div.innerHTML = 'Неверный email и/или пароль';
-    main.mainContainer.append(div);
-    setTimeout(() => div.remove(), 2000);
-  };
+  }
 
   eventListener() {
     main.mainContainer.querySelector('.main__form')?.addEventListener('submit', this.signIn);
