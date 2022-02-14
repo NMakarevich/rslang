@@ -1,8 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
-import { getWord, createUserWord, deleteUserWord } from '../api-requests';
-import { authorization, ICards } from './consts';
+import { getWord, createUserWord, deleteUserWord } from '../api';
+import { authorization } from '../consts';
+import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
 import { cards } from './textbook';
 

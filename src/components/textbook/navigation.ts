@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { pagesAmount, authorization } from './consts';
+import { pagesAmount, authorization } from '../consts';
 import { cards } from './textbook';
 import { localStorageUtil } from './localStorageUtil';
 

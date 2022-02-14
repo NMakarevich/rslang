@@ -1,4 +1,4 @@
-import { ISignIn } from '../../interfaces';
+import { ISignIn } from '../interfaces';
 import { signIn } from '../api';
 import main from '../main';
 

@@ -1,4 +1,5 @@
-import { authorization, IUserInfo } from './consts';
+import { authorization } from '../consts';
+import { IUserInfo } from '../interfaces';
 
 export class LocalStorageUtil {
   keyChapter: string;

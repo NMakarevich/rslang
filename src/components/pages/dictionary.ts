@@ -2,7 +2,7 @@ import main from '../main';
 import { cards } from '../textbook/textbook';
 import textbookNavigation from '../textbook/navigation';
 import { localStorageUtil } from '../textbook/localStorageUtil';
-import { authorization } from '../textbook/consts';
+import { authorization } from '../consts';
 import addUpButton from '../textbook/upButton';
 
 class Dictionary {

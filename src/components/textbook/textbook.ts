@@ -3,8 +3,9 @@
 /* eslint-disable no-loop-func */
 
 import '../../sass/textbook.scss';
-import { ICards, authorization } from './consts';
-import { getWords, getUserHardWords } from '../api-requests';
+import { authorization } from '../consts';
+import { ICards } from '../interfaces';
+import { getWords, getUserHardWords } from '../api';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
 
