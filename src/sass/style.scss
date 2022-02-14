@@ -22,7 +22,6 @@ body {
 
 .container {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -35,6 +34,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     justify-content: center;
+    flex-direction: column;
   }
 }
 
