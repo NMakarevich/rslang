@@ -34,6 +34,7 @@ class Header {
   logout = () => {
     localStorage.setItem('rslang-user', '');
     this.toggleUser({ detail: '' } as CustomEvent);
+    window.location.href = '#/';
   };
 
   toggleBurger = () => {
