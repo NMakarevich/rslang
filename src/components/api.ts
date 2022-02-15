@@ -66,6 +66,37 @@ export const createUserWord = async ({ userId, wordId, word }: createUserWordDat
   });
 };
 
+export const updateUserWord = async ({ userId, wordId, word }: createUserWordData) => {
+  const { token } = localStorageUtil.getUserInfo();
+  const res = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(word),
+  });
+  const data = await res.json();
+  console.log(data);
+};
+
+export const getUserWord = async (userId: string, wordId: string) => {
+  const { token } = localStorageUtil.getUserInfo();
+  const res = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await res.json();
+  console.log(data.optional);
+  return data.optional;
+};
+// getUserWord('6209086939a144001619fee7', '5e9f5ee35eb9e72bc21af4a0');
+
 export const deleteUserWord = async ({ userId, wordId }: createUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
   await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {

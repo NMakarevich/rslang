@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
-import { getWord, createUserWord, deleteUserWord } from '../api';
+import {
+  getWord, createUserWord, deleteUserWord, updateUserWord, getUserWord,
+} from '../api';
 import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
 import { cards } from './textbook';
@@ -29,6 +31,12 @@ class Card {
     if (localStorageUtil.checkAuthorization()) {
       identificator = this.data._id;
       options = 'Правильных ответов: 0, неправильных ответов: 0';
+      console.log(this.data.userWord);
+      if (this.data.userWord) {
+        options = `Правильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
+      } else {
+        options = 'Правильных ответов: 0, неправильных ответов: 0';
+      }
     }
     let typeOfWord = '';
     let difficultClass = '';
@@ -40,14 +48,12 @@ class Card {
       difficultClass = 'difficult';
       difficultButtonText = 'Удалить из сложных';
       typeOfWord = 'Сложное слово';
-      options = `Правильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
     }
 
     if (this.data.userWord?.difficulty === 'easy') {
       studiedClass = 'studied';
       studiedButtonText = 'Удалить из изученных';
       typeOfWord = 'Изученное слово';
-      options = `Правильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
     }
 
     this.wordCard.innerHTML = `
@@ -103,18 +109,21 @@ class Card {
       const btn = button;
       if (!btn.classList.contains('difficult')) {
         if (btn.nextElementSibling?.classList.contains('studied')) {
-          await deleteUserWord({
+          const optionalData = await getUserWord(this.userID, `${this.data._id}`);
+          await updateUserWord({
             userId: `${this.userID}`,
             wordId: `${this.data._id}`,
+            word: { difficulty: 'hard', optional: optionalData },
+          });
+        } else {
+          await createUserWord({
+            userId: `${this.userID}`,
+            wordId: `${this.data._id}`,
+            word: { difficulty: 'hard', optional: { answers: ' ' } },
           });
         }
         btn.classList.add('difficult');
         btn.innerText = 'Удалить из сложных';
-        await createUserWord({
-          userId: `${this.userID}`,
-          wordId: `${this.data._id}`,
-          word: { difficulty: 'hard', optional: { answers: ' ' } },
-        });
         await this.updatePage();
       } else {
         btn.classList.remove('difficult');
@@ -135,18 +144,21 @@ class Card {
       const btn = button;
       if (!btn.classList.contains('studied')) {
         if (btn.previousElementSibling?.classList.contains('difficult')) {
-          await deleteUserWord({
+          const optionalData = await getUserWord(this.userID, `${this.data._id}`);
+          await updateUserWord({
             userId: `${this.userID}`,
             wordId: `${this.data._id}`,
+            word: { difficulty: 'easy', optional: optionalData },
+          });
+        } else {
+          await createUserWord({
+            userId: `${this.userID}`,
+            wordId: `${this.data._id}`,
+            word: { difficulty: 'easy', optional: { answers: ' ' } },
           });
         }
         btn.classList.add('studied');
         btn.innerText = 'Удалить из изученных';
-        await createUserWord({
-          userId: `${this.userID}`,
-          wordId: `${this.data._id}`,
-          word: { difficulty: 'easy', optional: { answers: ' ' } },
-        });
         await this.updatePage();
       } else {
         btn.classList.remove('studied');
