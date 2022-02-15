@@ -6,6 +6,7 @@ export default function addUpButton() {
   document.body.appendChild(upButton);
   upButton.onclick = () => {
     window.scrollTo(window.pageXOffset, 0);
+    localStorage.setItem('scroll', '0');
   };
 
   window.addEventListener('scroll', () => {

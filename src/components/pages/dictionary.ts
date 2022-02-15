@@ -2,8 +2,8 @@ import main from '../main';
 import { cards } from '../textbook/textbook';
 import textbookNavigation from '../textbook/navigation';
 import { localStorageUtil } from '../textbook/localStorageUtil';
-import { authorization } from '../textbook/consts';
 import addUpButton from '../textbook/upButton';
+import { chapterDifficult } from '../consts';
 
 class Dictionary {
   render = async () => {
@@ -17,7 +17,8 @@ class Dictionary {
       </div>
     </div>`;
     textbookNavigation.render();
-    if (localStorageUtil.getChapter() === 6 && authorization.authorized) {
+    if (localStorageUtil.getChapter() === chapterDifficult
+    && localStorageUtil.checkAuthorization()) {
       cards.render('difficult');
     } else {
       cards.render('usual');
