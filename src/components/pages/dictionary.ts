@@ -3,6 +3,7 @@ import { cards } from '../textbook/textbook';
 import textbookNavigation from '../textbook/navigation';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 import addUpButton from '../textbook/upButton';
+import { chapterDifficult } from '../consts';
 
 class Dictionary {
   render = async () => {
@@ -16,7 +17,8 @@ class Dictionary {
       </div>
     </div>`;
     textbookNavigation.render();
-    if (localStorageUtil.getChapter() === 6 && localStorageUtil.checkAuthorization()) {
+    if (localStorageUtil.getChapter() === chapterDifficult
+    && localStorageUtil.checkAuthorization()) {
       cards.render('difficult');
     } else {
       cards.render('usual');

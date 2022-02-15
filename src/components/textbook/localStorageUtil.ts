@@ -58,4 +58,3 @@ export class LocalStorageUtil {
 
 export const localStorageUtil = new LocalStorageUtil();
 localStorageUtil.checkAuthorization();
-// localStorage.clear();

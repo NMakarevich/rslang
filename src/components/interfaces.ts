@@ -36,7 +36,9 @@ export type ICards = {
   textExampleTranslate: string;
   userWord?: {
     difficulty: string,
-    optional: object
+    optional: {
+      answers: string,
+    }
   };
   listProps: Array<Object>;
 };

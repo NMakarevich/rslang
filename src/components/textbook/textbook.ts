@@ -7,6 +7,7 @@ import { ICards } from '../interfaces';
 import { getWords, getUserHardWords } from '../api';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
+import { chapterDifficult } from '../consts';
 
 export class Cards {
   page: number;
@@ -56,7 +57,7 @@ export class Cards {
 
 export const cards = new Cards();
 
-if (localStorageUtil.getChapter() === 6 && localStorageUtil.checkAuthorization()) {
+if (localStorageUtil.getChapter() === chapterDifficult && localStorageUtil.checkAuthorization()) {
   cards.render('difficult');
 } else {
   cards.render('usual');

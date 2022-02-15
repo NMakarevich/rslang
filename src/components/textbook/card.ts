@@ -5,6 +5,7 @@ import { getWord, createUserWord, deleteUserWord } from '../api';
 import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
 import { cards } from './textbook';
+import { chapterDifficult } from '../consts';
 
 let isPlay = false;
 
@@ -24,8 +25,10 @@ class Card {
   render(): HTMLElement {
     this.wordCard.classList.add('word-card');
     let identificator = this.data.id;
+    let options = '';
     if (localStorageUtil.checkAuthorization()) {
       identificator = this.data._id;
+      options = 'Правильных ответов: 0, неправильных ответов: 0';
     }
     let typeOfWord = '';
     let difficultClass = '';
@@ -37,12 +40,14 @@ class Card {
       difficultClass = 'difficult';
       difficultButtonText = 'Удалить из сложных';
       typeOfWord = 'Сложное слово';
+      options = `Правильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
     }
 
     if (this.data.userWord?.difficulty === 'easy') {
       studiedClass = 'studied';
       studiedButtonText = 'Удалить из изученных';
       typeOfWord = 'Изученное слово';
+      options = `Правильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
     }
 
     this.wordCard.innerHTML = `
@@ -64,7 +69,7 @@ class Card {
         <button type="button" class="add-to-difficult ${difficultClass}" id="${identificator}">${difficultButtonText}</button>
         <button type="button" class="add-to-studied ${studiedClass}" id="${identificator}">${studiedButtonText}</button>
         </div>
-        <div>Правильных ответов: 0, неправильных ответов: 0</div>
+        ${options}
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
     this.eventListeners();
@@ -108,7 +113,7 @@ class Card {
         await createUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data._id}`,
-          word: { difficulty: 'hard', optional: {} },
+          word: { difficulty: 'hard', optional: { answers: ' ' } },
         });
         await this.updatePage();
       } else {
@@ -140,7 +145,7 @@ class Card {
         await createUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data._id}`,
-          word: { difficulty: 'easy', optional: {} },
+          word: { difficulty: 'easy', optional: { answers: ' ' } },
         });
         await this.updatePage();
       } else {
@@ -201,7 +206,7 @@ class Card {
   }
 
   updatePage() {
-    if (localStorageUtil.getChapter() === 6) {
+    if (localStorageUtil.getChapter() === chapterDifficult) {
       cards.render('difficult');
     } else {
       cards.render('usual');
