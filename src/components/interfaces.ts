@@ -1,9 +1,22 @@
-export const baseUrl = 'https://rslang-team32.herokuapp.com';
-export const pagesAmount = 30;
+export interface IUser {
+  name?: string;
+  email: string;
+  password: string;
+}
 
-export const authorization = {
-  authorized: false,
-};
+export interface IRegistry {
+  email: string;
+  id: string;
+  name: string;
+}
+
+export interface ISignIn {
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name: string;
+}
 
 export type ICards = {
   audio: string;
@@ -23,17 +36,11 @@ export type ICards = {
   textExampleTranslate: string;
   userWord?: {
     difficulty: string,
-    optional: object
+    optional: {
+      answers: string,
+    }
   };
   listProps: Array<Object>;
-};
-
-export type IUserInfo = {
-  message: string,
-  token: string,
-  refreshToken: string,
-  userId: string,
-  name: string
 };
 
 export type createUserWordData = {

@@ -1,4 +1,4 @@
-import { authorization, IUserInfo } from './consts';
+import { ISignIn } from '../interfaces';
 
 export class LocalStorageUtil {
   keyChapter: string;
@@ -45,18 +45,16 @@ export class LocalStorageUtil {
     return '';
   }
 
-  putUserInfo(info: IUserInfo) {
+  putUserInfo(info: ISignIn) {
     localStorage.setItem(this.keyUserInfo, JSON.stringify(info));
   }
 
   checkAuthorization() {
-    const authorized = this.getUserInfo();
-    if (authorized !== '') {
-      authorization.authorized = true;
-    }
+    const data = localStorage.getItem('rslang-user');
+    if (data) return true;
+    return false;
   }
 }
 
 export const localStorageUtil = new LocalStorageUtil();
 localStorageUtil.checkAuthorization();
-// localStorage.clear();
