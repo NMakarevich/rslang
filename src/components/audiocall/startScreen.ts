@@ -1,6 +1,7 @@
 import { chapterDifficult, pagesAmount } from '../consts';
 import { IDictionary } from '../interfaces';
 import main from '../main';
+import GameScreen from './gameScreen';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 
 class StartScreen {
@@ -50,6 +51,8 @@ class StartScreen {
       this.dictionary.chapter = localStorageUtil.getChapter();
       this.dictionary.page = localStorageUtil.getPage();
     }
+    const gameScreen = new GameScreen(this.dictionary);
+    this.container.replaceWith(gameScreen.render());
   };
 
   addOptions(): string {
