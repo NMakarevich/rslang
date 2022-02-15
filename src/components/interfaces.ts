@@ -35,16 +35,21 @@ export type ICards = {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   userWord?: {
-    difficulty: string,
+    difficulty: string;
     optional: {
-      answers: string,
-    }
+      answers: string;
+    };
   };
   listProps: Array<Object>;
 };
 
 export type createUserWordData = {
-  userId: string,
-  wordId: string,
-  word?: object
+  userId: string;
+  wordId: string;
+  word?: object;
 };
+
+export interface IDictionary {
+  chapter: number;
+  page: number;
+}
