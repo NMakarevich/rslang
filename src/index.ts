@@ -11,3 +11,11 @@ window.addEventListener('load', () => {
   const router = new Router();
   router.run();
 });
+
+/* document.addEventListener('click', () => {
+  console.log(window.pageYOffset);
+  localStorage.setItem('scroll', `${window.pageYOffset}`);
+  window.pageYOffset = 5000;
+  window.scrollTo(10, 5000);
+})  */
+

@@ -25,20 +25,11 @@ class Card {
   }
 
   render(): HTMLElement {
+    this.checkScrollPosition();
     this.wordCard.classList.add('word-card');
-    let identificator = this.data.id;
-    let options = '';
-    if (localStorageUtil.checkAuthorization()) {
-      identificator = this.data._id;
-      options = 'Правильных ответов: 0, неправильных ответов: 0';
-      console.log(this.data.userWord);
-      if (this.data.userWord) {
-        options = `Правильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильных ответов: ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
-      } else {
-        options = 'Правильных ответов: 0, неправильных ответов: 0';
-      }
-    }
+
     let typeOfWord = '';
+    let typeOfWordСolor = '';
     let difficultClass = '';
     let difficultButtonText = 'Добавить в сложные';
     let studiedClass = '';
@@ -48,17 +39,31 @@ class Card {
       difficultClass = 'difficult';
       difficultButtonText = 'Удалить из сложных';
       typeOfWord = 'Сложное слово';
+      typeOfWordСolor = 'red';
     }
 
     if (this.data.userWord?.difficulty === 'easy') {
       studiedClass = 'studied';
       studiedButtonText = 'Удалить из изученных';
       typeOfWord = 'Изученное слово';
+      typeOfWordСolor = 'green';
+    }
+
+    let identificator = this.data.id;
+    let options = '';
+    if (localStorageUtil.checkAuthorization()) {
+      identificator = this.data._id;
+      if (this.data.userWord) {
+        // исправить когда определимся, каким способом записываем в базу ответы пользователя
+        options = `Ответы: правильные - ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильные - ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
+      } else {
+        options = 'Ответы: правильные - 0, неправильные - 0';
+      }
     }
 
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
-       <div>${typeOfWord}</div>
+       <div style="color: ${typeOfWordСolor}" class=${typeOfWordСolor}>${typeOfWord}</div>
         <div class="word-wrapper">
             <button type="button" class="sound" id="${identificator}"></button>
             <span class="word">${this.data.word}</span>
@@ -98,8 +103,10 @@ class Card {
     this.soundButton.addEventListener('click', this.playAudio);
     this.difficultButton.addEventListener('click', () => {
       this.addToDifficult(this.difficultButton);
+      localStorage.setItem('scroll', `${window.pageYOffset}`);
     });
     this.studiedButton.addEventListener('click', () => {
+      localStorage.setItem('scroll', `${window.pageYOffset}`);
       this.addToStudied(this.studiedButton);
     });
   }
@@ -222,6 +229,13 @@ class Card {
       cards.render('difficult');
     } else {
       cards.render('usual');
+    }
+  }
+
+  checkScrollPosition() {
+    const scrollPosition = localStorage.getItem('scroll');
+    if (scrollPosition) {
+      window.scrollTo(0, +scrollPosition);
     }
   }
 }
