@@ -43,14 +43,6 @@ export type ICards = {
   listProps: Array<Object>;
 };
 
-export type IUserInfo = {
-  message: string,
-  token: string,
-  refreshToken: string,
-  userId: string,
-  name: string
-};
-
 export type createUserWordData = {
   userId: string,
   wordId: string,

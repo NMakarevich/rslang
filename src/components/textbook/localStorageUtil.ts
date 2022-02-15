@@ -1,4 +1,4 @@
-import { IUserInfo } from '../interfaces';
+import { ISignIn } from '../interfaces';
 
 export class LocalStorageUtil {
   keyChapter: string;
@@ -45,7 +45,7 @@ export class LocalStorageUtil {
     return '';
   }
 
-  putUserInfo(info: IUserInfo) {
+  putUserInfo(info: ISignIn) {
     localStorage.setItem(this.keyUserInfo, JSON.stringify(info));
   }
 
