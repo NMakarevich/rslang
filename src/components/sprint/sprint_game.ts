@@ -56,7 +56,7 @@ class SprintGame {
     }
     let word: HTMLElement;
     const translation = Math.ceil(Math.random() * 10 + 1);
-    console.log('ffff' + translation);
+    console.log(`ffff + ${translation}`);
 
     if (data[0]) {
       word = new Word().draw(data[0], data[translation]!);

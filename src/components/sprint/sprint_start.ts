@@ -23,8 +23,8 @@ class SprintStart {
     sprintStartTitle.innerHTML = 'Спринт';
     const sprintStartDescription = document.createElement('p');
     sprintStartDescription.classList.add('sprint__start__description');
-    sprintStartDescription.innerHTML =
-      'Тренирует навык быстрого перевода с английского языка на русский. Вам нужно выбрать соответствует ли перевод предложенному слову';
+    sprintStartDescription.innerHTML = `Тренирует навык быстрого перевода с английского языка на русский. 
+      Вам нужно выбрать соответствует ли перевод предложенному слову`;
     const sprintCat = document.createElement('select');
     sprintCat.classList.add('sprint__cat');
     sprintCat.name = 'sprint__cat';
@@ -78,7 +78,6 @@ class SprintStart {
     // sprintExit.append(sprintExitImg);
     // sprintContainer.append(sprintExit, sprintStart);
     return sprintContainer;
-    // return sprintContainer;
   }
 }
 
