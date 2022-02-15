@@ -128,5 +128,6 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
     },
   });
   const res = await response.json();
+  // console.log(res);
   return res[0].paginatedResults;
 }
