@@ -8,15 +8,15 @@ class TextbookNavigation {
     const html = `<div class="textbook-header">
                     <div class="controls">
                       <select id="select-chapter">
-                        <option value="1"selected>Раздел 1</option>
+                        <option value="1">Раздел 1</option>
                         <option value="2">Раздел 2</option>
                         <option value="3">Раздел 3</option>
                         <option value="4">Раздел 4</option>
                         <option value="5">Раздел 5</option>
                         <option value="6">Раздел 6</option>
-                        <option value="7">Сложные слова</option>
+                        ${this.checkIsAuthorised()}
                       </select>
-                      <div class="navigation">
+                      <div class="navigation ${this.isHidden()}">
                         <button id="back-btn">Назад</button>
                         ${this.renderSelectPage()}
                         <button id="next-btn">Вперед</button>
@@ -59,26 +59,38 @@ class TextbookNavigation {
     return document.querySelector('#next-btn') as HTMLButtonElement;
   }
 
+  get chapterNavigation(): HTMLElement {
+    return document.querySelector('.navigation') as HTMLElement;
+  }
+
   eventListeners() {
+
+    this.selectChapter.addEventListener('change', () => {
+      localStorage.setItem('scroll', '0');
+  
+      if (+this.selectChapter.value - 1 === chapterDifficult
+        && localStorageUtil.checkAuthorization()) {
+          this.chapterNavigation.classList.add('hidden');
+          cards.render('difficult');
+      } else {
+        if (this.chapterNavigation.classList.contains('hidden')){
+          this.chapterNavigation.classList.remove('hidden');
+        }
+      }
+      cards.group = +this.selectChapter.value - 1;
+      cards.page = 0;
+      this.selectPage.value = '1';
+
+      cards.render('usual');
+      localStorageUtil.putChapter(`${cards.group}`);
+      localStorageUtil.putPage('0');
+    });
+
     this.selectPage.addEventListener('change', () => {
       localStorage.setItem('scroll', '0');
       cards.page = +this.selectPage.value - 1;
       cards.render('usual');
       localStorageUtil.putPage(`${cards.page}`);
-    });
-
-    this.selectChapter.addEventListener('change', () => {
-      localStorage.setItem('scroll', '0');
-      if (+this.selectChapter.value - 1 === chapterDifficult
-        && localStorageUtil.checkAuthorization()) {
-        cards.render('difficult');
-      }
-      cards.group = +this.selectChapter.value - 1;
-      cards.page = 0;
-      this.selectPage.value = '1';
-      cards.render('usual');
-      localStorageUtil.putChapter(`${cards.group}`);
-      localStorageUtil.putPage('0');
     });
 
     this.backBTN.addEventListener('click', () => {
@@ -100,6 +112,20 @@ class TextbookNavigation {
         localStorageUtil.putPage(`${cards.page}`);
       }
     });
+  }
+  
+  checkIsAuthorised() {
+    if (localStorageUtil.checkAuthorization()){
+      return '<option value="7">Сложные слова</option>'
+    }
+    return ''
+  }
+  
+  isHidden() {
+    if (localStorageUtil.getChapter() === 6){
+      return 'hidden'
+    }
+    return ''
   }
 }
 
