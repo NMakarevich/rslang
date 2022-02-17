@@ -53,3 +53,13 @@ export interface IDictionary {
   chapter: number;
   page: number;
 }
+
+export interface IQuestion {
+  word: ICards;
+  answers: string[];
+}
+
+export interface ICustomEvent {
+  word: ICards;
+  correct: boolean;
+}
