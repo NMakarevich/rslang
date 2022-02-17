@@ -6,7 +6,6 @@ class WordResult {
     sprintResultItem.classList.add('sprint__result__item');
     const sprinteRsultItemVoice = document.createElement('div');
     sprinteRsultItemVoice.classList.add('sprint__result__item__voice');
-    // sprinteRsultItemVoice.src = './assets/svg/volume.svg';
     const sprintResultItemText = document.createElement('div');
     sprintResultItemText.classList.add('sprint__result__item__text');
     sprintResultItemText.innerHTML = `${word.word} - ${word.wordTranslate}`;
