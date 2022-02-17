@@ -1,5 +1,4 @@
 // import { getUserStudiedWords } from '../api-requests';
-import { authorization } from '../textbook/consts';
 import { getWords1, pageWords } from './function';
 import SprintGame from './sprint_game';
 import { localStorageUtil } from '../textbook/localStorageUtil';
@@ -23,7 +22,8 @@ class SprintStart {
     sprintStartTitle.innerHTML = 'Спринт';
     const sprintStartDescription = document.createElement('p');
     sprintStartDescription.classList.add('sprint__start__description');
-    sprintStartDescription.innerHTML = 'Тренирует навык быстрого перевода с английского языка на русский. Вам нужно выбрать соответствует ли перевод предложенному слову';
+    sprintStartDescription.innerHTML =
+      'Тренирует навык быстрого перевода с английского языка на русский. Вам нужно выбрать соответствует ли перевод предложенному слову';
     const sprintCat = document.createElement('select');
     sprintCat.classList.add('sprint__cat');
     sprintCat.name = 'sprint__cat';
@@ -53,7 +53,7 @@ class SprintStart {
       pageWords.group = localStorageUtil.getChapter();
       pageWords.page = localStorageUtil.getPage();
       console.log(pageWords);
-      if (authorization) {
+      if (localStorageUtil.checkAuthorization()) {
         arr = getWords1(pageWords);
         console.log(arr);
         sprintContainer.replaceWith(new SprintGame().draw(await arr));
