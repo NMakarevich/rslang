@@ -1,5 +1,5 @@
 import {
-  addAnswerYes, audio, changeWord, setTimer, shuffle, addWords,
+  addAnswerYes, audio, changeWord, setTimer, /* shuffle, */ addWords, dailyStat,
 } from './function';
 
 import { baseUrl } from '../textbook/consts';
@@ -8,16 +8,17 @@ import Word from './word';
 
 class SprintGame {
   draw(data: Array<IWord>) {
-    let arrWords = shuffle(data);
+    let arrWords = data;
+    // console.log(arrWords);
     let count: number = 0;
     const right: Array<IWord> = [];
     const wrong: Array<IWord> = [];
     const sprintContainer = document.createElement('div');
     sprintContainer.classList.add('sprint__container');
-    const sprintExit = document.createElement('div');
-    sprintExit.classList.add('sprint__exit');
-    const sprintExitImg = document.createElement('img');
-    sprintExitImg.classList.add('sprint__exit_img');
+    // const sprintExit = document.createElement('div');
+    // sprintExit.classList.add('sprint__exit');
+    // const sprintExitImg = document.createElement('img');
+    // sprintExitImg.classList.add('sprint__exit_img');
     const sprintLevel = document.createElement('div');
     sprintLevel.classList.add('sprint__level');
     const sprintGame = document.createElement('div');
@@ -58,7 +59,7 @@ class SprintGame {
     let word: HTMLElement;
     const translation = Math.ceil(Math.random() * 19);
     if (arrWords[0]) {
-      word = new Word().draw(arrWords[0], data[translation]!);
+      word = new Word().draw(arrWords[0], arrWords[translation]!);
       audio.src = `${baseUrl}/${arrWords[0].audio}`;
     } else word = document.createElement('div');
     let x: boolean;
@@ -88,8 +89,12 @@ class SprintGame {
           point = 0;
         } point += 1;
         addAnswerYes(right, point, arrWords[count]);
-      } else wrong.push(arrWords[count]!);
+      } else {
+        dailyStat('sprint', 'wrong', arrWords[count]!);
+        wrong.push(arrWords[count]!);
+      }
       count += 1;
+      // console.log(`count ${count}`);
       if (count === arrWords.length - 2) {
         arrWords = await addWords(arrWords);
       }
@@ -101,8 +106,14 @@ class SprintGame {
           point = 0;
         } point += 1;
         addAnswerYes(right, point, arrWords[count]);
-      } else wrong.push(arrWords[count]!);
+      } else {
+        dailyStat('sprint', 'wrong', arrWords[count]!);
+        wrong.push(arrWords[count]!);
+      }
+      // console.log(arrWords[count]);
+      // console.log(wrong);
       count += 1;
+      // console.log(`count ${count}`);
       if (count === arrWords.length - 2) {
         arrWords = await addWords(arrWords);
       }
@@ -133,12 +144,12 @@ class SprintGame {
     sprintGameContainer.appendChild(sprintGameChoise);
     sprintGame.appendChild(sprintGameHead);
     sprintGame.appendChild(sprintGameContainer);
-    sprintExit.appendChild(sprintExitImg);
-    sprintContainer.appendChild(sprintExit);
+    // sprintExit.appendChild(sprintExitImg);
+    // sprintContainer.appendChild(sprintExit);
     sprintContainer.appendChild(sprintLevel);
     sprintContainer.appendChild(sprintGame);
     document.addEventListener('keydown', async (event) => {
-      if (event.key === 'ArrowRight') {
+      if (event.key === 'ArrowLeft') {
         if (x) {
           if (point === 3) {
             point = 0;
@@ -151,7 +162,7 @@ class SprintGame {
         }
         x = changeWord(count, arrWords);
       }
-      if (event.key === 'ArrowLeft') {
+      if (event.key === 'ArrowRight') {
         if (!x) {
           if (point === 3) {
             point = 0;

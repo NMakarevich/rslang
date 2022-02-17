@@ -1,15 +1,19 @@
-import { getWords, pageWords } from './function';
+// import { getUserStudiedWords } from '../api-requests';
+import { authorization } from '../textbook/consts';
+import { getWords1, pageWords } from './function';
 import SprintGame from './sprint_game';
+import { localStorageUtil } from '../textbook/localStorageUtil';
 
 class SprintStart {
   draw() {
+    let arr;
     const CAT_QUANTITY = 6;
     const sprintContainer = document.createElement('div');
     sprintContainer.classList.add('sprint__container');
-    const sprintExit = document.createElement('div');
-    sprintExit.classList.add('sprint__exit');
-    const sprintExitImg = document.createElement('img');
-    sprintExitImg.classList.add('sprint__exit_img');
+    // const sprintExit = document.createElement('div');
+    // sprintExit.classList.add('sprint__exit');
+    // const sprintExitImg = document.createElement('img');
+    // sprintExitImg.classList.add('sprint__exit_img');
     const sprintStart = document.createElement('div');
     sprintStart.classList.add('sprint__start');
     const sptintStartContainer = document.createElement('div');
@@ -31,21 +35,42 @@ class SprintStart {
       option.innerHTML = `Уровень ${i + 1}`;
       sprintCat.appendChild(option);
     }
+    sprintCat.onchange = () => {
+      const cat = String(Number(sprintCat.value) - 1);
+      localStorageUtil.putChapter(cat);
+      pageWords.group = localStorageUtil.getChapter();
+      localStorageUtil.putPage('0');
+      pageWords.page = localStorageUtil.getPage();
+      console.log(pageWords);
+      arr = getWords1(pageWords);
+      // sprintContainer.replaceWith(new SprintGame().draw(await arr));
+    };
     const sprintStartBtn = document.createElement('button');
     sprintStartBtn.classList.add('sprint__start__btn');
     sprintStartBtn.innerHTML = 'Начать';
     sprintStartBtn.onclick = async () => {
-      pageWords.group = Number(sprintCat.value) - 1;
-      const arr = getWords(pageWords);
-      sprintContainer.replaceWith(new SprintGame().draw(await arr));
+      console.log(pageWords);
+      pageWords.group = localStorageUtil.getChapter();
+      pageWords.page = localStorageUtil.getPage();
+      console.log(pageWords);
+      if (authorization) {
+        arr = getWords1(pageWords);
+        console.log(arr);
+        sprintContainer.replaceWith(new SprintGame().draw(await arr));
+      } else {
+        pageWords.group = Number(sprintCat.value) - 1;
+        arr = getWords1(pageWords);
+        console.log(arr);
+        sprintContainer.replaceWith(new SprintGame().draw(await arr));
+      }
     };
     sptintStartContainer.appendChild(sprintStartTitle);
     sptintStartContainer.appendChild(sprintStartDescription);
     sptintStartContainer.appendChild(sprintCat);
     sptintStartContainer.appendChild(sprintStartBtn);
     sprintStart.appendChild(sptintStartContainer);
-    sprintExit.appendChild(sprintExitImg);
-    sprintContainer.appendChild(sprintExit);
+    // sprintExit.appendChild(sprintExitImg);
+    // sprintContainer.appendChild(sprintExit);
     sprintContainer.appendChild(sprintStart);
     sptintStartContainer.append(sprintStartTitle, sprintStartDescription);
     sptintStartContainer.append(sprintCat, sprintStartBtn);
