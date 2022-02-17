@@ -16,8 +16,9 @@ class Login {
   }
 
   render = () => {
+    main.main.style.backgroundColor = '#d373f3';
     main.mainContainer.innerHTML = `
-    <div class='main__login'>
+    <div class='main__login content-wrapper'>
       <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registration'>Регистрация</a></h2>
       <form class='main__form'>
         ${this.insertInputs()}
