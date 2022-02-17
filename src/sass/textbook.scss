@@ -5,7 +5,6 @@ html {
 body,
 p,
 h1,
-h2,
 h3 {
   margin: 0;
   padding: 0;
@@ -13,9 +12,11 @@ h3 {
   font-size: 17px;
 }
 .textbook {
+  font-family: 'Roboto', sans-serif;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  color: #560372;
 }
 
 #textbook-header {
@@ -25,8 +26,9 @@ h3 {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background-color: #b3b3b3;
-  border: 1px solid black;
+  background-color: #d373f3;
+  border: 1px solid #aa06e0;
+  border-radius: 10px;
 
   * {
     font-size: 17px;
@@ -48,6 +50,7 @@ h3 {
   * {
     height: 33px;
     width: 80px;
+    font-family: 'Roboto', sans-serif;
   }
   @media screen and (max-width: 910px) {
     margin-left: 10px;
@@ -68,11 +71,13 @@ h3 {
   }
 }
 .game {
+  font-family: 'Roboto', sans-serif;
   display: flex;
   gap: 10px;
   margin: 0 10px 5px 0;
   &__link {
-    width: 160px;
+    font-family: 'Roboto', sans-serif;
+    width: 170px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -81,6 +86,7 @@ h3 {
     border: 1px solid black;
     color: black;
     text-decoration: none;
+    background-color: #ffffff;
   }
   @media screen and (max-width: 700px) {
     margin: 0 0 5px 10px;
@@ -101,7 +107,7 @@ max-width: 100%;
   display: flex;
   width: 100%;
   height: 290px;
-  border: 1px solid black;
+  border: 1px solid #400255;
   margin: 10px 0;
   flex-direction: row;
   justify-content: space-between;
@@ -157,13 +163,16 @@ max-width: 100%;
   font-weight: bold;
 }
 .word-transcription {
-  color: grey;
+  color: #aa06e0;
 }
 
 .button-wrapper {
   display: flex;
   gap: 10px;
   * {
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid #400255;
+    border-radius: 10px;
     width: 50%;
     height: 30px;
     font-size: 14px;
@@ -177,13 +186,19 @@ max-width: 100%;
       width: 100%;
     }
   }
+  .difficult {
+    background-color: rgb(238, 54, 54);
+  }
+  .studied {
+    background-color: #d373f3;
+  }
 }
 .sound {
   width: 40px;
   height: 40px;
-  border: 2px solid #ffffff;
   background-image: url("../assets/svg/sound.svg");
-  border-radius: 100%;
+  background-color: #fff;
+  border: none;
   background-repeat: no-repeat;
   object-fit: cover;
   cursor: pointer;
@@ -191,7 +206,6 @@ max-width: 100%;
   &.active {
     transition: 0.5s;
     transform: scale(1.3);
-    border: 2px solid #07d400;
     z-index: 0;
   }
 }
@@ -233,12 +247,6 @@ max-width: 100%;
   }
 }
 
-.difficult {
-  background-color: red;
-}
-.studied {
-  background-color: green;
-}
 .hidden {
   display: none;
 }

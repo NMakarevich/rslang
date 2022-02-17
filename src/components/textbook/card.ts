@@ -46,7 +46,7 @@ class Card {
       studiedClass = 'studied';
       studiedButtonText = 'Удалить из изученных';
       typeOfWord = 'Изученное слово';
-      typeOfWordСolor = 'green';
+      typeOfWordСolor = '#d373f3';
     }
 
     let identificator = this.data.id;
