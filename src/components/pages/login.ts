@@ -16,8 +16,11 @@ class Login {
   }
 
   render = () => {
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     main.mainContainer.innerHTML = `
-    <div class='main__login'>
+    <div class='main__login content-wrapper'>
       <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registration'>Регистрация</a></h2>
       <form class='main__form'>
         ${this.insertInputs()}
