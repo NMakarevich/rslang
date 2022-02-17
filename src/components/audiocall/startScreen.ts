@@ -28,8 +28,10 @@ class StartScreen {
         Выбрать слово можно, кликнув по нему или нажав цифру на клавиатуре, 
         соответствующую выбранному слову
       </p>
-      <select class="audiocall__difficult" ${this.isFromDictionary ? 'hidden' : ''}>${this.addOptions()}</select>
-      <button type="button" class="audiocall__start">Начать</button>
+      <div class="audiocall__controlls">
+        <select class="audiocall__difficult" ${this.isFromDictionary ? 'hidden' : ''}>${this.addOptions()}</select>
+        <button type="button" class="audiocall__start">Начать</button>
+      </div>
     `;
     this.startButton.addEventListener('click', this.startGame);
     return this.container;
@@ -43,7 +45,7 @@ class StartScreen {
     return this.container.querySelector('.audiocall__start') as HTMLButtonElement;
   }
 
-  startGame = () => {
+  startGame = async () => {
     if (!this.isFromDictionary) {
       this.dictionary.chapter = Number(this.select.value);
       this.dictionary.page = Math.round(Math.random() * (pagesAmount - 1));
@@ -52,7 +54,7 @@ class StartScreen {
       this.dictionary.page = localStorageUtil.getPage();
     }
     const gameScreen = new GameScreen(this.dictionary);
-    this.container.replaceWith(gameScreen.render());
+    this.container.replaceWith(await gameScreen.render());
   };
 
   addOptions(): string {
