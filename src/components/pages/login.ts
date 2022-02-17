@@ -16,7 +16,9 @@ class Login {
   }
 
   render = () => {
-    main.main.style.backgroundColor = '#d373f3';
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     main.mainContainer.innerHTML = `
     <div class='main__login content-wrapper'>
       <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registration'>Регистрация</a></h2>

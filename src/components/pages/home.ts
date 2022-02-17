@@ -2,7 +2,6 @@ import main from '../main';
 
 const home = {
   render: () => {
-    main.main.style.backgroundColor = '#d373f3';
     main.mainContainer.innerHTML = `<div class="home-container">
                                       <h2 class="title">Улучшай свой английский вместе с <span class="rslang">RSLang</span>!</h2>
                                       <div class="list-title">Здесь ты найдешь:</div>

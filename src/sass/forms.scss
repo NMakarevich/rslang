@@ -28,7 +28,11 @@
           font-size: 25px;
         }
       }
-      &:-webkit-autofill:focus, :-webkit-autofill {
+
+      &:-webkit-writing-mode {
+          color: #9900CC;
+      }
+      &:-webkit-autofill:focus {
         -webkit-text-fill-color: #9900CC;
         font-size: 25px;
       }
@@ -62,8 +66,10 @@
     }
   }
   .form__error {
+    font-family: 'Neucha', cursive;
     margin-top: 5px;
-    color: red;
+    color: #9900CC;
+    font-size: 20px;
   }
 }
 .content-wrapper{
