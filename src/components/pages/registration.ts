@@ -1,8 +1,8 @@
 import main from '../main';
 import Login from './login';
-import { registryUser } from '../../components/api';
+import { registrationUser } from '../api';
 
-class Registry extends Login {
+class Registration extends Login {
   name: HTMLInputElement;
 
   constructor() {
@@ -11,8 +11,11 @@ class Registry extends Login {
   }
 
   override render = () => {
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     main.mainContainer.innerHTML = `
-    <div class='main__registry'>
+    <div class='main__registration content-wrapper'>
       <h2 сlass='main__title'><a class='main__title-link' href='#/login'>Вход</a> / Регистрация</h2>
       <form class='main__form'>
         ${this.insertInputs()}
@@ -34,19 +37,19 @@ class Registry extends Login {
     return div.innerHTML;
   }
 
-  async registry(event: Event) {
+  async registration(event: Event) {
     event.preventDefault();
-    await registryUser({
+    await registrationUser({
       name: this.name.value,
       email: this.email.value,
       password: this.password.value,
     });
-    location.href = '#/login';
+    window.location.href = '#/login';
   }
 
   override eventListener() {
-    main.mainContainer.querySelector('.main__form')?.addEventListener('submit', this.registry);
+    main.mainContainer.querySelector('.main__form')?.addEventListener('submit', this.registration);
   }
 }
 
-export default Registry;
+export default Registration;

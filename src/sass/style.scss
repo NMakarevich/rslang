@@ -4,6 +4,7 @@
 @import 'games';
 @import 'team';
 @import 'sprint';
+@import 'main-page';
 
 * {
   box-sizing: border-box;
@@ -29,15 +30,18 @@ body {
 }
 
 .main {
+  background-color: #d373f3;
   flex: 1;
   .container {
     max-width: 1200px;
     margin: 0 auto;
     justify-content: center;
+    flex-direction: column;
+  }
+  &.bg-white {
+    background-color: #ffffff;
   }
 }
-
-
 
 .nav__list {
   margin: 0;

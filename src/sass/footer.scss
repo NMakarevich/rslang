@@ -1,4 +1,8 @@
 .footer {
+  background-color: #d373f3;
+  font-family: 'Neucha', cursive;
+  color: white;
+  font-size: 18px;
   width: 100%;
   min-height: 80px;
   .container {
@@ -14,6 +18,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    filter: brightness(0) invert(1);
   }
   .nav {
     &__list {
@@ -22,8 +27,22 @@
       list-style: none;
     }
     &__link {
-      color: black;
       text-decoration: none;
+      position: relative;
+      padding-left: 25px;
+      color: white;
+      text-decoration: none;
+      &::before {
+        position: absolute;
+        left: 1px;
+        content: '';
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-image: url('../assets/svg/git.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
     }
   }
 }

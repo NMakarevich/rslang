@@ -1,4 +1,4 @@
-import { ISignIn } from '../../interfaces';
+import { ISignIn } from '../interfaces';
 import { signIn } from '../api';
 import main from '../main';
 
@@ -16,9 +16,12 @@ class Login {
   }
 
   render = () => {
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     main.mainContainer.innerHTML = `
-    <div class='main__login'>
-      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registry'>Регистрация</a></h2>
+    <div class='main__login content-wrapper'>
+      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registration'>Регистрация</a></h2>
       <form class='main__form'>
         ${this.insertInputs()}
       </form>
@@ -48,30 +51,27 @@ class Login {
       password: this.password.value,
     })
       .then((response) => {
-        if (response.status === 403) {
+        if (response.status !== 200) {
           throw new Error('wrong email and/or password');
         }
         return response.json();
       })
       .then((data: ISignIn) => {
-        localStorage.setItem(`rslang-user`, JSON.stringify(data));
+        localStorage.setItem('rslang-user', JSON.stringify(data));
         const e = new CustomEvent('signin', {
           bubbles: true,
           detail: data.name,
         });
         document.dispatchEvent(e);
-        location.href = '/';
+        window.location.href = '/';
       })
       .catch(() => {
-        this.showErrorMessage();
+        const div = document.createElement('div');
+        div.classList.add('form__error');
+        div.innerHTML = 'Неверный email и/или пароль';
+        main.mainContainer.append(div);
+        setTimeout(() => div.remove(), 2000);
       });
-  }
-
-  showErrorMessage() {
-    const div = document.createElement('div');
-    div.innerHTML = 'Неверный email и/или пароль';
-    main.mainContainer.append(div);
-    setTimeout(() => div.remove(), 2000);
   }
 
   eventListener() {

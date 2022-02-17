@@ -2,6 +2,7 @@ import main from '../main';
 
 const games = {
   render: () => {
+    main.main.classList.add('bg-white');
     main.mainContainer.innerHTML = `<div class='main__games'>
     <h2 сlass='main__title'>Игры</h2>
     <div class='games'>
