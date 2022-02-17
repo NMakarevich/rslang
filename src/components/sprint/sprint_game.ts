@@ -1,8 +1,6 @@
-import {
-  addAnswerYes, audio, changeWord, setTimer, shuffle, addWords, wordStatistic,
-} from './function';
+import { addAnswerYes, audio, changeWord, setTimer, shuffle, addWords, wordStatistic } from './function';
 
-import { baseUrl } from '../textbook/consts';
+import { baseURL } from '../consts';
 import { IWord } from './interfaces/IWord';
 import Word from './word';
 
@@ -60,7 +58,7 @@ class SprintGame {
     const translation = Math.ceil(Math.random() * 19);
     if (arrWords[0]) {
       word = new Word().draw(arrWords[0], arrWords[translation]!);
-      audio.src = `${baseUrl}/${arrWords[0].audio}`;
+      audio.src = `${baseURL}/${arrWords[0].audio}`;
     } else word = document.createElement('div');
     let x: boolean;
     if (translation === count) {
@@ -87,7 +85,8 @@ class SprintGame {
       if (!x) {
         if (point === 3) {
           point = 0;
-        } point += 1;
+        }
+        point += 1;
         addAnswerYes(right, point, arrWords[count]);
       } else {
         wordStatistic('sprint', 'wrong', arrWords[count]!);
@@ -104,7 +103,8 @@ class SprintGame {
       if (x) {
         if (point === 3) {
           point = 0;
-        } point += 1;
+        }
+        point += 1;
         addAnswerYes(right, point, arrWords[count]);
       } else {
         wordStatistic('sprint', 'wrong', arrWords[count]!);
@@ -153,7 +153,8 @@ class SprintGame {
         if (x) {
           if (point === 3) {
             point = 0;
-          } point += 1;
+          }
+          point += 1;
           addAnswerYes(right, point, arrWords[count]);
         } else wrong.push(arrWords[count]!);
         count += 1;
@@ -166,7 +167,8 @@ class SprintGame {
         if (!x) {
           if (point === 3) {
             point = 0;
-          } point += 1;
+          }
+          point += 1;
           addAnswerYes(right, point, arrWords[count]);
         } else wrong.push(arrWords[count]!);
         count += 1;

@@ -1,6 +1,5 @@
 // import { createUserWordData } from '../textbook/consts';
 // import { getWords } from '../api-requests';
-import { authorization } from '../textbook/consts';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 import { IWord } from './interfaces/IWord';
 import SprintResult from './sprint_results';
@@ -19,7 +18,7 @@ const path = {
 };
 
 // eslint-disable-next-line no-shadow
-export async function getWords1(pageWords: { group: any; page?: number; }) {
+export async function getWords1(pageWords: { group: any; page?: number }) {
   const response = await fetch(`${baseUrl}${path.words}?group=${pageWords.group}&page=${pageWords.group}`);
   let data;
   if (response.ok) data = await response.json();
@@ -94,14 +93,14 @@ export async function addWords(arrWords: Array<IWord>) {
 }
 
 export type createUserWordData = {
-  userId: string,
-  wordId: string,
-  word?: object
+  userId: string;
+  wordId: string;
+  word?: object;
 };
 
 export type createUserStat = {
-  userId: string,
-  count: number,
+  userId: string;
+  count: number;
 };
 
 export const updateUserStat = async ({ userId, count }: createUserStat) => {
@@ -132,7 +131,7 @@ export const createUserWord1 = async ({ userId, wordId, word }: createUserWordDa
 
 export async function getWord1(id: string) {
   let res;
-  if (authorization.authorized) {
+  if (localStorageUtil.checkAuthorization()) {
     const { token } = localStorageUtil.getUserInfo();
     const { userId } = localStorageUtil.getUserInfo();
     const response: Response = await fetch(`${baseUrl}/users/${userId}/aggregatedWords/${id}`, {
@@ -233,6 +232,7 @@ export async function addAnswerYes(right: Array<IWord>, point: number, data?: IW
         (item as HTMLElement).classList.remove('sprint__game__point_activ');
       });
     }, 200);
-  } (points[point - 1] as HTMLElement).classList.add('sprint__game__point_activ');
+  }
+  (points[point - 1] as HTMLElement).classList.add('sprint__game__point_activ');
   setTimeout(() => sprintGameScore?.classList.remove('sprint__game__score_activ'), 1000);
 }
