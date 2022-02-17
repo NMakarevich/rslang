@@ -8,9 +8,10 @@ import { chapterDifficult } from '../consts';
 class Dictionary {
   render = async () => {
     addUpButton();
+    main.main.classList.add('bg-white');
     main.mainContainer.innerHTML = `
     <div class='main__dictionary'>
-      <h2 сlass='main__title'>Словарь</h2>
+      <h2 сlass='main__title'>Учебник</h2>
       <div class="textbook">
         <div id="textbook-header"></div>
         <div id="textbook-wrapper"></div>

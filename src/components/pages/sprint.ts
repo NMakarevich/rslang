@@ -3,6 +3,7 @@ import SprintStart from '../sprint/sprint_start';
 
 const sprint = {
   render: () => {
+    main.main.classList.add('bg-white');
     main.mainContainer.innerHTML = `
     <div class='main__sprint'>
       <h2 сlass='main__title'>Спринт</h2>
