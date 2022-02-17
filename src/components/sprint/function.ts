@@ -162,7 +162,7 @@ export const updateUserWord1 = async ({ userId, wordId, word }: createUserWordDa
   });
 };
 
-export async function dailyStat(game: string, answer: string, data: IWord) {
+export async function wordStatistic(game: string, answer: string, data: IWord) {
   const date = new Date();
   const dateFormat = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   // const word = data.id;
@@ -219,7 +219,7 @@ export async function addAnswerYes(right: Array<IWord>, point: number, data?: IW
   const sprintGameScore = document.querySelector('.sprint__game__score');
   let bill = sprintGameScore?.innerHTML;
   if (data) {
-    dailyStat('sprint', 'rigth', data);
+    wordStatistic('sprint', 'rigth', data);
     right.push(data);
     bill = String(10 + Number(bill));
     (sprintGameScore as HTMLElement).innerHTML = bill;

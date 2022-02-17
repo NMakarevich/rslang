@@ -1,5 +1,5 @@
 import {
-  addAnswerYes, audio, changeWord, setTimer, /* shuffle, */ addWords, dailyStat,
+  addAnswerYes, audio, changeWord, setTimer, shuffle, addWords, wordStatistic,
 } from './function';
 
 import { baseUrl } from '../textbook/consts';
@@ -8,7 +8,7 @@ import Word from './word';
 
 class SprintGame {
   draw(data: Array<IWord>) {
-    let arrWords = data;
+    let arrWords = shuffle(data);
     // console.log(arrWords);
     let count: number = 0;
     const right: Array<IWord> = [];
@@ -90,7 +90,7 @@ class SprintGame {
         } point += 1;
         addAnswerYes(right, point, arrWords[count]);
       } else {
-        dailyStat('sprint', 'wrong', arrWords[count]!);
+        wordStatistic('sprint', 'wrong', arrWords[count]!);
         wrong.push(arrWords[count]!);
       }
       count += 1;
@@ -107,7 +107,7 @@ class SprintGame {
         } point += 1;
         addAnswerYes(right, point, arrWords[count]);
       } else {
-        dailyStat('sprint', 'wrong', arrWords[count]!);
+        wordStatistic('sprint', 'wrong', arrWords[count]!);
         wrong.push(arrWords[count]!);
       }
       // console.log(arrWords[count]);
