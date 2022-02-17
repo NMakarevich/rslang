@@ -1,3 +1,4 @@
+import main from './main';
 import routes from './routes';
 
 class Router {
@@ -7,6 +8,8 @@ class Router {
 
     window.addEventListener('hashchange', () => {
       const pageId = window.location.hash.slice(2) || '/';
+      main.pages[0] = main.pages[1] as string;
+      main.pages[1] = pageId;
       this.pushToHistory(pageId);
     });
   };

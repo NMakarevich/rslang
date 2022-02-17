@@ -45,9 +45,9 @@ class Header {
     this.header.classList.add('open');
   };
 
-toggleUser = (event: CustomEventInit<string>) => {
+toggleUser = (event: Event) => {
     const userName = this.header.querySelector('.header__user-name') as HTMLSpanElement;
-    userName.textContent = event.detail as string;
+    userName.textContent = (<CustomEvent>event).detail as string;
     const user = this.header.querySelector('.header__user') as HTMLElement;
     user.hidden = !user.hidden;
     const link = this.header.querySelector('.header__link') as HTMLLinkElement;

@@ -1,6 +1,7 @@
 import home from './pages/home';
 import Dictionary from './pages/dictionary';
 import about from './pages/about';
+import AudioCall from './pages/audiocall';
 import Registration from './pages/registration';
 import Login from './pages/login';
 import team from './pages/team';
@@ -16,7 +17,7 @@ const routes = [
   { path: 'dictionary', component: new Dictionary() },
   { path: 'games', component: games },
   { path: 'games/sprint', component: sprint },
-  { path: 'games/audio', component: null },
+  { path: 'games/audio', component: new AudioCall() },
   { path: 'about', component: about },
   { path: 'team', component: team },
 ];
