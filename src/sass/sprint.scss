@@ -3,6 +3,8 @@
 	flex-direction: column;
 	margin: 0 auto;
 	max-width: 700px;
+  position: relative;
+  // opacity: 0;
 }
 
 .sprint__exit {
@@ -126,6 +128,11 @@
 	margin: 50px 30px 0;
 	cursor: pointer;
 } 
+
+.sprint__game__variant:hover, .sprint__game__voice:hover {
+  transform: scale(1.05);
+
+}
 .sprint__game__variant_yes {
 	background-color: #99B063;
 }
@@ -149,16 +156,24 @@
 }
 
 .sprint__result {
-	display: flex;
-	flex-direction: column;
-	width: 500px;
-	align-self: center;
-	background-color:#F5C670;
-	opacity: 0.7;
-	padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  align-self: center;
+  background-color: #F5C670;
+  /* opacity: 0.7; */
+  padding: 20px;
+  position: absolute;
+  top: 20%;
+  left: calc(50% - 350px/2);
+  overflow-y: scroll;
+  max-height: 400px;
 }
 .sprint__result__title {}
-.sprint__result__text {}
+.sprint__result__text {
+  display: flex;
+  align-items: center;
+}
 .sprint__result__list {} 
 .sprint__result__list_yes {}
 .sprint__result__item {
@@ -190,3 +205,54 @@
 	flex-direction: column;
 	align-items: center;
 }
+
+.sprint__game__point_activ {
+  background-color: #F5C670;
+}
+
+.sprint__game__score_activ {
+  animation-duration: 1s;
+  animation-name: scoreScale;
+}
+
+@keyframes scoreScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.sprint__result__quantity {
+  width: 40px;
+  height: 22px;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  background-color:#73ADAC;
+  color: white;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+.sprint__result__quantity_no {
+  background-color: #DE645B;
+}
+.sprint__result__back, .sprint__result__again {
+  margin: 10px;
+  background-color: #73ADAC;
+  color: white;
+}
+.sprint__result__btns {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+
+// .sprint__result__back__link {
+//   width: 100%;
+//   height: 100%;
+// }

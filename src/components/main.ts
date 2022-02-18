@@ -5,8 +5,12 @@ const header = new Header();
 class Main {
   main: HTMLElement;
 
+  pages: string[];
+
   constructor() {
     this.main = document.createElement('main');
+    this.pages = [];
+    this.pages[1] = '/';
   }
 
   render = (): void => {

@@ -1,6 +1,7 @@
 import { ISignIn } from '../interfaces';
 import { signIn } from '../api';
 import main from '../main';
+import { localStorageUtil } from '../textbook/localStorageUtil';
 
 class Login {
   email: HTMLInputElement;
@@ -57,7 +58,7 @@ class Login {
         return response.json();
       })
       .then((data: ISignIn) => {
-        localStorage.setItem('rslang-user', JSON.stringify(data));
+        localStorageUtil.putUserInfo(data);
         const e = new CustomEvent('signin', {
           bubbles: true,
           detail: data.name,
@@ -69,8 +70,8 @@ class Login {
         const div = document.createElement('div');
         div.classList.add('form__error');
         div.innerHTML = 'Неверный email и/или пароль';
-        main.mainContainer.append(div);
-        setTimeout(() => div.remove(), 2000);
+        main.mainContainer.querySelector('.main__form')?.append(div);
+        setTimeout(() => div.remove(), 3000);
       });
   }
 
