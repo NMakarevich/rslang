@@ -9,14 +9,24 @@
   text-align: center;
   font-size: 32px;
   text-transform: uppercase;
+  @media screen and (max-width: 500px) {
+    font-size: 26px;
+    margin-top: 30px;
+    }
   .rslang {
     font-size: 70px;
     text-transform: none;
+    @media screen and (max-width: 500px) {
+    font-size: 50px;
+    }
   }
   .title {
     font-size: 50px;
     text-transform: uppercase;
     margin-bottom: 15px;
+    @media screen and (max-width: 500px) {
+      font-size: 35px;
+      }
   }
 
   .list-title {
@@ -28,7 +38,6 @@
   .list {
     list-style: none;
     .list__item {
-      padding-left: 30px;
       margin-bottom: 15px;
     }
     .list-item-img {
