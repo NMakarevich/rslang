@@ -224,7 +224,7 @@ max-width: 100%;
     }
   }
   .difficult {
-    background-color: #6c7afc;
+    background-color: #7986f8;
     color: #ffffff;
   }
   .studied {
@@ -267,13 +267,13 @@ max-width: 100%;
 
 #upButton {
   font-size: 40px;
-  color: black;
+  color: #9900CC;
   position: fixed;
   bottom: 50px;
   right: 50px;
   padding: 15px;
-  background-color: rgb(247, 241, 241);
-  border: 1px solid black;
+  background-color: #ffffff;
+  border: 2px solid #9900CC;
   border-radius: 10px;
 
   cursor: pointer;
@@ -282,7 +282,7 @@ max-width: 100%;
   }
 
   &:hover {
-    background-color: rgb(230, 225, 225);
+    background-color: #f4d9fd;
   }
 }
 
