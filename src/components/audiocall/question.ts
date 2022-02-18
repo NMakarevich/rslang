@@ -1,5 +1,7 @@
 import { answersCount, baseURL } from '../consts';
-import { IQuestion } from '../interfaces';
+import { ICards, IQuestion } from '../interfaces';
+import { wordStatistic } from '../sprint/function';
+import { localStorageUtil } from '../textbook/localStorageUtil';
 
 class Question {
   data: IQuestion;
@@ -34,21 +36,21 @@ class Question {
 
   addAnswers(): void {
     const { answers } = this.data;
-    answers.push(this.data.word.word);
-    this.shuffleAnswers(answers).forEach((answer: string, index: number) => {
+    answers.push(this.data.word);
+    this.shuffleAnswers(answers).forEach((answer: ICards, index: number) => {
       const li = document.createElement('li');
       li.classList.add('question__answer');
       li.setAttribute('data-number', `${index + 1}`);
-      li.textContent = `${index + 1}. ${answer}`;
+      li.textContent = `${index + 1}. ${answer.wordTranslate}`;
       this.answersList.append(li);
     });
   }
 
-  shuffleAnswers(answers: string[]): string[] {
-    const copyAnswers: string[] = [...answers];
+  shuffleAnswers(answers: ICards[]): ICards[] {
+    const copyAnswers: ICards[] = [...answers];
     for (let i = answers.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      [copyAnswers[i], copyAnswers[j]] = [copyAnswers[j] as string, copyAnswers[i] as string];
+      [copyAnswers[i], copyAnswers[j]] = [copyAnswers[j] as ICards, copyAnswers[i] as ICards];
     }
     return copyAnswers;
   }
@@ -80,12 +82,16 @@ class Question {
 
   checkAnswer(answer: HTMLElement) {
     let isCorrect = false;
-    if (answer.textContent?.includes(this.data.word.word)) {
+    if (answer.textContent?.includes(this.data.word.wordTranslate)) {
       answer.classList.add('question__correct');
       isCorrect = true;
+      if (!localStorageUtil.getUserInfo()) return;
+      wordStatistic('audiocall', 'right', this.data.word);
     } else {
       answer.classList.add('question__wrong');
       this.showCorrectAnswer();
+      if (!localStorageUtil.getUserInfo()) return;
+      wordStatistic('audiocall', 'wrong', this.data.word);
     }
     this.isAnswered = true;
     const event = new CustomEvent('answer-question', {
@@ -101,7 +107,7 @@ class Question {
   showCorrectAnswer() {
     const answers = Array.from(this.answersList.querySelectorAll('.question__answer')) as HTMLLIElement[];
     answers
-      .find((answer: HTMLLIElement) => answer.textContent?.includes(this.data.word.word))
+      .find((answer: HTMLLIElement) => answer.textContent?.includes(this.data.word.wordTranslate))
       ?.classList.add('question__correct');
   }
 

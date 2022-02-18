@@ -39,10 +39,10 @@ class GameScreen {
 
   generateQuestionData(questionNum: number = 0): IQuestion {
     const word = this.words[questionNum] as ICards;
-    const answers: string[] = [];
+    const answers: ICards[] = [];
     while (answers.length !== answersCount - 1) {
       const index = Math.floor(Math.random() * (this.words.length - 1));
-      const answer = this.words[index]?.word as string;
+      const answer = this.words[index] as ICards;
       if (index !== questionNum && !answers.includes(answer)) {
         answers.push(answer);
       }

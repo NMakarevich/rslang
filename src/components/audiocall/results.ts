@@ -37,7 +37,7 @@ class AudiocallResults {
   generateWordsList(words: ICards[]): string {
     let html = '';
     words.forEach((word: ICards) => {
-      html += `<li class='results__item'>${word.word}</li>`;
+      html += `<li class='results__item'>${word.word} - ${word.wordTranslate}</li>`;
     });
     return html;
   }
