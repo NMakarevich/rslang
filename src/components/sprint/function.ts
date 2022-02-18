@@ -1,7 +1,8 @@
 // import { createUserWordData } from '../textbook/consts';
 // import { getWords } from '../api-requests';
+import { createUserWord, getUserWord, getWords, updateUserWord } from '../api';
+import { ICards } from '../interfaces';
 import { localStorageUtil } from '../textbook/localStorageUtil';
-import { IWord } from './interfaces/IWord';
 import SprintResult from './sprint_results';
 import Word from './word';
 
@@ -13,20 +14,27 @@ export const pageWords = {
 };
 
 const baseUrl = 'https://rslang-team32.herokuapp.com';
-const path = {
-  words: '/words',
-};
+// const path = {
+//   words: '/words',
+// };
 
 // eslint-disable-next-line no-shadow
-export async function getWords1(pageWords: { group: any; page?: number }) {
-  const response = await fetch(`${baseUrl}${path.words}?group=${pageWords.group}&page=${pageWords.group}`);
-  let data;
-  if (response.ok) data = await response.json();
-  return data;
-}
+// export async function getWords1(pageWords: { group: any; page?: number }) {
+//   const response = await fetch(`${baseUrl}${path.words}?group=${pageWords.group}&page=${pageWords.group}`);
+//   let data;
+//   if (response.ok) data = await response.json();
+//   return data;
+// }
 
 export async function getStat(userId: string) {
-  const response = await fetch(`${baseUrl}/users/${userId}/statistics`);
+  const { token } = localStorageUtil.getUserInfo();
+  const response = await fetch(`${baseUrl}/users/${userId}/statistics`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
   let data;
   if (response.ok) data = await response.json();
   return data;
@@ -34,7 +42,7 @@ export async function getStat(userId: string) {
 
 // eslint-disable-next-line no-undef
 let time: NodeJS.Timer;
-export function setTimer(right: Array<IWord>, wrong: Array<IWord>) {
+export function setTimer(right: Array<ICards>, wrong: Array<ICards>) {
   let seconds = 60;
   time = setInterval(() => {
     if (seconds >= 0) {
@@ -51,8 +59,8 @@ export function setTimer(right: Array<IWord>, wrong: Array<IWord>) {
   }, 1000);
 }
 
-export function changeWord(count: number, data: Array<IWord>) {
-  console.log(count);
+export function changeWord(count: number, data: Array<ICards>) {
+  console.log('count', count);
   let newWord;
   const count1 = count;
   const x = Math.random();
@@ -79,15 +87,15 @@ export function makeNode(html: string, teg: string): HTMLElement {
   return div.firstElementChild as HTMLElement;
 }
 
-export function shuffle(array: Array<IWord>) {
+export function shuffle(array: Array<ICards>) {
   array.sort(() => Math.random() - 0.5);
   return array;
 }
 
-export async function addWords(arrWords: Array<IWord>) {
+export async function addWords(arrWords: Array<ICards>) {
   let oldWords = arrWords;
   pageWords.group += 1;
-  const newWords = shuffle(await getWords1(pageWords));
+  const newWords = shuffle(await getWords(pageWords.page, pageWords.group));
   oldWords = arrWords.concat(newWords);
   return oldWords;
 }
@@ -116,105 +124,116 @@ export const updateUserStat = async ({ userId, count }: createUserStat) => {
   });
 };
 
-export const createUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
-  const { token } = localStorageUtil.getUserInfo();
-  await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(word),
-  });
-};
+// export const createUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
+//   const { token } = localStorageUtil.getUserInfo();
+//   await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
+//     method: 'POST',
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(word),
+//   });
+// };
 
-export async function getWord1(id: string) {
-  let res;
-  if (localStorageUtil.checkAuthorization()) {
-    const { token } = localStorageUtil.getUserInfo();
-    const { userId } = localStorageUtil.getUserInfo();
-    const response: Response = await fetch(`${baseUrl}/users/${userId}/aggregatedWords/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-      },
-    });
-    res = await response.json();
-  } else {
-    const response: Response = await fetch(`${baseUrl}/words/${id}`);
-    res = await response.json();
-  }
-  return res;
-}
+// export async function getWord1(id: string) {
+//   let res;
+//   if (localStorageUtil.checkAuthorization()) {
+//     const { token } = localStorageUtil.getUserInfo();
+//     const { userId } = localStorageUtil.getUserInfo();
+//     const response: Response = await fetch(`${baseUrl}/users/${userId}/aggregatedWords/${id}`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         Accept: 'application/json',
+//       },
+//     });
+//     res = await response.json();
+//   } else {
+//     const response: Response = await fetch(`${baseUrl}/words/${id}`);
+//     res = await response.json();
+//   }
+//   return res;
+// }
 
-export const updateUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
-  const { token } = localStorageUtil.getUserInfo();
-  await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(word),
-  });
-};
+// export const updateUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
+//   const { token } = localStorageUtil.getUserInfo();
+//   await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
+//     method: 'PUT',
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(word),
+//   });
+// };
 
-export async function wordStatistic(game: string, answer: string, data: IWord) {
+export async function wordStatistic(game: string, answer: string, data: ICards) {
   const date = new Date();
   const dateFormat = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   // const word = data.id;
   const user = localStorageUtil.getUserInfo();
-  const wordInfo = await getWord1(data.id);
-  let sprint1 = 1;
-  if (wordInfo[0].userWord === undefined) {
-    await createUserWord1({
+  if (!user) return;
+  const id = data.id || data._id;
+  const wordInfo = await getUserWord(user?.userId, id as string);
+  let answerCount = 1;
+  console.log(wordInfo);
+  if (!wordInfo) {
+    await createUserWord({
       userId: `${user.userId}`,
-      wordId: `${data.id}`,
+      wordId: `${id}`,
       word: { optional: { [dateFormat]: { [game]: { [answer]: 1 } } } },
     });
   } else {
     // eslint-disable-next-line max-len
-    if (wordInfo[0].userWord.optional[dateFormat] === undefined) {
-      sprint1 = 1;
-      wordInfo[0].userWord.optional[dateFormat] = { [game]: { [answer]: sprint1 } };
-      if (wordInfo[0].userWord.optional[dateFormat][game] === undefined) {
-        sprint1 = 1;
-        wordInfo[0].userWord.optional[dateFormat][game] = { [answer]: sprint1 };
-        if (wordInfo[0].userWord.optional[dateFormat][game][answer] === undefined) {
-          sprint1 = 1;
-          wordInfo[0].userWord.optional[dateFormat][game][answer] = sprint1;
+    if (!wordInfo.optional[dateFormat]) {
+      answerCount = 1;
+      wordInfo.optional[dateFormat] = { [game]: { [answer]: answerCount } };
+      if (!wordInfo.optional[dateFormat][game]) {
+        answerCount = 1;
+        wordInfo.optional[dateFormat][game] = { [answer]: answerCount };
+        if (!wordInfo.optional[dateFormat][game][answer]) {
+          answerCount = 1;
+          wordInfo.optional[dateFormat][game][answer] = answerCount;
         }
       }
-    } else sprint1 = Number(wordInfo[0].userWord.optional[dateFormat][game][answer]) + 1;
-    wordInfo[0].userWord.optional[dateFormat][game][answer] = sprint1;
-    // console.log(wordInfo[0].userWord.optional);
-    if (sprint1 >= 2) {
-      wordInfo[0].userWord.optional.isStadied = true;
-      let countWords = await getStat(user.userId);
-      // console.log(countWords);
-      if (countWords === undefined) {
-        countWords = 0;
-      }
-      await updateUserStat({
-        userId: `${user.userId}`,
-        count: countWords.learnedWords + 1,
-      });
-      // const stat = await getStat(user.userId);
-      // console.log(stat);
     }
-    const optionalWord = wordInfo[0].userWord.optional;
-    await updateUserWord1({
+    if (!wordInfo.optional[dateFormat][game]) {
+      answerCount = 1;
+      wordInfo.optional[dateFormat][game] = { [answer]: answerCount };
+      if (!wordInfo.optional[dateFormat][game][answer]) {
+        answerCount = 1;
+        wordInfo.optional[dateFormat][game][answer] = answerCount;
+      }
+    } else answerCount = Number(wordInfo.optional[dateFormat][game][answer]) + 1;
+    wordInfo.optional[dateFormat][game][answer] = answerCount;
+    // console.log(wordInfo[0].userWord.optional);
+    // if (answerCount >= 2) {
+    //   wordInfo.optional.isStadied = true;
+    //   let countWords = await getStat(user.userId);
+    //   // console.log(countWords);
+    //   if (countWords === undefined) {
+    //     countWords = 0;
+    //   }
+    //   await updateUserStat({
+    //     userId: `${user.userId}`,
+    //     count: countWords.learnedWords + 1,
+    //   });
+    //   // const stat = await getStat(user.userId);
+    //   // console.log(stat);
+    // }
+    const optionalWord = wordInfo.optional;
+    await updateUserWord({
       userId: `${user.userId}`,
-      wordId: `${data.id}`,
+      wordId: `${id}`,
       word: { optional: optionalWord },
     });
     // console.log(await getWord1(data.id));
   }
 }
 
-export async function addAnswerYes(right: Array<IWord>, point: number, data?: IWord) {
+export async function addAnswerYes(right: Array<ICards>, point: number, data?: ICards) {
   const sprintGameScore = document.querySelector('.sprint__game__score');
   let bill = sprintGameScore?.innerHTML;
   if (data) {

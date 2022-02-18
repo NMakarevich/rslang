@@ -1,7 +1,7 @@
-import { IWord } from './interfaces/IWord';
+import { ICards } from '../interfaces';
 
 class Word {
-  draw(word: IWord, translation: IWord) {
+  draw(word: ICards, translation: ICards) {
     const sprintWordCont = document.createElement('div');
     sprintWordCont.classList.add('sprint__word__container');
     const sprintGameWord = document.createElement('div');

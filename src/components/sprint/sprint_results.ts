@@ -1,8 +1,8 @@
-import { IWord } from './interfaces/IWord';
+import { ICards } from '../interfaces';
 import WordResult from './word_result';
 
 class SprintResult {
-  draw(rigth: Array<IWord>, wrong: Array<IWord>) {
+  draw(rigth: Array<ICards>, wrong: Array<ICards>) {
     const sprintResult = document.createElement('div');
     sprintResult.classList.add('sprint__result');
     const sprintResultTitle = document.createElement('div');

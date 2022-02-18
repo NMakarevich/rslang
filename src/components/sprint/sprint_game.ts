@@ -1,16 +1,16 @@
 import { addAnswerYes, audio, changeWord, setTimer, shuffle, addWords, wordStatistic } from './function';
 
 import { baseURL } from '../consts';
-import { IWord } from './interfaces/IWord';
 import Word from './word';
+import { ICards } from '../interfaces';
 
 class SprintGame {
-  draw(data: Array<IWord>) {
+  draw(data: Array<ICards>) {
     let arrWords = shuffle(data);
     // console.log(arrWords);
     let count: number = 0;
-    const right: Array<IWord> = [];
-    const wrong: Array<IWord> = [];
+    const right: Array<ICards> = [];
+    const wrong: Array<ICards> = [];
     const sprintContainer = document.createElement('div');
     sprintContainer.classList.add('sprint__container');
     // const sprintExit = document.createElement('div');
@@ -89,7 +89,8 @@ class SprintGame {
         point += 1;
         addAnswerYes(right, point, arrWords[count]);
       } else {
-        wordStatistic('sprint', 'wrong', arrWords[count]!);
+        console.log(arrWords[count]);
+        await wordStatistic('sprint', 'wrong', arrWords[count]!);
         wrong.push(arrWords[count]!);
       }
       count += 1;
