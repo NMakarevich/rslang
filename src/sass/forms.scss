@@ -14,12 +14,15 @@
     align-items: center;
   }
   &__form {
+    position: relative;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
     width: 400px;
     font-size: 25px;
     input {
+      width: 100%;
       &:focus {
         outline-color: #C263E2;
         color: #9900CC;
@@ -66,6 +69,8 @@
     }
   }
   .form__error {
+    position: absolute;
+    bottom: -40px;
     font-family: 'Neucha', cursive;
     margin-top: 5px;
     color: #9900CC;
