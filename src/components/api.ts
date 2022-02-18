@@ -31,12 +31,15 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
   if (localStorageUtil.checkAuthorization()) {
     const { token } = localStorageUtil.getUserInfo();
     const { userId } = localStorageUtil.getUserInfo();
-    const response: Response = await fetch(`${baseURL}/users/${userId}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-      },
-    });
+    const response: Response = await fetch(
+      `${baseURL}/users/${userId}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      }
+    );
     const data = await response.json();
     res = await data[0].paginatedResults;
   } else {
@@ -89,8 +92,9 @@ export const getUserWord = async (userId: string, wordId: string) => {
       'Content-Type': 'application/json',
     },
   });
+  if (res.status === 404) return null;
   const data = await res.json();
-  return data.optional;
+  return data;
 };
 
 export const deleteUserWord = async ({ userId, wordId }: createUserWordData) => {
@@ -108,12 +112,15 @@ export const deleteUserWord = async ({ userId, wordId }: createUserWordData) => 
 export async function getUserHardWords(): Promise<ICards[]> {
   const { token } = localStorageUtil.getUserInfo();
   const { userId } = localStorageUtil.getUserInfo();
-  const response: Response = await fetch(`${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22hard%22%7D]%7D`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    },
-  });
+  const response: Response = await fetch(
+    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22hard%22%7D]%7D`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    }
+  );
   const res = await response.json();
   return res[0].paginatedResults;
 }
@@ -121,12 +128,15 @@ export async function getUserHardWords(): Promise<ICards[]> {
 export async function getUserStudiedWords(): Promise<ICards[]> {
   const { token } = localStorageUtil.getUserInfo();
   const { userId } = localStorageUtil.getUserInfo();
-  const response: Response = await fetch(`${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22easy%22%7D]%7D`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    },
-  });
+  const response: Response = await fetch(
+    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22easy%22%7D]%7D`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    }
+  );
   const res = await response.json();
   // console.log(res);
   return res[0].paginatedResults;
