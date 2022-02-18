@@ -39,14 +39,14 @@ class Card {
       difficultClass = 'difficult';
       difficultButtonText = 'Удалить из сложных';
       typeOfWord = 'Сложное слово';
-      typeOfWordСolor = 'red';
+      typeOfWordСolor = '#6c7afc';
     }
 
     if (this.data.userWord?.difficulty === 'easy') {
       studiedClass = 'studied';
       studiedButtonText = 'Удалить из изученных';
       typeOfWord = 'Изученное слово';
-      typeOfWordСolor = 'green';
+      typeOfWordСolor = '#d373f3';
     }
 
     let identificator = this.data.id;
@@ -70,7 +70,7 @@ class Card {
             <span class="word-transcription">${this.data.transcription}</span>
             <span class="word-translate">${this.data.wordTranslate}</span>
         </div>
-        <h2 class="word-title">Значение:</h2>
+        <p class="word-title">Значение:</p>
         <p>${this.data.textMeaning}</p>
         <p>${this.data.textMeaningTranslate}</p>
         <p class="word-title">Пример:</p>

@@ -21,8 +21,19 @@
     gap: 15px;
     width: 400px;
     font-size: 25px;
+    @media screen and (max-width: 600px) {
+      width: 280px;
+      gap: 5px;
+    }
     input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #6c7afc;
+      font-size: 25px;
+      font-family: 'Neucha', cursive;
+      color: #9900CC;
       width: 100%;
+
       &:focus {
         outline-color: #C263E2;
         color: #9900CC;
@@ -43,11 +54,6 @@
         -webkit-text-fill-color: #9900CC;
         font-size: 25px;
       }
-      padding: 10px;
-      border-radius: 10px;
-      border: 2px solid #6c7afc;
-      font-size: 25px;
-      font-family: 'Neucha', cursive;
       &::-webkit-input-placeholder {
         text-transform: uppercase;
         color: #6c7afc;
@@ -64,6 +70,9 @@
           transition: 1s;
           border: 2px solid #6c7afc;
         }
+      }
+      @media screen and (max-width: 600px) {
+        padding: 5px;
       }
       
     }
@@ -93,4 +102,9 @@
   color: #9900CC;
   font-family: 'Neucha', cursive;
   text-transform: uppercase;
+  @media screen and (max-width: 500px) {
+    background-color: #ffffff;
+    min-height: 300px;
+    border-radius: 20px;
+  }
 }
