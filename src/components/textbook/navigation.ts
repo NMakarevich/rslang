@@ -17,9 +17,9 @@ class TextbookNavigation {
                         ${this.checkIsAuthorised()}
                       </select>
                       <div class="navigation ${this.isHidden()}">
-                        <button id="back-btn">Назад</button>
+                        <button id="back-btn"></button>
                         ${this.renderSelectPage()}
-                        <button id="next-btn">Вперед</button>
+                        <button id="next-btn"></button>
                       </div>
                     </div>
                   </div>
@@ -64,18 +64,15 @@ class TextbookNavigation {
   }
 
   eventListeners() {
-
     this.selectChapter.addEventListener('change', () => {
       localStorage.setItem('scroll', '0');
-  
+
       if (+this.selectChapter.value - 1 === chapterDifficult
         && localStorageUtil.checkAuthorization()) {
-          this.chapterNavigation.classList.add('hidden');
-          cards.render('difficult');
-      } else {
-        if (this.chapterNavigation.classList.contains('hidden')){
-          this.chapterNavigation.classList.remove('hidden');
-        }
+        this.chapterNavigation.classList.add('hidden');
+        cards.render('difficult');
+      } else if (this.chapterNavigation.classList.contains('hidden')) {
+        this.chapterNavigation.classList.remove('hidden');
       }
       cards.group = +this.selectChapter.value - 1;
       cards.page = 0;
@@ -113,19 +110,19 @@ class TextbookNavigation {
       }
     });
   }
-  
+
   checkIsAuthorised() {
-    if (localStorageUtil.checkAuthorization()){
-      return '<option value="7">Сложные слова</option>'
+    if (localStorageUtil.checkAuthorization()) {
+      return '<option value="7">Сложные слова</option>';
     }
-    return ''
+    return '';
   }
-  
+
   isHidden() {
-    if (localStorageUtil.getChapter() === 6){
-      return 'hidden'
+    if (localStorageUtil.getChapter() === 6) {
+      return 'hidden';
     }
-    return ''
+    return '';
   }
 }
 
