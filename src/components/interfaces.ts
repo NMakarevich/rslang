@@ -36,9 +36,7 @@ export type ICards = {
   textExampleTranslate: string;
   userWord?: {
     difficulty: string;
-    optional: {
-      answers: string;
-    };
+    optional: any;
   };
   listProps: Array<Object>;
 };
@@ -56,7 +54,7 @@ export interface IDictionary {
 
 export interface IQuestion {
   word: ICards;
-  answers: string[];
+  answers: ICards[];
 }
 
 export interface ICustomEvent {
