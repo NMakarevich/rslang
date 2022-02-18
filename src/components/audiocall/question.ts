@@ -85,13 +85,15 @@ class Question {
     if (answer.textContent?.includes(this.data.word.wordTranslate)) {
       answer.classList.add('question__correct');
       isCorrect = true;
-      if (!localStorageUtil.getUserInfo()) return;
-      wordStatistic('audiocall', 'right', this.data.word);
+      if (localStorageUtil.getUserInfo()) {
+        wordStatistic('audiocall', 'right', this.data.word);
+      }
     } else {
       answer.classList.add('question__wrong');
       this.showCorrectAnswer();
-      if (!localStorageUtil.getUserInfo()) return;
-      wordStatistic('audiocall', 'wrong', this.data.word);
+      if (localStorageUtil.getUserInfo()) {
+        wordStatistic('audiocall', 'wrong', this.data.word);
+      }
     }
     this.isAnswered = true;
     const event = new CustomEvent('answer-question', {
