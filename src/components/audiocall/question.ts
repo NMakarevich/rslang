@@ -86,23 +86,29 @@ class Question {
   async updateUserWord(wordId: string, answer: string) {
     const { userId } = localStorageUtil.getUserInfo();
     const userWord = await getUserWord(userId, wordId);
+    console.log('1', userWord);
     if (!userWord) {
-      const emptyUWord = { ...emptyUserWord };
+      const emptyUWord = JSON.parse(JSON.stringify(emptyUserWord));
       emptyUWord.optional.answers = `${emptyUWord.optional.answers}${answer}`;
+      console.log('2', emptyUWord);
       await createUserWord({
-        userId: `${userId}`,
-        wordId: `${wordId}`,
+        userId,
+        wordId,
         word: emptyUWord,
       });
     } else {
-      userWord.answers = `${userWord.answers}${answer}`;
-      if (userWord.answers.includes('111')) {
+      delete userWord.id;
+      delete userWord.wordId;
+      console.log('3', userWord);
+      userWord.optional.answers = `${userWord.optional.answers}${answer}`;
+      if (userWord.optional.answers.includes('111')) {
         userWord.difficulty = Difficulty.learned;
         this.isLearned = true;
       }
+      console.log('4', userWord);
       await updateUserWord({
-        userId: `${userId}`,
-        wordId: `${wordId}`,
+        userId,
+        wordId,
         word: userWord,
       });
     }
