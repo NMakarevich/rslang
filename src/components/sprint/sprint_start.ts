@@ -1,7 +1,8 @@
 // import { getUserStudiedWords } from '../api-requests';
-import { getWords1, pageWords } from './function';
+import { pageWords } from './function';
 import SprintGame from './sprint_game';
 import { localStorageUtil } from '../textbook/localStorageUtil';
+import { getWords } from '../api';
 
 class SprintStart {
   draw() {
@@ -42,7 +43,7 @@ class SprintStart {
       localStorageUtil.putPage('0');
       pageWords.page = localStorageUtil.getPage();
       console.log(pageWords);
-      arr = getWords1(pageWords);
+      arr = getWords(pageWords.page, pageWords.group);
       // sprintContainer.replaceWith(new SprintGame().draw(await arr));
     };
     const sprintStartBtn = document.createElement('button');
@@ -54,12 +55,12 @@ class SprintStart {
       pageWords.page = localStorageUtil.getPage();
       console.log(pageWords);
       if (localStorageUtil.checkAuthorization()) {
-        arr = getWords1(pageWords);
+        arr = getWords(pageWords.page, pageWords.group);
         console.log(arr);
         sprintContainer.replaceWith(new SprintGame().draw(await arr));
       } else {
         pageWords.group = Number(sprintCat.value) - 1;
-        arr = getWords1(pageWords);
+        arr = getWords(pageWords.page, pageWords.group);
         console.log(arr);
         sprintContainer.replaceWith(new SprintGame().draw(await arr));
       }
