@@ -49,15 +49,13 @@ class Card {
       typeOfWordСolor = '#d373f3';
     }
 
-    let identificator = this.data.id;
-    let options = '';
+    let answers = '';
     if (localStorageUtil.checkAuthorization()) {
-      identificator = this.data._id;
       if (this.data.userWord) {
         // исправить когда определимся, каким способом записываем в базу ответы пользователя
-        options = `Ответы: правильные - ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '1').length}, неправильные - ${this.data.userWord.optional.answers.split('').filter((x: string) => x === '0').length}`;
+        answers = 'Ответы: правильные - 0, неправильные - 0';
       } else {
-        options = 'Ответы: правильные - 0, неправильные - 0';
+        answers = 'Ответы: правильные - 0, неправильные - 0';
       }
     }
 
@@ -65,7 +63,7 @@ class Card {
     <div class="card-wrapper">
        <div style="color: ${typeOfWordСolor}" class=${typeOfWordСolor}>${typeOfWord}</div>
         <div class="word-wrapper">
-            <button type="button" class="sound" id="${identificator}"></button>
+            <button type="button" class="sound" id="${this.data.id}"></button>
             <span class="word">${this.data.word}</span>
             <span class="word-transcription">${this.data.transcription}</span>
             <span class="word-translate">${this.data.wordTranslate}</span>
@@ -77,10 +75,10 @@ class Card {
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
         <div class="button-wrapper">
-        <button type="button" class="add-to-difficult ${difficultClass}" id="${identificator}">${difficultButtonText}</button>
-        <button type="button" class="add-to-studied ${studiedClass}" id="${identificator}">${studiedButtonText}</button>
+        <button type="button" class="add-to-difficult ${difficultClass}" id="${this.data.id}">${difficultButtonText}</button>
+        <button type="button" class="add-to-studied ${studiedClass}" id="${this.data.id}">${studiedButtonText}</button>
         </div>
-        ${options}
+        <div>${answers}</div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
     this.eventListeners();
@@ -116,16 +114,16 @@ class Card {
       const btn = button;
       if (!btn.classList.contains('difficult')) {
         if (btn.nextElementSibling?.classList.contains('studied')) {
-          const optionalData = await getUserWord(this.userID, `${this.data._id}`);
+          const optionalData = await getUserWord(this.userID, `${this.data.id}`);
           await updateUserWord({
             userId: `${this.userID}`,
-            wordId: `${this.data._id}`,
+            wordId: `${this.data.id}`,
             word: { difficulty: 'hard', optional: optionalData },
           });
         } else {
           await createUserWord({
             userId: `${this.userID}`,
-            wordId: `${this.data._id}`,
+            wordId: `${this.data.id}`,
             word: { difficulty: 'hard', optional: { answers: ' ' } },
           });
         }
@@ -137,7 +135,7 @@ class Card {
         btn.innerText = 'Добавить в сложные';
         await deleteUserWord({
           userId: `${this.userID}`,
-          wordId: `${this.data._id}`,
+          wordId: `${this.data.id}`,
         });
         await this.updatePage();
       }
@@ -151,16 +149,16 @@ class Card {
       const btn = button;
       if (!btn.classList.contains('studied')) {
         if (btn.previousElementSibling?.classList.contains('difficult')) {
-          const optionalData = await getUserWord(this.userID, `${this.data._id}`);
+          const optionalData = await getUserWord(this.userID, `${this.data.id}`);
           await updateUserWord({
             userId: `${this.userID}`,
-            wordId: `${this.data._id}`,
+            wordId: `${this.data.id}`,
             word: { difficulty: 'easy', optional: optionalData },
           });
         } else {
           await createUserWord({
             userId: `${this.userID}`,
-            wordId: `${this.data._id}`,
+            wordId: `${this.data.id}`,
             word: { difficulty: 'easy', optional: { answers: ' ' } },
           });
         }
@@ -172,7 +170,7 @@ class Card {
         btn.innerText = 'Добавить в изученные';
         await deleteUserWord({
           userId: `${this.userID}`,
-          wordId: `${this.data._id}`,
+          wordId: `${this.data.id}`,
         });
         await this.updatePage();
       }

@@ -1,4 +1,4 @@
-// import { createUserWordData } from '../textbook/consts';
+// import { ICreateUserWordData } from '../textbook/consts';
 // import { getWords } from '../api-requests';
 import { createUserWord, getUserWord, getWords, updateUserWord } from '../api';
 import { ICards } from '../interfaces';
@@ -100,12 +100,6 @@ export async function addWords(arrWords: Array<ICards>) {
   return oldWords;
 }
 
-export type createUserWordData = {
-  userId: string;
-  wordId: string;
-  word?: object;
-};
-
 export type createUserStat = {
   userId: string;
   count: number;
@@ -156,6 +150,7 @@ export const updateUserStat = async ({ userId, count }: createUserStat) => {
 //   return res;
 // }
 
+
 // export const updateUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
 //   const { token } = localStorageUtil.getUserInfo();
 //   await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
@@ -175,7 +170,7 @@ export async function wordStatistic(game: string, answer: string, data: ICards) 
   // const word = data.id;
   const user = localStorageUtil.getUserInfo();
   if (!user) return;
-  const id = data.id || data._id;
+  const id = data.id;
   const wordInfo = await getUserWord(user?.userId, id as string);
   let answerCount = 1;
   console.log(wordInfo);
