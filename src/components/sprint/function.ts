@@ -100,12 +100,6 @@ export async function addWords(arrWords: Array<ICards>) {
   return oldWords;
 }
 
-export type ICreateUserWordData = {
-  userId: string;
-  wordId: string;
-  word?: object;
-};
-
 export type createUserStat = {
   userId: string;
   count: number;
@@ -176,7 +170,7 @@ export async function wordStatistic(game: string, answer: string, data: ICards) 
   // const word = data.id;
   const user = localStorageUtil.getUserInfo();
   if (!user) return;
-  const id = data.id || data._id;
+  const id = data.id;
   const wordInfo = await getUserWord(user?.userId, id as string);
   let answerCount = 1;
   console.log(wordInfo);

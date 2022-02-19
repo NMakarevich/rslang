@@ -35,7 +35,9 @@ export interface ICards {
   textExampleTranslate: string;
   userWord?: {
     difficulty: string;
-    optional: any;
+    optional: {
+      answers: string;
+    };
   };
   listProps: Array<Object>;
 }
