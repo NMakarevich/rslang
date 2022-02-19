@@ -18,12 +18,11 @@ export interface ISignIn {
   name: string;
 }
 
-export type ICards = {
+export interface ICards {
   audio: string;
   audioMeaning: string;
   audioExample: string;
-  _id?: string;
-  id?: string;
+  id: string;
   group: number;
   page: number;
   word: string;
@@ -41,13 +40,13 @@ export type ICards = {
     };
   };
   listProps: Array<Object>;
-};
+}
 
-export type createUserWordData = {
+export interface ICreateUserWordData {
   userId: string;
   wordId: string;
   word?: object;
-};
+}
 
 export interface IDictionary {
   chapter: number;

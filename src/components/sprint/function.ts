@@ -1,4 +1,4 @@
-// import { createUserWordData } from '../textbook/consts';
+// import { ICreateUserWordData } from '../textbook/consts';
 // import { getWords } from '../api-requests';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 import { IWord } from './interfaces/IWord';
@@ -92,7 +92,7 @@ export async function addWords(arrWords: Array<IWord>) {
   return oldWords;
 }
 
-export type createUserWordData = {
+export type ICreateUserWordData = {
   userId: string;
   wordId: string;
   word?: object;
@@ -116,7 +116,7 @@ export const updateUserStat = async ({ userId, count }: createUserStat) => {
   });
 };
 
-export const createUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
+export const createUserWord1 = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
   await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
     method: 'POST',
@@ -148,7 +148,7 @@ export async function getWord1(id: string) {
   return res;
 }
 
-export const updateUserWord1 = async ({ userId, wordId, word }: createUserWordData) => {
+export const updateUserWord1 = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
   await fetch(`${baseUrl}/users/${userId}/words/${wordId}`, {
     method: 'PUT',

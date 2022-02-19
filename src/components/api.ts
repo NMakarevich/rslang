@@ -1,4 +1,4 @@
-import { IUser, ICards, createUserWordData } from './interfaces';
+import { IUser, ICards, ICreateUserWordData } from './interfaces';
 import { baseURL } from './consts';
 import { localStorageUtil } from './textbook/localStorageUtil';
 
@@ -53,7 +53,7 @@ export async function getWord(id: string): Promise<ICards> {
   return res;
 }
 
-export const createUserWord = async ({ userId, wordId, word }: createUserWordData) => {
+export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
   await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
@@ -66,7 +66,7 @@ export const createUserWord = async ({ userId, wordId, word }: createUserWordDat
   });
 };
 
-export const updateUserWord = async ({ userId, wordId, word }: createUserWordData) => {
+export const updateUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
   await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'PUT',
@@ -93,7 +93,7 @@ export const getUserWord = async (userId: string, wordId: string) => {
   return data.optional;
 };
 
-export const deleteUserWord = async ({ userId, wordId }: createUserWordData) => {
+export const deleteUserWord = async ({ userId, wordId }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
   await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'DELETE',
