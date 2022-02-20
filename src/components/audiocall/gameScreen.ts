@@ -30,6 +30,7 @@ class GameScreen {
     this.container.innerHTML = '<button type="button" class="button__next" disabled>Далее</button>';
     this.words = await getWords(this.dictionary.page, this.dictionary.chapter);
     const firstQData = this.generateQuestionData();
+    localStorage.setItem('audiocallSequence', '0');
     const question = new Question(firstQData);
     this.container.prepend(question.render());
     question.playAudio();
