@@ -1,5 +1,5 @@
 import { ISignIn } from '../interfaces';
-import { signIn } from '../api';
+import { getUserStatistics, signIn } from '../api';
 import main from '../main';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 
@@ -57,8 +57,9 @@ class Login {
         }
         return response.json();
       })
-      .then((data: ISignIn) => {
+      .then(async (data: ISignIn) => {
         localStorageUtil.putUserInfo(data);
+        await getUserStatistics();
         const e = new CustomEvent('signin', {
           bubbles: true,
           detail: data.name,

@@ -1,5 +1,5 @@
-import { IUser, ICards, ICreateUserWordData } from './interfaces';
-import { baseURL } from './consts';
+import { IUser, ICards, ICreateUserWordData, IStatistics, ISignIn } from './interfaces';
+import { baseURL, emptyUserStatistics } from './consts';
 import { localStorageUtil } from './textbook/localStorageUtil';
 
 export async function registrationUser(user: IUser): Promise<Response> {
@@ -24,6 +24,18 @@ export async function signIn(user: IUser): Promise<Response> {
     body: JSON.stringify(user),
   });
   return response;
+}
+
+export async function updateToken(): Promise<void> {
+  const { refreshToken, userId } = localStorageUtil.getUserInfo();
+  const response = await fetch(`${baseURL}/users/${userId}/tokens`, {
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+      Accept: 'application/json',
+    },
+  });
+  const userData: ISignIn = await response.json();
+  localStorageUtil.putUserInfo(userData);
 }
 
 export async function getWords(page: number, group: number): Promise<ICards[]> {
@@ -140,4 +152,35 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
   const res = await response.json();
   // console.log(res);
   return res[0].paginatedResults;
+}
+
+export async function updateUserStatistics(statistics: IStatistics) {
+  const { token, userId } = localStorageUtil.getUserInfo();
+  console.log(statistics);
+  await fetch(`${baseURL}/users/${userId}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(statistics),
+  });
+}
+
+export async function getUserStatistics(): Promise<IStatistics | undefined> {
+  if (!localStorageUtil.checkAuthorization()) return undefined;
+  const { token, userId } = localStorageUtil.getUserInfo();
+  const request: Response = await fetch(`${baseURL}/users/${userId}/statistics`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    },
+  });
+  if (request.status === 404) {
+    await updateUserStatistics(emptyUserStatistics);
+  }
+  if (request.status === 401) await updateToken();
+  const response: IStatistics = await request.json();
+  return response;
 }

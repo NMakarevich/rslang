@@ -1,3 +1,5 @@
+import { Difficulty } from './consts';
+
 export interface IUser {
   name?: string;
   email: string;
@@ -61,4 +63,31 @@ export interface IQuestion {
 export interface ICustomEvent {
   word: ICards;
   correct: boolean;
+}
+
+export interface IUserWord {
+  difficulty: Difficulty;
+  optional: {
+    answers: string;
+  };
+  id?: string;
+  wordId?: string;
+}
+
+export interface IGameStatistic {
+  date: string;
+  right: number;
+  wrong: number;
+  rightSequence: number;
+}
+
+export interface IStatistics {
+  id?: string;
+  learnedWords: number;
+  optional: {
+    games: {
+      sprint: IGameStatistic[];
+      audiocall: IGameStatistic[];
+    }
+  };
 }
