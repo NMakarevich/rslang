@@ -27,26 +27,23 @@ class Card {
   render(): HTMLElement {
     this.checkScrollPosition();
     this.wordCard.classList.add('word-card');
-
-    let typeOfWord = '';
-    let typeOfWordСolor = '';
+    let hideDifficultBtn = '';
+    let hideStudiedBtn = '';
     let difficultClass = '';
     let difficultButtonText = 'Добавить в сложные';
     let studiedClass = '';
     let studiedButtonText = 'Добавить в изученные';
 
     if (this.data.userWord?.difficulty === 'hard') {
-      difficultClass = 'difficult';
-      difficultButtonText = 'Удалить из сложных';
-      typeOfWord = 'Сложное слово';
-      typeOfWordСolor = '#6c7afc';
+      difficultClass = 'difficult restrict-events';
+      difficultButtonText = 'Добавлено в сложные';
+      hideStudiedBtn = 'hidden';
     }
 
     if (this.data.userWord?.difficulty === 'easy') {
-      studiedClass = 'studied';
-      studiedButtonText = 'Удалить из изученных';
-      typeOfWord = 'Изученное слово';
-      typeOfWordСolor = '#d373f3';
+      studiedClass = 'studied restrict-events';
+      studiedButtonText = 'Слово изучено';
+      hideDifficultBtn = 'hidden';
     }
 
     let answers = '';
@@ -61,7 +58,6 @@ class Card {
 
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
-       <div style="color: ${typeOfWordСolor}" class=${typeOfWordСolor}>${typeOfWord}</div>
         <div class="word-wrapper">
             <button type="button" class="sound" id="${this.data.id}"></button>
             <span class="word">${this.data.word}</span>
@@ -75,8 +71,8 @@ class Card {
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
         <div class="button-wrapper">
-        <button type="button" class="add-to-difficult ${difficultClass}" id="${this.data.id}">${difficultButtonText}</button>
-        <button type="button" class="add-to-studied ${studiedClass}" id="${this.data.id}">${studiedButtonText}</button>
+        <button type="button" class="add-to-difficult  ${difficultClass} ${hideDifficultBtn}" id="${this.data.id}">${difficultButtonText}</button>
+        <button type="button" class="add-to-studied ${studiedClass} ${hideStudiedBtn}" id="${this.data.id}">${studiedButtonText}</button>
         </div>
         <div>${answers}</div>
     </div>
@@ -127,12 +123,9 @@ class Card {
             word: { difficulty: 'hard', optional: { answers: ' ' } },
           });
         }
-        btn.classList.add('difficult');
-        btn.innerText = 'Удалить из сложных';
+
         await this.updatePage();
       } else {
-        btn.classList.remove('difficult');
-        btn.innerText = 'Добавить в сложные';
         await deleteUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data.id}`,
@@ -163,7 +156,7 @@ class Card {
           });
         }
         btn.classList.add('studied');
-        btn.innerText = 'Удалить из изученных';
+        btn.innerText = 'Слово изучено';
         await this.updatePage();
       } else {
         btn.classList.remove('studied');
