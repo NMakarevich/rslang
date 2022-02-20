@@ -1,4 +1,4 @@
-import { createUserWord, getUserStatistics, getUserWord, updateUserWord } from '../api';
+import { createUserWord, getUserStatistics, getUserWord, updateUserStatistics, updateUserWord } from '../api';
 import { answersCount, baseURL, Difficulty, emptyUserWord } from '../consts';
 import { ICards, IGameStatistic, IQuestion, IStatistics } from '../interfaces';
 import { localStorageUtil } from '../textbook/localStorageUtil';
@@ -83,14 +83,13 @@ class Question {
     }
   };
 
-  async updateUserWord(wordId: string, answer: string) {
+  updateUserWord = async (wordId: string, answer: string) => {
     const { userId } = localStorageUtil.getUserInfo();
+    let isLearned = false;
     const userWord = await getUserWord(userId, wordId);
-    console.log('1', userWord);
     if (!userWord) {
       const emptyUWord = JSON.parse(JSON.stringify(emptyUserWord));
       emptyUWord.optional.answers = `${emptyUWord.optional.answers}${answer}`;
-      console.log('2', emptyUWord);
       await createUserWord({
         userId,
         wordId,
@@ -99,48 +98,49 @@ class Question {
     } else {
       delete userWord.id;
       delete userWord.wordId;
-      console.log('3', userWord);
       userWord.optional.answers = `${userWord.optional.answers}${answer}`;
       if (userWord.optional.answers.includes('111')) {
         userWord.difficulty = Difficulty.learned;
-        this.isLearned = true;
+        isLearned = true;
       }
-      console.log('4', userWord);
       await updateUserWord({
         userId,
         wordId,
         word: userWord,
       });
     }
-  }
+    return isLearned;
+  };
 
-  async addAnswerToUserStatistics(answer: boolean, isLearned: boolean) {
+  addAnswerToUserStatistics = async (answer: boolean, isLearned: boolean) => {
     const statistics = (await getUserStatistics()) as IStatistics;
+    delete statistics.id;
     if (isLearned) statistics.learnedWords += 1;
     const date = new Date().toLocaleDateString('ru-RU').split('.').join('-');
-    const gameArr = statistics.optional.audiocall;
+    const gameArr = statistics.optional.games.audiocall;
     const dateIndex = gameArr.findIndex((item: IGameStatistic) => item.date === date) as number;
     // const answerString = answer ? 'right' : 'wrong';
     if (dateIndex >= 0) {
-      // statistics.optional[game as keyof typeof statistics.optional][dateIndex][
+      // statistics.optional.games[game as keyof typeof statistics.optional][dateIndex][
       //   answerString as keyof IGameStatistic
       // ] += 1;
-      const dateObj = statistics.optional.audiocall[dateIndex] as IGameStatistic;
+      const dateObj = statistics.optional.games.audiocall[dateIndex] as IGameStatistic;
       if (answer) {
         dateObj.right += 1;
       } else dateObj.wrong += 1;
-      statistics.optional.audiocall[dateIndex] = dateObj;
+      statistics.optional.games.audiocall[dateIndex] = dateObj;
     } else {
-      statistics.optional.audiocall.push({
+      statistics.optional.games.audiocall.push({
         date,
         wrong: answer ? 0 : 1,
         right: answer ? 1 : 0,
         rightSequence: 0,
       });
     }
-  }
+    await updateUserStatistics(statistics);
+  };
 
-  checkAnswer(answer: HTMLElement) {
+  async checkAnswer(answer: HTMLElement) {
     let isCorrect = false;
     if (answer.textContent?.includes(this.data.word.wordTranslate)) {
       answer.classList.add('question__correct');
@@ -151,8 +151,8 @@ class Question {
     }
     this.isAnswered = true;
     if (localStorageUtil.getUserInfo()) {
-      this.updateUserWord(this.data.word.id, `${isCorrect ? '1' : '0'}`);
-      // this.addAnswerToUserStatistics(isCorrect, this.isLearned);
+      const isLearned = await this.updateUserWord(this.data.word.id, `${isCorrect ? '1' : '0'}`);
+      this.addAnswerToUserStatistics(isCorrect, isLearned);
     }
     const event = new CustomEvent('answer-question', {
       bubbles: true,
