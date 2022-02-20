@@ -1,4 +1,6 @@
-import { IUser, ICards, ICreateUserWordData, IStatistics, ISignIn } from './interfaces';
+import {
+  IUser, ICards, ICreateUserWordData, IStatistics, ISignIn,
+} from './interfaces';
 import { baseURL, emptyUserStatistics } from './consts';
 import { localStorageUtil } from './textbook/localStorageUtil';
 
@@ -50,7 +52,7 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
         },
-      }
+      },
     );
     const data = await response.json();
     res = await data[0].paginatedResults;
@@ -70,7 +72,7 @@ export async function getWord(id: string): Promise<ICards> {
 
 export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
-  await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+  const a = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -79,6 +81,8 @@ export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordDa
     },
     body: JSON.stringify(word),
   });
+  const b = await a.json();
+  console.log(b);
 };
 
 export const updateUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
@@ -131,7 +135,7 @@ export async function getUserHardWords(): Promise<ICards[]> {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    }
+    },
   );
   const res = await response.json();
   return res[0].paginatedResults;
@@ -147,7 +151,7 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    }
+    },
   );
   const res = await response.json();
   // console.log(res);
@@ -156,8 +160,8 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
 
 export async function updateUserStatistics(statistics: IStatistics) {
   const { token, userId } = localStorageUtil.getUserInfo();
-  console.log(statistics);
-  await fetch(`${baseURL}/users/${userId}/statistics`, {
+
+  const res = await fetch(`${baseURL}/users/${userId}/statistics`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -166,6 +170,8 @@ export async function updateUserStatistics(statistics: IStatistics) {
     },
     body: JSON.stringify(statistics),
   });
+  const a = await res.json();
+  console.log(a);
 }
 
 export async function getUserStatistics(): Promise<IStatistics | undefined> {
