@@ -7,6 +7,7 @@ import {
 import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
 import { chapterDifficult } from '../consts';
+// import { cards } from './textbook';
 
 let isPlay = false;
 
@@ -102,9 +103,11 @@ class Card {
     this.soundButton.addEventListener('click', this.playAudio);
     this.difficultButton.addEventListener('click', () => {
       this.addToDifficult(this.difficultButton);
+      // cards.checkPageIsLearned();
     });
     this.studiedButton.addEventListener('click', () => {
       this.addToStudied(this.studiedButton);
+      // cards.checkPageIsLearned();
     });
   }
 
@@ -129,7 +132,7 @@ class Card {
           await updateUserWord({
             userId: `${this.userID}`,
             wordId: `${this.data.id}`,
-            word: { difficulty: 'new', optional: optionalData.optional },
+            word: { difficulty: 'inProgress', optional: optionalData.optional },
           });
         } else {
           await updateUserWord({

@@ -143,7 +143,7 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
   const { token } = localStorageUtil.getUserInfo();
   const { userId } = localStorageUtil.getUserInfo();
   const response: Response = await fetch(
-    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22easy%22%7D]%7D`,
+    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22learned%22%7D]%7D`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
