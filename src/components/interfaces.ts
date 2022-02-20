@@ -81,13 +81,15 @@ export interface IGameStatistic {
   rightSequence: number;
 }
 
+export interface IGamesStatistic {
+  sprint: IGameStatistic[];
+  audiocall: IGameStatistic[];
+}
+
 export interface IStatistics {
   id?: string;
   learnedWords: number;
   optional: {
-    games: {
-      sprint: IGameStatistic[];
-      audiocall: IGameStatistic[];
-    }
+    games: IGamesStatistic;
   };
 }
