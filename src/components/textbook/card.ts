@@ -2,12 +2,12 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-underscore-dangle */
 import {
-  getWord, createUserWord, deleteUserWord, updateUserWord, getUserWord,
+  getWord, createUserWord, updateUserWord, getUserWord, getUserStatistics, updateUserStatistics,
 } from '../api';
 import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
-import { cards } from './textbook';
 import { chapterDifficult } from '../consts';
+// import { cards } from './textbook';
 
 let isPlay = false;
 
@@ -25,35 +25,38 @@ class Card {
   }
 
   render(): HTMLElement {
-    this.checkScrollPosition();
     this.wordCard.classList.add('word-card');
-
-    let typeOfWord = '';
-    let typeOfWordСolor = '';
+    let hideDifficultBtn = '';
+    let hideStudiedBtn = '';
     let difficultClass = '';
     let difficultButtonText = 'Добавить в сложные';
     let studiedClass = '';
     let studiedButtonText = 'Добавить в изученные';
 
     if (this.data.userWord?.difficulty === 'hard') {
-      difficultClass = 'difficult';
-      difficultButtonText = 'Удалить из сложных';
-      typeOfWord = 'Сложное слово';
-      typeOfWordСolor = '#6c7afc';
+      if (localStorageUtil.getChapter() === 6) {
+        difficultClass = 'difficult';
+        difficultButtonText = 'Удалить из сложных';
+        hideStudiedBtn = 'hidden';
+      } else {
+        difficultClass = 'difficult restrict-events';
+        difficultButtonText = 'Сложное слово';
+        hideStudiedBtn = 'hidden';
+      }
     }
 
-    if (this.data.userWord?.difficulty === 'easy') {
-      studiedClass = 'studied';
-      studiedButtonText = 'Удалить из изученных';
-      typeOfWord = 'Изученное слово';
-      typeOfWordСolor = '#d373f3';
+    if (this.data.userWord?.difficulty === 'learned') {
+      studiedClass = 'studied restrict-events';
+      studiedButtonText = 'Изученное слово';
+      hideDifficultBtn = 'hidden';
     }
 
     let answers = '';
     if (localStorageUtil.checkAuthorization()) {
+      const array = this.data.userWord?.optional.answers.split('');
       if (this.data.userWord) {
-        // исправить когда определимся, каким способом записываем в базу ответы пользователя
-        answers = 'Ответы: правильные - 0, неправильные - 0';
+        answers = `Ответы: правильные - ${array?.filter((x) => x === '1').length},
+         неправильные - ${array?.filter((x) => x === '0').length}`;
       } else {
         answers = 'Ответы: правильные - 0, неправильные - 0';
       }
@@ -61,7 +64,6 @@ class Card {
 
     this.wordCard.innerHTML = `
     <div class="card-wrapper">
-       <div style="color: ${typeOfWordСolor}" class=${typeOfWordСolor}>${typeOfWord}</div>
         <div class="word-wrapper">
             <button type="button" class="sound" id="${this.data.id}"></button>
             <span class="word">${this.data.word}</span>
@@ -74,11 +76,11 @@ class Card {
         <p class="word-title">Пример:</p>
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
+        <div class="answers">${answers}</div>
         <div class="button-wrapper">
-        <button type="button" class="add-to-difficult ${difficultClass}" id="${this.data.id}">${difficultButtonText}</button>
-        <button type="button" class="add-to-studied ${studiedClass}" id="${this.data.id}">${studiedButtonText}</button>
+        <button type="button" class="add-to-difficult  ${difficultClass} ${hideDifficultBtn}" id="${this.data.id}">${difficultButtonText}</button>
+        <button type="button" class="add-to-studied ${studiedClass} ${hideStudiedBtn}" id="${this.data.id}">${studiedButtonText}</button>
         </div>
-        <div>${answers}</div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
     this.eventListeners();
@@ -101,79 +103,82 @@ class Card {
     this.soundButton.addEventListener('click', this.playAudio);
     this.difficultButton.addEventListener('click', () => {
       this.addToDifficult(this.difficultButton);
-      localStorage.setItem('scroll', `${window.pageYOffset}`);
+      // cards.checkPageIsLearned();
     });
     this.studiedButton.addEventListener('click', () => {
-      localStorage.setItem('scroll', `${window.pageYOffset}`);
       this.addToStudied(this.studiedButton);
+      // cards.checkPageIsLearned();
     });
   }
 
-  addToDifficult = async (button: HTMLButtonElement) => {
+  addToDifficult = async (btn: HTMLButtonElement) => {
+    const button = btn;
     if (localStorageUtil.checkAuthorization()) {
-      const btn = button;
-      if (!btn.classList.contains('difficult')) {
-        if (btn.nextElementSibling?.classList.contains('studied')) {
-          const optionalData = await getUserWord(this.userID, `${this.data.id}`);
+      const optionalData = await getUserWord(this.userID, `${this.data.id}`);
+      if (!optionalData) {
+        await createUserWord({
+          userId: `${this.userID}`,
+          wordId: `${this.data.id}`,
+          word: { difficulty: 'hard', optional: { answers: ' ' } },
+        });
+        button.classList.add('difficult');
+        button.classList.add('restrict-events');
+        button.nextElementSibling?.classList.add('hidden');
+        button.innerText = 'Сложное слово';
+      }
+      if (optionalData) {
+        if (localStorageUtil.getChapter() === chapterDifficult) {
+          this.wordCard.classList.add('hidden');
           await updateUserWord({
             userId: `${this.userID}`,
             wordId: `${this.data.id}`,
-            word: { difficulty: 'hard', optional: optionalData },
+            word: { difficulty: 'inProgress', optional: optionalData.optional },
           });
         } else {
-          await createUserWord({
+          await updateUserWord({
             userId: `${this.userID}`,
             wordId: `${this.data.id}`,
-            word: { difficulty: 'hard', optional: { answers: ' ' } },
+            word: { difficulty: 'hard', optional: optionalData.optional },
           });
+          button.classList.add('difficult');
+          button.classList.add('restrict-events');
+          button.nextElementSibling?.classList.add('hidden');
+          button.innerText = 'Сложное слово';
         }
-        btn.classList.add('difficult');
-        btn.innerText = 'Удалить из сложных';
-        await this.updatePage();
-      } else {
-        btn.classList.remove('difficult');
-        btn.innerText = 'Добавить в сложные';
-        await deleteUserWord({
-          userId: `${this.userID}`,
-          wordId: `${this.data.id}`,
-        });
-        await this.updatePage();
       }
     } else {
       this.showModalWindow();
     }
   };
 
-  addToStudied = async (button: HTMLButtonElement) => {
+  addToStudied = async (btn: HTMLButtonElement) => {
+    const button = btn;
     if (localStorageUtil.checkAuthorization()) {
-      const btn = button;
-      if (!btn.classList.contains('studied')) {
-        if (btn.previousElementSibling?.classList.contains('difficult')) {
-          const optionalData = await getUserWord(this.userID, `${this.data.id}`);
-          await updateUserWord({
-            userId: `${this.userID}`,
-            wordId: `${this.data.id}`,
-            word: { difficulty: 'easy', optional: optionalData },
-          });
-        } else {
-          await createUserWord({
-            userId: `${this.userID}`,
-            wordId: `${this.data.id}`,
-            word: { difficulty: 'easy', optional: { answers: ' ' } },
-          });
-        }
-        btn.classList.add('studied');
-        btn.innerText = 'Удалить из изученных';
-        await this.updatePage();
-      } else {
-        btn.classList.remove('studied');
-        btn.innerText = 'Добавить в изученные';
-        await deleteUserWord({
+      const optionalData = await getUserWord(this.userID, `${this.data.id}`);
+      if (!optionalData) {
+        await createUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data.id}`,
+          word: { difficulty: 'learned', optional: { answers: ' ' } },
         });
-        await this.updatePage();
+      } else {
+        await updateUserWord({
+          userId: `${this.userID}`,
+          wordId: `${this.data.id}`,
+          word: { difficulty: 'learned', optional: optionalData.optional },
+        });
       }
+      const statistics = await getUserStatistics();
+      if (statistics != null) {
+        delete statistics.id;
+        statistics.learnedWords += 1;
+        console.log(statistics);
+        await updateUserStatistics(statistics);
+      }
+      button.classList.add('studied');
+      button.classList.add('restrict-events');
+      button.previousElementSibling?.classList.add('hidden');
+      button.innerText = 'Изученное слово';
     } else {
       this.showModalWindow();
     }
@@ -220,21 +225,6 @@ class Card {
     setTimeout(() => {
       document.body.removeChild(div);
     }, 2000);
-  }
-
-  updatePage() {
-    if (localStorageUtil.getChapter() === chapterDifficult) {
-      cards.render('difficult');
-    } else {
-      cards.render('usual');
-    }
-  }
-
-  checkScrollPosition() {
-    const scrollPosition = localStorage.getItem('scroll');
-    if (scrollPosition) {
-      window.scrollTo(0, +scrollPosition);
-    }
   }
 }
 

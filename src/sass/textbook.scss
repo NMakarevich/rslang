@@ -12,7 +12,7 @@ h3 {
   font-size: 17px;
 }
 .textbook {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,6 @@ h3 {
     font-size: 17px;
     cursor: pointer;
     border-radius: 5px;
-    
   }
 
   @media screen and (max-width: 700px) {
@@ -45,13 +44,13 @@ h3 {
 }
 .navigation {
   margin: 0 0 5px 20px;
-  *{
+  * {
     height: 33px;
   }
-  
+
   display: flex;
   width: 150px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
@@ -63,7 +62,7 @@ h3 {
     height: 22px;
     width: 22px;
     background-color: #ffffff;
-    background-image: url('../assets/svg/forward.svg');
+    background-image: url("../assets/svg/forward.svg");
     background-repeat: no-repeat;
     background-size: contain;
     &#back-btn {
@@ -82,33 +81,35 @@ h3 {
   color: #560372;
   border: 2px solid #d373f3;
   text-decoration: none;
+  outline: none;
   &:hover {
     border: 2px solid #8306ad;
   }
-/*   @media screen and (max-width: 910px) {
+  /*   @media screen and (max-width: 910px) {
     width: 250px;
   } */
 }
 #select-page {
-text-align: center;
+  outline: none;
+  text-align: center;
   color: #560372;
   background-color: #ffffff;
   border: 2px solid #d373f3;
   text-decoration: none;
   border: none;
   text-decoration: none;
-/*   @media screen and (max-width: 910px) {
+  /*   @media screen and (max-width: 910px) {
     width: 250px;
   } */
 }
 
 .game {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   display: flex;
   gap: 10px;
   margin: 0 10px 5px 0;
   &__link {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     width: 170px;
     text-align: center;
     display: flex;
@@ -135,7 +136,7 @@ text-align: center;
   }
 }
 #textbook-wrapper {
-max-width: 100%;
+  max-width: 100%;
 }
 
 .word-card {
@@ -206,7 +207,7 @@ max-width: 100%;
   display: flex;
   gap: 10px;
   * {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     border: 1px solid #400255;
     background-color: #faeef9;
     border-radius: 10px;
@@ -267,13 +268,13 @@ max-width: 100%;
 
 #upButton {
   font-size: 40px;
-  color: #9900CC;
+  color: #9900cc;
   position: fixed;
   bottom: 50px;
   right: 50px;
   padding: 15px;
   background-color: #ffffff;
-  border: 2px solid #9900CC;
+  border: 2px solid #9900cc;
   border-radius: 10px;
 
   cursor: pointer;
@@ -292,4 +293,14 @@ max-width: 100%;
 
 .main__dictionary {
   width: 100%;
+}
+
+.restrict-events {
+  pointer-events: none;
+}
+
+.answers {
+  margin: 5px 0;
+  font-size: 15px;
+  font-weight: 700;
 }

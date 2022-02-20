@@ -65,8 +65,6 @@ class TextbookNavigation {
 
   eventListeners() {
     this.selectChapter.addEventListener('change', () => {
-      localStorage.setItem('scroll', '0');
-
       if (+this.selectChapter.value - 1 === chapterDifficult
         && localStorageUtil.checkAuthorization()) {
         this.chapterNavigation.classList.add('hidden');
@@ -84,14 +82,12 @@ class TextbookNavigation {
     });
 
     this.selectPage.addEventListener('change', () => {
-      localStorage.setItem('scroll', '0');
       cards.page = +this.selectPage.value - 1;
       cards.render('usual');
       localStorageUtil.putPage(`${cards.page}`);
     });
 
     this.backBTN.addEventListener('click', () => {
-      localStorage.setItem('scroll', '0');
       if (+this.selectPage.value > 1) {
         this.selectPage.value = `${+this.selectPage.value - 1}`;
         cards.page -= 1;
@@ -101,7 +97,6 @@ class TextbookNavigation {
     });
 
     this.nextBTN.addEventListener('click', () => {
-      localStorage.setItem('scroll', '0');
       if (+this.selectPage.value < pagesAmount) {
         this.selectPage.value = `${+this.selectPage.value + 1}`;
         cards.page += 1;

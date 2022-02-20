@@ -1,4 +1,6 @@
-import { IUser, ICards, ICreateUserWordData, IStatistics, ISignIn } from './interfaces';
+import {
+  IUser, ICards, ICreateUserWordData, IStatistics, ISignIn,
+} from './interfaces';
 import { baseURL, emptyUserStatistics } from './consts';
 import { localStorageUtil } from './textbook/localStorageUtil';
 
@@ -50,7 +52,7 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
         },
-      }
+      },
     );
     const data = await response.json();
     res = await data[0].paginatedResults;
@@ -131,7 +133,7 @@ export async function getUserHardWords(): Promise<ICards[]> {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    }
+    },
   );
   const res = await response.json();
   return res[0].paginatedResults;
@@ -141,22 +143,21 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
   const { token } = localStorageUtil.getUserInfo();
   const { userId } = localStorageUtil.getUserInfo();
   const response: Response = await fetch(
-    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22easy%22%7D]%7D`,
+    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22learned%22%7D]%7D`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    }
+    },
   );
   const res = await response.json();
-  // console.log(res);
   return res[0].paginatedResults;
 }
 
 export async function updateUserStatistics(statistics: IStatistics) {
   const { token, userId } = localStorageUtil.getUserInfo();
-  console.log(statistics);
+
   await fetch(`${baseURL}/users/${userId}/statistics`, {
     method: 'PUT',
     headers: {
