@@ -72,7 +72,7 @@ export async function getWord(id: string): Promise<ICards> {
 
 export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
-  const a = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+  await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -81,8 +81,6 @@ export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordDa
     },
     body: JSON.stringify(word),
   });
-  const b = await a.json();
-  console.log(b);
 };
 
 export const updateUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
@@ -154,14 +152,13 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
     },
   );
   const res = await response.json();
-  // console.log(res);
   return res[0].paginatedResults;
 }
 
 export async function updateUserStatistics(statistics: IStatistics) {
   const { token, userId } = localStorageUtil.getUserInfo();
 
-  const res = await fetch(`${baseURL}/users/${userId}/statistics`, {
+  await fetch(`${baseURL}/users/${userId}/statistics`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -170,8 +167,6 @@ export async function updateUserStatistics(statistics: IStatistics) {
     },
     body: JSON.stringify(statistics),
   });
-  const a = await res.json();
-  console.log(a);
 }
 
 export async function getUserStatistics(): Promise<IStatistics | undefined> {

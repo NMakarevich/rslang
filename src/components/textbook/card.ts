@@ -24,7 +24,6 @@ class Card {
   }
 
   render(): HTMLElement {
-    // console.log(this.data);
     this.wordCard.classList.add('word-card');
     let hideDifficultBtn = '';
     let hideStudiedBtn = '';
@@ -40,14 +39,14 @@ class Card {
         hideStudiedBtn = 'hidden';
       } else {
         difficultClass = 'difficult restrict-events';
-        difficultButtonText = 'Добавлено в сложные';
+        difficultButtonText = 'Сложное слово';
         hideStudiedBtn = 'hidden';
       }
     }
 
     if (this.data.userWord?.difficulty === 'learned') {
       studiedClass = 'studied restrict-events';
-      studiedButtonText = 'Слово изучено';
+      studiedButtonText = 'Изученное слово';
       hideDifficultBtn = 'hidden';
     }
 
@@ -76,11 +75,11 @@ class Card {
         <p class="word-title">Пример:</p>
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
+        <div class="answers">${answers}</div>
         <div class="button-wrapper">
         <button type="button" class="add-to-difficult  ${difficultClass} ${hideDifficultBtn}" id="${this.data.id}">${difficultButtonText}</button>
         <button type="button" class="add-to-studied ${studiedClass} ${hideStudiedBtn}" id="${this.data.id}">${studiedButtonText}</button>
         </div>
-        <div>${answers}</div>
     </div>
     <img class="word-image" src="https://rslang-team32.herokuapp.com/${this.data.image}" alt="">`;
     this.eventListeners();
@@ -122,7 +121,7 @@ class Card {
         button.classList.add('difficult');
         button.classList.add('restrict-events');
         button.nextElementSibling?.classList.add('hidden');
-        button.innerText = 'Добавлено в сложные';
+        button.innerText = 'Сложное слово';
       }
       if (optionalData) {
         if (localStorageUtil.getChapter() === chapterDifficult) {
@@ -141,7 +140,7 @@ class Card {
           button.classList.add('difficult');
           button.classList.add('restrict-events');
           button.nextElementSibling?.classList.add('hidden');
-          button.innerText = 'Добавлено в сложные';
+          button.innerText = 'Сложное слово';
         }
       }
     } else {
@@ -176,7 +175,7 @@ class Card {
       button.classList.add('studied');
       button.classList.add('restrict-events');
       button.previousElementSibling?.classList.add('hidden');
-      button.innerText = 'Слово изучено';
+      button.innerText = 'Изученное слово';
     } else {
       this.showModalWindow();
     }
