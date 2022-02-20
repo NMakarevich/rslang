@@ -21,21 +21,23 @@ export const emptyUserWord: IUserWord = {
 export const emptyUserStatistics: IStatistics = {
   learnedWords: 0,
   optional: {
-    sprint: [
-      {
-        date: new Date().toLocaleDateString('ru-RU').split('.').join('-'),
-        wrong: 0,
-        right: 0,
-        rightSequence: 0,
-      },
-    ],
-    audiocall: [
-      {
-        date: new Date().toLocaleDateString('ru-RU').split('.').join('-'),
-        wrong: 0,
-        right: 0,
-        rightSequence: 0,
-      },
-    ],
+    games: {
+      sprint: [
+        {
+          date: new Date().toLocaleDateString('ru-RU').split('.').join('-'),
+          wrong: 0,
+          right: 0,
+          rightSequence: 0,
+        },
+      ],
+      audiocall: [
+        {
+          date: new Date().toLocaleDateString('ru-RU').split('.').join('-'),
+          wrong: 0,
+          right: 0,
+          rightSequence: 0,
+        },
+      ],
+    }
   },
 };

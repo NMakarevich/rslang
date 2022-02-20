@@ -70,6 +70,8 @@ export interface IUserWord {
   optional: {
     answers: string;
   };
+  id?: string;
+  wordId?: string;
 }
 
 export interface IGameStatistic {
@@ -80,9 +82,12 @@ export interface IGameStatistic {
 }
 
 export interface IStatistics {
+  id?: string;
   learnedWords: number;
   optional: {
-    sprint: IGameStatistic[];
-    audiocall: IGameStatistic[];
+    games: {
+      sprint: IGameStatistic[];
+      audiocall: IGameStatistic[];
+    }
   };
 }
