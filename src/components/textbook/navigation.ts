@@ -7,7 +7,7 @@ import { getWords } from '../api';
 import { ICards } from '../interfaces';
 
 class TextbookNavigation {
-  render(): void {
+  render = async () => {
     const html = `<div class="textbook-header">
                     <div class="controls">
                       <select id="select-chapter">
@@ -21,7 +21,7 @@ class TextbookNavigation {
                       </select>
                       <div class="navigation ${this.isHidden()}">
                         <button id="back-btn"></button>
-                        ${this.renderSelectPage()}
+                        ${await this.renderSelectPage()}
                         <button id="next-btn"></button>
                       </div>
                     </div>
@@ -34,17 +34,14 @@ class TextbookNavigation {
     if (!textbookHeader) return;
     textbookHeader.innerHTML = html;
     this.eventListeners();
-  }
+  };
 
-  renderSelectPage(): string {
-    let optionList = '';
-    for (let i = 1; i <= pagesAmount; i += 1) {
-      optionList += `<option value="${i}">стр. ${i}</option>`;
-    }
+  renderSelectPage = async () => {
+    const options = await this.checkPageIsLearned();
     return `<select id="select-page">
-              ${optionList}
+              ${options}
             </select>`;
-  }
+  };
 
   get selectPage(): HTMLSelectElement {
     return document.querySelector('#select-page') as HTMLSelectElement;
@@ -79,9 +76,8 @@ class TextbookNavigation {
   }
 
   eventListeners() {
-    this.selectChapter.addEventListener('change', () => {
-      if (+this.selectChapter.value - 1 === chapterDifficult
-        && localStorageUtil.checkAuthorization()) {
+    this.selectChapter.addEventListener('change', async () => {
+      if (+this.selectChapter.value - 1 === chapterDifficult && localStorageUtil.checkAuthorization()) {
         this.chapterNavigation.classList.add('hidden');
         cards.render('difficult');
       } else if (this.chapterNavigation.classList.contains('hidden')) {
@@ -95,6 +91,7 @@ class TextbookNavigation {
       localStorageUtil.putChapter(`${cards.group}`);
       localStorageUtil.putPage('0');
       this.checkPage();
+      this.selectPage.innerHTML = await this.checkPageIsLearned();
     });
 
     this.selectPage.addEventListener('change', () => {
@@ -171,6 +168,25 @@ class TextbookNavigation {
       return 'hidden';
     }
     return '';
+  }
+
+  async checkPageIsLearned() {
+    const array = [];
+    let optionList = '';
+    for (let i = 0; i < 30; i += 1) {
+      array.push(getWords(i, cards.group));
+    }
+    return Promise.all(array)
+      .then((values) => {
+        values.forEach((el, i) => {
+          const learned = el.filter((x) => x.userWord?.difficulty === 'learned');
+          const hard = el.filter((x) => x.userWord?.difficulty === 'hard');
+          if (learned.length + hard.length === 20) {
+            optionList += `<option class="learned-page" value="${i + 1}">стр. ${i + 1}</option>`;
+          } else optionList += `<option value="${i + 1}">стр. ${i + 1}</option>`;
+        });
+      })
+      .then(() => optionList);
   }
 }
 

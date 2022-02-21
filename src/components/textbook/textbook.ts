@@ -54,3 +54,4 @@ if (localStorageUtil.getChapter() === chapterDifficult && localStorageUtil.check
 } else {
   cards.render('usual');
 }
+/// /////////////////////////////////////////////

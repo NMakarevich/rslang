@@ -7,13 +7,13 @@ export const chapterDifficult = 6;
 export const answersCount = 5;
 
 export enum Difficulty {
-  'new' = 'new',
+  'inProgress' = 'inProgress',
   'hard' = 'hard',
   'learned' = 'learned',
 }
 
 export const emptyUserWord: IUserWord = {
-  difficulty: Difficulty.new,
+  difficulty: Difficulty.inProgress,
   optional: {
     answers: '',
   },
@@ -39,6 +39,6 @@ export const emptyUserStatistics: IStatistics = {
           rightSequence: 0,
         },
       ],
-    }
+    },
   },
 };
