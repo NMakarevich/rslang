@@ -1,0 +1,46 @@
+.statictic__wrapper {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  margin: 0 auto;
+  max-width: 900px;
+}
+.statistic__container {
+  display: flex;
+  justify-content: space-around;
+  
+}
+.statistic__item {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  /* border: 2px solid #6c7afc; */
+  border-radius: 10px;
+  align-items: center;
+}
+.statistic__count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.statistic__count__back {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  background-color: #d373f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.statistic__count__text {
+  font-size: 40px;
+  color: white;
+}
+.statistic__count-name {
+  font-size: 16px;
+  color: #6c7afc;
+  margin: 10px;
+  text-align: center;
+}

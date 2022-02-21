@@ -1,4 +1,6 @@
 import { ICards } from '../interfaces';
+// eslint-disable-next-line import/no-cycle
+import { rigthSeries } from './function';
 import WordResult from './word_result';
 
 class SprintResult {
@@ -53,6 +55,7 @@ class SprintResult {
     sprintResult.appendChild(sprintResultTextNo);
     sprintResult.appendChild(sprintResultListNo);
     sprintResult.append(sprintResultBtnBtns);
+    rigthSeries(rigth);
     return sprintResult;
   }
 }
