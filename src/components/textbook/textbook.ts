@@ -65,20 +65,3 @@ if (localStorageUtil.getChapter() === chapterDifficult && localStorageUtil.check
   cards.render('usual');
 }
 /// /////////////////////////////////////////////
-export async function checkPageIsLearned() {
-  const array = [];
-  let optionList = '';
-  for (let i = 0; i < 30; i += 1) {
-    array.push(getWords(i, cards.group));
-  }
-  return Promise.all(array).then((values) => {
-    values.forEach((el, i) => {
-      const learned = el.filter((x) => x.userWord?.difficulty === 'learned');
-      const hard = el.filter((x) => x.userWord?.difficulty === 'hard');
-      if (learned.length + hard.length === 20) {
-        optionList += `<option class="learned-page" value="${i + 1}">стр. ${i + 1}</option>`;
-      }
-      optionList += `<option value="${i + 1}">стр. ${i + 1}</option>`;
-    });
-  }).then(() => optionList);
-}
