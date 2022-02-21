@@ -175,6 +175,7 @@ class Card {
       if (statistics != null) {
         delete statistics.id;
         statistics.learnedWords += 1;
+        console.log(statistics);
         await updateUserStatistics(statistics);
       }
       button.classList.add('studied');

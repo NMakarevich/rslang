@@ -74,6 +74,10 @@ class TextbookNavigation {
     return document.querySelector('.game') as HTMLElement;
   }
 
+  get textbook(): HTMLElement {
+    return document.querySelector('.textbook') as HTMLElement;
+  }
+
   eventListeners() {
     this.selectChapter.addEventListener('change', () => {
       if (+this.selectChapter.value - 1 === chapterDifficult
@@ -136,6 +140,9 @@ class TextbookNavigation {
       if (!this.gameButtons?.classList.contains('inactive')) {
         this.gameButtons?.classList.add('inactive');
       }
+      if (!this.textbook?.classList.contains('learned')) {
+        this.textbook?.classList.add('learned');
+      }
     } else {
       if (!this.pageNotification?.classList.contains('hidden')) {
         this.pageNotification?.classList.add('hidden');
@@ -145,6 +152,9 @@ class TextbookNavigation {
       }
       if (this.gameButtons?.classList.contains('inactive')) {
         this.gameButtons?.classList.remove('inactive');
+      }
+      if (this.textbook?.classList.contains('learned')) {
+        this.textbook?.classList.remove('learned');
       }
     }
   };

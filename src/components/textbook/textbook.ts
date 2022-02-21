@@ -7,7 +7,7 @@ import { ICards } from '../interfaces';
 import { getWords, getUserHardWords } from '../api';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
-import { chapterDifficult, wordsPerPage } from '../consts';
+import { chapterDifficult } from '../consts';
 
 export class Cards {
   page: number;
@@ -35,7 +35,6 @@ export class Cards {
         data.forEach((card: ICards) => {
           (textbookWrapper.firstElementChild as HTMLUListElement).append(new Card(card).render());
         });
-        this.checkP();
       })
       .then(() => {
         const selectPage = document.getElementById('select-page') as HTMLSelectElement;
@@ -54,14 +53,6 @@ export class Cards {
       document.body.removeChild(div);
     }, 2000);
   }
-
-  checkP = async () => {
-    const data = await getWords(this.page, this.group);
-    const hard = data.filter((x: ICards) => x.userWord?.difficulty === 'hard');
-    const learned = data.filter((x: ICards) => x.userWord?.difficulty === 'learned');
-    const total = hard.length + learned.length;
-    return total === wordsPerPage;
-  };
 }
 
 export const cards = new Cards();
