@@ -77,8 +77,9 @@ export async function checkPageIsLearned() {
       const hard = el.filter((x) => x.userWord?.difficulty === 'hard');
       if (learned.length + hard.length === 20) {
         optionList += `<option class="learned-page" value="${i + 1}">стр. ${i + 1}</option>`;
+      } else {
+        optionList += `<option value="${i + 1}">стр. ${i + 1}</option>`;
       }
-      optionList += `<option value="${i + 1}">стр. ${i + 1}</option>`;
     });
   }).then(() => optionList);
 }
