@@ -23,17 +23,22 @@
     list-style: none;
   }
   &__answer {
-    display: block;
     padding: 10px;
-    border: 1px solid black;
+    background-image: url('../assets/svg/ellipse.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: #6c7afc;
     cursor: pointer;
+    &:hover {
+      filter: drop-shadow(0 0 15px #6c7afc);
+    }
   }
   &__correct {
-    box-shadow: 0 0 10px green;
+    filter: drop-shadow(0 0 10px green);
   }
   
   &__wrong {
-    box-shadow: 0 0 10px red;
+    filter: drop-shadow(0 0 10px red);
   }
 }
 

@@ -1,13 +1,32 @@
-.main__audiocall {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  &__start,
-  .button__next,
-  .button__results {
-    padding: 10px;
+.main {
+  &__audiocall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-family: "Neucha", cursive;
+    &__start,
+    .button__next,
+    .button__results {
+      padding: 10px;
+      background-color: transparent;
+      border: none;
+      background-image: url('../assets/svg/ellipse.svg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      color: #6c7afc;
+      cursor: pointer;
+      &:hover {
+        filter: drop-shadow(0 0 10px #6c7afc);
+      }
+      &:disabled {
+        color: #abb3fa;
+        filter: none;
+      }
+    }
   }
 }
+
 
 .audiocall {
   &__container {
@@ -22,14 +41,40 @@
       gap: 20px
     }
   }
+  &__difficulty {
+    display: flex;
+    gap: 20px;
+    &-select {
+      width: 40px;
+      border-radius: 5px;
+      text-align: center;
+    }
+  }
+  &__start {
+    background-color: transparent;
+    border: none;
+    color: #6c7afc;
+    background-image: url('../assets/svg/ellipse.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    &:hover {
+      filter: drop-shadow(0 0 6px #4444dd)
+    }
+  }
+  &__controlls {
+    display: flex;
+    gap: 20px
+  }
   &__subtitle {
-    margin-bottom: 10px;
+    letter-spacing: 1px;
   }
   &__results {
     margin-top: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 15px;
     &-title {
       margin-bottom: 10px;
     }
@@ -38,11 +83,13 @@
     }
     &-correct {
       padding: 10px 20px;
-      background-color: green;
+      background-color: rgb(129, 197, 129);
+      border-radius: 10px 0 0 10px;
     }
     &-wrong {
       padding: 10px 20px;
-      background-color: red;
+      background-color: rgb(207, 91, 91);
+      border-radius: 0 10px 10px 0;
     }
     .results__list {
       padding: 0;
@@ -54,9 +101,14 @@
     gap: 20px;
   }
   &__link {
-    display: block;
     padding: 10px;
-    color: black;
+    color: #6c7afc;
     text-decoration: none;
+    background-image: url('../assets/svg/ellipse.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    &-hover {
+      filter: drop-shadow(0 0 10px #6c7afc);
+    }
   }
 }

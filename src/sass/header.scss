@@ -19,21 +19,25 @@
     margin: 0;
     font-size: 24px;
   }
-  &__user-name {
-    font-size: 25px;
-  }
-  &__user-button {
-    font-family: "Neucha", cursive;
-    font-size: 16px;
-    width: 60px;
-    height: 30px;
-    background-color: white;
-    color: #9900cc;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    margin-left: 5px;
+  &__user {
+    display: flex;
+    gap: 15px;
+    &-name {
+      font-size: 25px;
+    }
+    &-button {
+      font-family: "Neucha", cursive;
+      font-size: 16px;
+      width: 60px;
+      height: 30px;
+      background-color: white;
+      color: #9900cc;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-left: 5px;
+    }
   }
   &__burger {
     position: relative;
