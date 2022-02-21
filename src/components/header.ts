@@ -68,6 +68,7 @@ class Header {
     this.header.querySelector('.header__burger')?.addEventListener('click', this.toggleBurger);
     document.addEventListener('click', this.closeBurger);
     document.addEventListener('signin', this.toggleUser);
+    document.addEventListener('logout', this.logout);
     this.header.querySelector('.header__user-button')?.addEventListener('click', this.logout);
   }
 }
