@@ -1,6 +1,4 @@
-import {
-  IUser, ICards, ICreateUserWordData, IStatistics, ISignIn,
-} from './interfaces';
+import { IUser, ICards, ICreateUserWordData, IStatistics, ISignIn } from './interfaces';
 import { baseURL, emptyUserStatistics } from './consts';
 import { localStorageUtil } from './textbook/localStorageUtil';
 
@@ -37,7 +35,10 @@ export async function updateToken(): Promise<void> {
     },
   });
   const userData: ISignIn = await response.json();
-  localStorageUtil.putUserInfo(userData);
+  const userInfo: ISignIn = localStorageUtil.getUserInfo();
+  userInfo.token = userData.token;
+  userInfo.refreshToken = userData.refreshToken;
+  localStorageUtil.putUserInfo(userInfo);
 }
 
 export async function getWords(page: number, group: number): Promise<ICards[]> {
@@ -52,7 +53,7 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json',
         },
-      },
+      }
     );
     const data = await response.json();
     res = await data[0].paginatedResults;
@@ -133,7 +134,7 @@ export async function getUserHardWords(): Promise<ICards[]> {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    },
+    }
   );
   const res = await response.json();
   return res[0].paginatedResults;
@@ -149,7 +150,7 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    },
+    }
   );
   const res = await response.json();
   return res[0].paginatedResults;
