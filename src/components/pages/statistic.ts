@@ -9,8 +9,8 @@ const statistic = {
       <h2 сlass='main__title'>Статистика</h2>
     </div>
     `;
-    const mainSprint = main.mainContainer.querySelector('.main__statistic') as HTMLElement;
-    mainSprint.append(await new Statistic().draw());
+    const mainStatistic = main.mainContainer.querySelector('.main__statistic') as HTMLElement;
+    mainStatistic.append(await new Statistic().draw());
   },
 };
 
