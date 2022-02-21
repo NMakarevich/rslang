@@ -3,17 +3,15 @@ import { pageWords } from './function';
 import SprintGame from './sprint_game';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 import { getWords } from '../api';
+import main from '../main';
 
 class SprintStart {
   draw() {
     let arr;
     const CAT_QUANTITY = 6;
+    const isFromDictionary = main.pages[0] === 'dictionary';
     const sprintContainer = document.createElement('div');
     sprintContainer.classList.add('sprint__container');
-    // const sprintExit = document.createElement('div');
-    // sprintExit.classList.add('sprint__exit');
-    // const sprintExitImg = document.createElement('img');
-    // sprintExitImg.classList.add('sprint__exit_img');
     const sprintStart = document.createElement('div');
     sprintStart.classList.add('sprint__start');
     const sptintStartContainer = document.createElement('div');
@@ -23,13 +21,12 @@ class SprintStart {
     sprintStartTitle.innerHTML = 'Спринт';
     const sprintStartDescription = document.createElement('p');
     sprintStartDescription.classList.add('sprint__start__description');
-    sprintStartDescription.innerHTML =
-      'Тренирует навык быстрого перевода с английского языка на русский. Вам нужно выбрать соответствует ли перевод предложенному слову';
+    sprintStartDescription.innerHTML = 'Тренирует навык быстрого перевода с английского языка на русский. Вам нужно выбрать соответствует ли перевод предложенному слову';
     const sprintCat = document.createElement('select');
     sprintCat.classList.add('sprint__cat');
     sprintCat.name = 'sprint__cat';
     sprintCat.id = 'sprint__cat';
-    for (let i = 0; i <= CAT_QUANTITY; i += 1) {
+    for (let i = 0; i <= CAT_QUANTITY - 1; i += 1) {
       const option = document.createElement('option');
       option.classList.add('sprint__cat__option');
       option.value = `${i + 1}`;
@@ -46,6 +43,9 @@ class SprintStart {
       arr = getWords(pageWords.page, pageWords.group);
       // sprintContainer.replaceWith(new SprintGame().draw(await arr));
     };
+    if (isFromDictionary) {
+      sprintCat.style.display = 'none';
+    }
     const sprintStartBtn = document.createElement('button');
     sprintStartBtn.classList.add('sprint__start__btn');
     sprintStartBtn.innerHTML = 'Начать';

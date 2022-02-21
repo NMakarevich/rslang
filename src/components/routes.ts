@@ -8,6 +8,7 @@ import team from './pages/team';
 import games from './pages/games';
 import sprint from './pages/sprint';
 import page404 from './pages/404';
+import statistic from './pages/statistic';
 
 const routes = [
   { component: page404 },
@@ -20,6 +21,7 @@ const routes = [
   { path: 'games/audio', component: new AudioCall() },
   { path: 'about', component: about },
   { path: 'team', component: team },
+  { path: 'statistic', component: statistic },
 ];
 
 export default routes;
