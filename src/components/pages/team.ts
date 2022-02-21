@@ -2,6 +2,9 @@ import main from '../main';
 
 const team = {
   render: () => {
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     main.mainContainer.innerHTML = `
     <div class='main__team team'>
       <h2 class='main__title'>О команде</h2> 
