@@ -38,7 +38,7 @@ class TextbookNavigation {
 
   renderSelectPage = async () => {
     const options = await checkPageIsLearned();
-
+    console.log(options);
     return `<select id="select-page">
               ${options}
             </select>`;
