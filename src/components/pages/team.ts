@@ -14,7 +14,16 @@ const team = {
             <a class='team__github' href='http://github.com/lisaliza6428' target='_blank'>lisaliza6428</a>
             <ul class='team__contribution'>
               <li class='team__contribution-item'>
-                Работа со словарем
+                Настройка бэкенда
+              </li>
+              <li class='team__contribution-item'>
+                Дизайн приложения
+              </li>
+              <li class='team__contribution-item'>
+                Создание учебника
+              </li>
+              <li class='team__contribution-item'>
+                Работа с API
               </li>
             </ul>
           </div>
@@ -27,7 +36,16 @@ const team = {
             <a class='team__github' href='http://github.com/nmakarevich' target='_blank'>NMakarevich</a>
             <ul class='team__contribution'>
               <li class='team__contribution-item'>
-                Верстка страниц учебника
+                Создание заготовок страниц
+              </li>
+              <li class='team__contribution-item'>
+                Роутинг
+              </li>
+              <li class='team__contribution-item'>
+                Работа с API
+              </li>
+              <li class='team__contribution-item'>
+                Мини игра "Аудиовызов"
               </li>
             </ul>
           </div>
@@ -41,6 +59,12 @@ const team = {
             <ul class='team__contribution'>
               <li class='team__contribution-item'>
                 Мини-игра "Спринт"
+              </li>
+              <li class='team__contribution-item'>
+                Работа с API
+              </li>
+              <li class='team__contribution-item'>
+                Статистика
               </li>
             </ul>
           </div>
