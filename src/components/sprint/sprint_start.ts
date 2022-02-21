@@ -39,29 +39,28 @@ class SprintStart {
       pageWords.group = localStorageUtil.getChapter();
       localStorageUtil.putPage('0');
       pageWords.page = localStorageUtil.getPage();
-      console.log(pageWords);
       arr = getWords(pageWords.page, pageWords.group);
-      // sprintContainer.replaceWith(new SprintGame().draw(await arr));
     };
     if (isFromDictionary) {
       sprintCat.style.display = 'none';
+    } else {
+      localStorageUtil.putChapter('0');
+      pageWords.group = localStorageUtil.getChapter();
+      localStorageUtil.putPage('0');
+      pageWords.page = localStorageUtil.getPage();
     }
     const sprintStartBtn = document.createElement('button');
     sprintStartBtn.classList.add('sprint__start__btn');
     sprintStartBtn.innerHTML = 'Начать';
     sprintStartBtn.onclick = async () => {
-      console.log(pageWords);
       pageWords.group = localStorageUtil.getChapter();
       pageWords.page = localStorageUtil.getPage();
-      console.log(pageWords);
       if (localStorageUtil.checkAuthorization()) {
         arr = getWords(pageWords.page, pageWords.group);
-        console.log(arr);
         sprintContainer.replaceWith(new SprintGame().draw(await arr));
       } else {
         pageWords.group = Number(sprintCat.value) - 1;
         arr = getWords(pageWords.page, pageWords.group);
-        console.log(arr);
         sprintContainer.replaceWith(new SprintGame().draw(await arr));
       }
     };
@@ -70,8 +69,6 @@ class SprintStart {
     sptintStartContainer.appendChild(sprintCat);
     sptintStartContainer.appendChild(sprintStartBtn);
     sprintStart.appendChild(sptintStartContainer);
-    // sprintExit.appendChild(sprintExitImg);
-    // sprintContainer.appendChild(sprintExit);
     sprintContainer.appendChild(sprintStart);
     sptintStartContainer.append(sprintStartTitle, sprintStartDescription);
     sptintStartContainer.append(sprintCat, sprintStartBtn);

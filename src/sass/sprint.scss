@@ -129,7 +129,7 @@
 	cursor: pointer;
 } 
 
-.sprint__game__variant:hover, .sprint__game__voice:hover {
+.sprint__game__variant:hover, .sprint__game__voice:hover, .sprint__result__item__voice:hover {
   transform: scale(1.05);
 
 }
@@ -186,7 +186,7 @@
 	margin-right: 10px;
 	background: url('../assets/svg/volume.svg') center center no-repeat;
 	background-size: cover;
-
+  cursor: pointer;
 }
 .sprint__result__item__text {}
 .sprint__result__item {}
