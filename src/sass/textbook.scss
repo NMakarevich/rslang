@@ -20,6 +20,7 @@ h3 {
 }
 
 #textbook-header {
+  height: 60px;
   padding: 10px 0 5px 0;
   display: flex;
   flex-direction: row;
@@ -101,6 +102,12 @@ h3 {
       color: #560372;
     }
   }
+
+}
+
+.learned-page {
+  color: red !important;
+  font-size: 600 !important;
 }
 
 #page-notification {

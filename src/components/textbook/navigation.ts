@@ -1,13 +1,13 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import { pagesAmount, chapterDifficult } from '../consts';
-import { cards } from './textbook';
+import { cards, checkPageIsLearned } from './textbook';
 import { localStorageUtil } from './localStorageUtil';
 import { getWords } from '../api';
 import { ICards } from '../interfaces';
 
 class TextbookNavigation {
-  render(): void {
+  render = async () => {
     const html = `<div class="textbook-header">
                     <div class="controls">
                       <select id="select-chapter">
@@ -21,7 +21,7 @@ class TextbookNavigation {
                       </select>
                       <div class="navigation ${this.isHidden()}">
                         <button id="back-btn"></button>
-                        ${this.renderSelectPage()}
+                        ${await this.renderSelectPage()}
                         <button id="next-btn"></button>
                       </div>
                     </div>
@@ -34,17 +34,15 @@ class TextbookNavigation {
     if (!textbookHeader) return;
     textbookHeader.innerHTML = html;
     this.eventListeners();
-  }
+  };
 
-  renderSelectPage(): string {
-    let optionList = '';
-    for (let i = 1; i <= pagesAmount; i += 1) {
-      optionList += `<option value="${i}">стр. ${i}</option>`;
-    }
+  renderSelectPage = async () => {
+    const options = await checkPageIsLearned();
+
     return `<select id="select-page">
-              ${optionList}
+              ${options}
             </select>`;
-  }
+  };
 
   get selectPage(): HTMLSelectElement {
     return document.querySelector('#select-page') as HTMLSelectElement;
@@ -95,6 +93,8 @@ class TextbookNavigation {
       localStorageUtil.putChapter(`${cards.group}`);
       localStorageUtil.putPage('0');
       this.checkPage();
+      this.render();
+      textbookNavigation.render();
     });
 
     this.selectPage.addEventListener('change', () => {
