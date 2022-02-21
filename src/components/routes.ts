@@ -1,6 +1,5 @@
 import home from './pages/home';
 import Dictionary from './pages/dictionary';
-import about from './pages/about';
 import AudioCall from './pages/audiocall';
 import Registration from './pages/registration';
 import Login from './pages/login';
@@ -19,7 +18,6 @@ const routes = [
   { path: 'games', component: games },
   { path: 'games/sprint', component: sprint },
   { path: 'games/audio', component: new AudioCall() },
-  { path: 'about', component: about },
   { path: 'team', component: team },
   { path: 'statistic', component: statistic },
 ];

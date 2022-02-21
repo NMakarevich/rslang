@@ -32,6 +32,8 @@ body {
   padding: 20px;
 }
 
+
+
 .main {
   background-color: #d373f3;
   flex: 1;
@@ -40,9 +42,15 @@ body {
     margin: 0 auto;
     justify-content: center;
     flex-direction: column;
+    h2 {
+      color: white;
+    }
   }
   &.bg-white {
     background-color: #ffffff;
+    h2 {
+      color:#d373f3;
+    }
   }
 }
 

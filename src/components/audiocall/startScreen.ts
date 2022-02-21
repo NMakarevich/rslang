@@ -20,6 +20,9 @@ class StartScreen {
   }
 
   render(): HTMLDivElement {
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     this.container.classList.add('audiocall__container');
     this.isFromDictionary = main.pages[0] === 'dictionary';
     this.container.innerHTML = `
@@ -29,7 +32,12 @@ class StartScreen {
         соответствующую выбранному слову
       </p>
       <div class="audiocall__controlls">
-        <select class="audiocall__difficult" ${this.isFromDictionary ? 'hidden' : ''}>${this.addOptions()}</select>
+        <div class="audiocall__difficulty">
+          <span>Сложность:</span>
+          <select class="audiocall__difficulty-select" ${
+            this.isFromDictionary ? 'hidden' : ''
+          }>${this.addOptions()}</select>
+          </div>
         <button type="button" class="audiocall__start">Начать</button>
       </div>
     `;
@@ -38,7 +46,7 @@ class StartScreen {
   }
 
   get select(): HTMLSelectElement {
-    return this.container.querySelector('.audiocall__difficult') as HTMLSelectElement;
+    return this.container.querySelector('.audiocall__difficulty-select') as HTMLSelectElement;
   }
 
   get startButton(): HTMLButtonElement {

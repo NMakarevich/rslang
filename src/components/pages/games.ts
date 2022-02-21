@@ -2,7 +2,9 @@ import main from '../main';
 
 const games = {
   render: () => {
-    main.main.classList.add('bg-white');
+    if (main.main.classList.contains('bg-white')) {
+      main.main.classList.remove('bg-white');
+    }
     main.mainContainer.innerHTML = `<div class='main__games'>
     <h2 сlass='main__title'>Игры</h2>
     <div class='games'>
