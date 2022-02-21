@@ -5,6 +5,7 @@ class Statistic {
   async draw() {
     const staticticWrapper = document.createElement('div');
     staticticWrapper.classList.add('statictic__wrapper');
+    if (localStorageUtil.checkAuthorization()) {
     const statisticGameName = document.createElement('div');
     statisticGameName.classList.add('statistic__game__name');
     statisticGameName.innerHTML = 'Спринт';
@@ -25,16 +26,16 @@ class Statistic {
         statisticCountName.innerHTML = '% правильных ответов';
         const series = await getPercent();
         console.log(series);
-        if (localStorageUtil.checkAuthorization()) {
+        // if (localStorageUtil.checkAuthorization()) {
         statisticCountText.innerHTML = series;
-        }
+        // }
       }
       if (i === 1) {
         statisticCountName.innerHTML = 'Самая длинная серия';
         const series = await gerSeries();
-        if (localStorageUtil.checkAuthorization()) {
+        // if (localStorageUtil.checkAuthorization()) {
         statisticCountText.innerHTML = String(series);
-        }
+        // }
       }
       // if (i === 2) {
       //   statisticCountName.innerHTML = 'Новые слова за день';
@@ -78,7 +79,9 @@ class Statistic {
     }
     // eslint-disable-next-line max-len
     staticticWrapper.append(statisticGameName, statisticContainer, statisticGameName1, statisticContainer1);
+    
     return staticticWrapper;
+  } else return staticticWrapper.innerHTML = 'Зарегистрируйтесь, чтобы получить статистику';
   }
 }
 

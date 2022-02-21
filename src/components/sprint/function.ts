@@ -276,23 +276,27 @@ export async function rigthSeries(rigth: Array<ICards>) {
 }
 
 export async function getPercent() {
-  const statistics = await getUserStatistics() as IStatistics;
-  delete statistics.id;
-  const rightSequence = statistics.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
-  if (rightSequence[0]) {
-    const rightWords = rightSequence[0].right;
-    const wrongWords = rightSequence[0].wrong;
-    const percentWords = `${Math.round((rightWords / (rightWords + wrongWords)) * 100)}%`;
-    return percentWords;
-  } return '0';
+  // if (localStorageUtil.checkAuthorization()) {
+    const statistics = await getUserStatistics() as IStatistics;
+    delete statistics.id;
+    const rightSequence = statistics.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
+    if (rightSequence[0]) {
+      const rightWords = rightSequence[0].right;
+      const wrongWords = rightSequence[0].wrong;
+      const percentWords = `${Math.round((rightWords / (rightWords + wrongWords)) * 100)}%`;
+      return percentWords;
+    } return '0';
+  // } return 'Зарегистрируйтесь чтобы получить статистику';
 }
 
 export async function gerSeries() {
-  const series = await getUserStatistics() as IStatistics;
-  const rightSequence = series.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
-  if (rightSequence[0]) {
-    return rightSequence[0].rightSequence;
-  } return 0;
+  // if (localStorageUtil.checkAuthorization()) {
+    const series = await getUserStatistics() as IStatistics;
+    const rightSequence = series.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
+    if (rightSequence[0]) {
+      return rightSequence[0].rightSequence;
+    } return 0;
+  // } return 
 }
 
 // export async function getNew() {
