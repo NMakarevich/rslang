@@ -34,6 +34,11 @@ export async function updateToken(): Promise<void> {
       Accept: 'application/json',
     },
   });
+  if (response.status === 403) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+    return;
+  }
   const userData: ISignIn = await response.json();
   const userInfo: ISignIn = localStorageUtil.getUserInfo();
   userInfo.token = userData.token;
@@ -55,6 +60,10 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
         },
       }
     );
+    if (response.status === 401) {
+      const event = new CustomEvent('logout');
+      document.dispatchEvent(event);
+    }
     const data = await response.json();
     res = await data[0].paginatedResults;
   } else {
@@ -67,13 +76,17 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
 
 export async function getWord(id: string): Promise<ICards> {
   const response: Response = await fetch(`${baseURL}/words/${id}`);
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
   const res = await response.json();
   return res;
 }
 
 export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
-  await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+  const response = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -82,11 +95,15 @@ export const createUserWord = async ({ userId, wordId, word }: ICreateUserWordDa
     },
     body: JSON.stringify(word),
   });
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
 };
 
 export const updateUserWord = async ({ userId, wordId, word }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
-  await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+  const response = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -95,6 +112,10 @@ export const updateUserWord = async ({ userId, wordId, word }: ICreateUserWordDa
     },
     body: JSON.stringify(word),
   });
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
 };
 
 export const getUserWord = async (userId: string, wordId: string) => {
@@ -107,6 +128,10 @@ export const getUserWord = async (userId: string, wordId: string) => {
       'Content-Type': 'application/json',
     },
   });
+  if (res.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
   if (res.status === 404) return null;
   const data = await res.json();
   return data;
@@ -114,7 +139,7 @@ export const getUserWord = async (userId: string, wordId: string) => {
 
 export const deleteUserWord = async ({ userId, wordId }: ICreateUserWordData) => {
   const { token } = localStorageUtil.getUserInfo();
-  await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
+  const response = await fetch(`${baseURL}/users/${userId}/words/${wordId}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -122,6 +147,10 @@ export const deleteUserWord = async ({ userId, wordId }: ICreateUserWordData) =>
       'Content-Type': 'application/json',
     },
   });
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
 };
 
 export async function getUserHardWords(): Promise<ICards[]> {
@@ -136,6 +165,10 @@ export async function getUserHardWords(): Promise<ICards[]> {
       },
     }
   );
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
   const res = await response.json();
   return res[0].paginatedResults;
 }
@@ -152,14 +185,17 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
       },
     }
   );
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
   const res = await response.json();
   return res[0].paginatedResults;
 }
 
 export async function updateUserStatistics(statistics: IStatistics) {
   const { token, userId } = localStorageUtil.getUserInfo();
-
-  await fetch(`${baseURL}/users/${userId}/statistics`, {
+  const response = await fetch(`${baseURL}/users/${userId}/statistics`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -168,21 +204,28 @@ export async function updateUserStatistics(statistics: IStatistics) {
     },
     body: JSON.stringify(statistics),
   });
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
 }
 
 export async function getUserStatistics(): Promise<IStatistics | undefined> {
   if (!localStorageUtil.checkAuthorization()) return undefined;
   const { token, userId } = localStorageUtil.getUserInfo();
-  const request: Response = await fetch(`${baseURL}/users/${userId}/statistics`, {
+  const response: Response = await fetch(`${baseURL}/users/${userId}/statistics`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
     },
   });
-  if (request.status === 404) {
+  if (response.status === 404) {
     await updateUserStatistics(emptyUserStatistics);
   }
-  if (request.status === 401) await updateToken();
-  const response: IStatistics = await request.json();
-  return response;
+  if (response.status === 401) {
+    const event = new CustomEvent('logout');
+    document.dispatchEvent(event);
+  }
+  const res: IStatistics = await response.json();
+  return res;
 }
