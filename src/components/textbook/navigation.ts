@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import { pagesAmount, chapterDifficult } from '../consts';
-import { cards, checkPageIsLearned } from './textbook';
+import { cards } from './textbook';
 import { localStorageUtil } from './localStorageUtil';
 import { getWords } from '../api';
 import { ICards } from '../interfaces';
@@ -37,8 +37,7 @@ class TextbookNavigation {
   };
 
   renderSelectPage = async () => {
-    const options = await checkPageIsLearned();
-    console.log(options);
+    const options = await this.checkPageIsLearned();
     return `<select id="select-page">
               ${options}
             </select>`;
@@ -77,9 +76,8 @@ class TextbookNavigation {
   }
 
   eventListeners() {
-    this.selectChapter.addEventListener('change', () => {
-      if (+this.selectChapter.value - 1 === chapterDifficult
-        && localStorageUtil.checkAuthorization()) {
+    this.selectChapter.addEventListener('change', async () => {
+      if (+this.selectChapter.value - 1 === chapterDifficult && localStorageUtil.checkAuthorization()) {
         this.chapterNavigation.classList.add('hidden');
         cards.render('difficult');
       } else if (this.chapterNavigation.classList.contains('hidden')) {
@@ -93,8 +91,7 @@ class TextbookNavigation {
       localStorageUtil.putChapter(`${cards.group}`);
       localStorageUtil.putPage('0');
       this.checkPage();
-      this.render();
-      textbookNavigation.render();
+      this.selectPage.innerHTML = await this.checkPageIsLearned();
     });
 
     this.selectPage.addEventListener('change', () => {
@@ -171,6 +168,25 @@ class TextbookNavigation {
       return 'hidden';
     }
     return '';
+  }
+
+  async checkPageIsLearned() {
+    const array = [];
+    let optionList = '';
+    for (let i = 0; i < 30; i += 1) {
+      array.push(getWords(i, cards.group));
+    }
+    return Promise.all(array)
+      .then((values) => {
+        values.forEach((el, i) => {
+          const learned = el.filter((x) => x.userWord?.difficulty === 'learned');
+          const hard = el.filter((x) => x.userWord?.difficulty === 'hard');
+          if (learned.length + hard.length === 20) {
+            optionList += `<option class="learned-page" value="${i + 1}">стр. ${i + 1}</option>`;
+          } else optionList += `<option value="${i + 1}">стр. ${i + 1}</option>`;
+        });
+      })
+      .then(() => optionList);
   }
 }
 
