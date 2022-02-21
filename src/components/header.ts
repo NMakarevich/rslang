@@ -18,7 +18,6 @@ class Header {
             <li class='nav__item' id='dictionary'><a class='nav__link' href="#/dictionary">Учебник</a></li>
             <li class='nav__item' id='games'><a class='nav__link' href="#/games">Игры</a></li>
             <li class='nav__item' id='statistic'><a class='nav__link' href="#/statistic">Статистика</a></li>
-            <li class='nav__item' id='about'><a class='nav__link' href="#/about">О приложении</a></li>
             <li class='nav__item' id='team'><a class='nav__link' href="#/team">Команда</a></li>
           </ul>
         </nav>
