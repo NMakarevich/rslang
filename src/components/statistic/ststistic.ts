@@ -1,4 +1,5 @@
 import { gerSeries, getPercent } from '../sprint/function';
+import { localStorageUtil } from '../textbook/localStorageUtil';
 
 class Statistic {
   async draw() {
@@ -24,12 +25,16 @@ class Statistic {
         statisticCountName.innerHTML = '% правильных ответов';
         const series = await getPercent();
         console.log(series);
+        if (localStorageUtil.checkAuthorization()) {
         statisticCountText.innerHTML = series;
+        }
       }
       if (i === 1) {
         statisticCountName.innerHTML = 'Самая длинная серия';
         const series = await gerSeries();
+        if (localStorageUtil.checkAuthorization()) {
         statisticCountText.innerHTML = String(series);
+        }
       }
       // if (i === 2) {
       //   statisticCountName.innerHTML = 'Новые слова за день';

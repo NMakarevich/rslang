@@ -228,10 +228,14 @@ export async function addAnswerYes(right: Array<ICards>, point: number, data?: I
   const sprintGameScore = document.querySelector('.sprint__game__score');
   let bill = sprintGameScore?.innerHTML;
   if (data) {
-    const isLearned = await updateUserWordLearnes(data.id, '1');
+    
     // wordStatistic('sprint', 'rigth', data);
-    addAnswerToUserStatisticsSprint(true, isLearned);
+    if (localStorageUtil.checkAuthorization()) {
+      const isLearned = await updateUserWordLearnes(data.id, '1');
+      addAnswerToUserStatisticsSprint(true, isLearned);
+    }
     right.push(data);
+    console.log(right);
     bill = String(10 + Number(bill));
     (sprintGameScore as HTMLElement).innerHTML = bill;
     sprintGameScore?.classList.add('sprint__game__score_activ');
@@ -252,8 +256,11 @@ export async function addAnswerYes(right: Array<ICards>, point: number, data?: I
 export async function addAnswerNo(wrong: Array<ICards>, data?: ICards) {
   if (data) {
     const isLearned = await updateUserWordLearnes(data.id, '0');
-    addAnswerToUserStatisticsSprint(false, isLearned);
+    if (localStorageUtil.checkAuthorization()) {
+      addAnswerToUserStatisticsSprint(false, isLearned);
+    }
     wrong.push(data);
+    console.log(wrong);
   }
 }
 
