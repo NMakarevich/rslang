@@ -289,7 +289,7 @@ export async function getPercent() {
   // } return 'Зарегистрируйтесь чтобы получить статистику';
 }
 
-export async function gerSeries() {
+export async function getSeries() {
   // if (localStorageUtil.checkAuthorization()) {
     const series = await getUserStatistics() as IStatistics;
     const rightSequence = series.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));

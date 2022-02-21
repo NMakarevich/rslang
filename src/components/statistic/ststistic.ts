@@ -1,4 +1,4 @@
-import { gerSeries, getPercent } from '../sprint/function';
+import { getSeries, getPercent } from '../sprint/function';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 
 class Statistic {
@@ -32,7 +32,7 @@ class Statistic {
       }
       if (i === 1) {
         statisticCountName.innerHTML = 'Самая длинная серия';
-        const series = await gerSeries();
+        const series = await getSeries();
         // if (localStorageUtil.checkAuthorization()) {
         statisticCountText.innerHTML = String(series);
         // }
@@ -86,59 +86,3 @@ class Statistic {
 }
 
 export default Statistic;
-
-// <div class="statictic__wrapper">
-// <h1 class="statistic__game__name">Спринт</h1>
-// <div class="statistic__container">
-// <div class="statistic__item">
-//   <div class="statistic__count">
-//     <div class="statistic__count__back">
-//       <div class="statistic__count__text">25</div>
-//     </div>
-//   </div>
-//   <div class="statistic__count-name">Новые слова за день</div>
-// </div>
-// <div class="statistic__item">
-//   <div class="statistic__count">
-//     <div class="statistic__count__back">
-//       <div class="statistic__count__text">60%</div>
-//     </div>
-//   </div>
-//   <div class="statistic__count-name">Правильные ответы</div>
-// </div>
-// <div class="statistic__item">
-//   <div class="statistic__count">
-//     <div class="statistic__count__back">
-//       <div class="statistic__count__text">34</div>
-//     </div>
-//   </div>
-//   <div class="statistic__count-name">Самая длинная серия</div>
-// </div>
-// </div>
-// <h1 class="statistic__game__name">Аудиовызов</h1>
-// <div class="statistic__container">
-// <div class="statistic__item">
-//   <div class="statistic__count">
-//     <div class="statistic__count__back">
-//       <div class="statistic__count__text">15</div>
-//     </div>
-//   </div>
-//   <div class="statistic__count-name">Новые слова за день</div>
-// </div>
-// <div class="statistic__item">
-//   <div class="statistic__count">
-//     <div class="statistic__count__back">
-//       <div class="statistic__count__text">72%</div>
-//     </div>
-//   </div>
-//   <div class="statistic__count-name">Правильные ответы</div>
-// </div>
-// <div class="statistic__item">
-//   <div class="statistic__count">
-//     <div class="statistic__count__back">
-//       <div class="statistic__count__text">41</div>
-//     </div>
-//   </div>
-//   <div class="statistic__count-name">Самая длинная серия</div>
-// </div>
-// </div>
