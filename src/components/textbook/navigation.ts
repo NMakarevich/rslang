@@ -1,7 +1,10 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import { pagesAmount, chapterDifficult } from '../consts';
 import { cards } from './textbook';
 import { localStorageUtil } from './localStorageUtil';
+import { getWords } from '../api';
+import { ICards } from '../interfaces';
 
 class TextbookNavigation {
   render(): void {
@@ -63,6 +66,18 @@ class TextbookNavigation {
     return document.querySelector('.navigation') as HTMLElement;
   }
 
+  get pageNotification(): HTMLElement {
+    return document.querySelector('#page-notification') as HTMLElement;
+  }
+
+  get gameButtons(): HTMLElement {
+    return document.querySelector('.game') as HTMLElement;
+  }
+
+  get textbook(): HTMLElement {
+    return document.querySelector('.textbook') as HTMLElement;
+  }
+
   eventListeners() {
     this.selectChapter.addEventListener('change', () => {
       if (+this.selectChapter.value - 1 === chapterDifficult
@@ -79,12 +94,14 @@ class TextbookNavigation {
       cards.render('usual');
       localStorageUtil.putChapter(`${cards.group}`);
       localStorageUtil.putPage('0');
+      this.checkPage();
     });
 
     this.selectPage.addEventListener('change', () => {
       cards.page = +this.selectPage.value - 1;
       cards.render('usual');
       localStorageUtil.putPage(`${cards.page}`);
+      this.checkPage();
     });
 
     this.backBTN.addEventListener('click', () => {
@@ -93,6 +110,7 @@ class TextbookNavigation {
         cards.page -= 1;
         cards.render('usual');
         localStorageUtil.putPage(`${cards.page}`);
+        this.checkPage();
       }
     });
 
@@ -102,9 +120,44 @@ class TextbookNavigation {
         cards.page += 1;
         cards.render('usual');
         localStorageUtil.putPage(`${cards.page}`);
+        this.checkPage();
       }
     });
   }
+
+  checkPage = async () => {
+    const data = await getWords(cards.page, cards.group);
+    const hard = data.filter((x: ICards) => x.userWord?.difficulty === 'hard');
+    const learned = data.filter((x: ICards) => x.userWord?.difficulty === 'learned');
+    const total = hard.length + learned.length;
+    if (total === 20) {
+      if (this.pageNotification?.classList.contains('hidden')) {
+        this.pageNotification?.classList.remove('hidden');
+      }
+      if (!this.selectPage?.classList.contains('learned')) {
+        this.selectPage?.classList.add('learned');
+      }
+      if (!this.gameButtons?.classList.contains('inactive')) {
+        this.gameButtons?.classList.add('inactive');
+      }
+      if (!this.textbook?.classList.contains('learned')) {
+        this.textbook?.classList.add('learned');
+      }
+    } else {
+      if (!this.pageNotification?.classList.contains('hidden')) {
+        this.pageNotification?.classList.add('hidden');
+      }
+      if (this.selectPage?.classList.contains('learned')) {
+        this.selectPage?.classList.remove('learned');
+      }
+      if (this.gameButtons?.classList.contains('inactive')) {
+        this.gameButtons?.classList.remove('inactive');
+      }
+      if (this.textbook?.classList.contains('learned')) {
+        this.textbook?.classList.remove('learned');
+      }
+    }
+  };
 
   checkIsAuthorised() {
     if (localStorageUtil.checkAuthorization()) {
@@ -122,4 +175,5 @@ class TextbookNavigation {
 }
 
 const textbookNavigation = new TextbookNavigation();
+setTimeout(textbookNavigation.checkPage, 500);
 export default textbookNavigation;

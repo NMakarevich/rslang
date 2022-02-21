@@ -85,9 +85,6 @@ h3 {
   &:hover {
     border: 2px solid #8306ad;
   }
-  /*   @media screen and (max-width: 910px) {
-    width: 250px;
-  } */
 }
 #select-page {
   outline: none;
@@ -98,9 +95,19 @@ h3 {
   text-decoration: none;
   border: none;
   text-decoration: none;
-  /*   @media screen and (max-width: 910px) {
-    width: 250px;
-  } */
+  &.learned {
+    color: #c023f5 ;
+    option {
+      color: #560372;
+    }
+  }
+}
+
+#page-notification {
+  margin: 15px 0 0 0;
+  font-size: 22px;
+  text-align: center;
+  color: #c023f5 !important;
 }
 
 .game {
@@ -108,6 +115,13 @@ h3 {
   display: flex;
   gap: 10px;
   margin: 0 10px 5px 0;
+  &.inactive {
+    pointer-events: none;
+    * {
+      background-color: #df94f8;
+      color: #8306ad;
+    }
+  }
   &__link {
     font-family: "Roboto", sans-serif;
     width: 170px;
@@ -139,6 +153,9 @@ h3 {
   max-width: 100%;
 }
 
+.textbook.learned {
+  color: #dc77fd;
+}
 .word-card {
   display: flex;
   width: 100%;
@@ -185,6 +202,7 @@ h3 {
 }
 .word-wrapper {
   display: flex;
+  margin-top: 5px;
   align-items: center;
   * {
     margin-right: 25px;
@@ -245,7 +263,7 @@ h3 {
   transition: 0.5s;
   &.active {
     transition: 0.5s;
-    transform: scale(1.3);
+    transform: scale(1.2);
     z-index: 0;
   }
 }
@@ -259,11 +277,12 @@ h3 {
   align-items: center;
   text-align: center;
   top: 60px;
-  left: calc(50% - 100px);
-  background-color: #b3b3b3;
+  left: calc(50% - 150px);
+  background-color: #6c75f8;
   padding: 20px;
   border-radius: 10px;
-  border: 1px solid black;
+  border: 1px solid white;
+  color: white;
 }
 
 #upButton {
@@ -283,7 +302,7 @@ h3 {
   }
 
   &:hover {
-    background-color: #f4d9fd;
+    background-color: #f2e5fc;
   }
 }
 

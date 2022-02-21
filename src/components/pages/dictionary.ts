@@ -14,6 +14,7 @@ class Dictionary {
       <h2 сlass='main__title'>Учебник</h2>
       <div class="textbook">
         <div id="textbook-header"></div>
+        <div id="page-notification" class="hidden">Эта страница полностью изучена</div>
         <div id="textbook-wrapper"></div>
       </div>
     </div>`;

@@ -46,7 +46,7 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
     const { token } = localStorageUtil.getUserInfo();
     const { userId } = localStorageUtil.getUserInfo();
     const response: Response = await fetch(
-      `${baseURL}/users/${userId}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20`,
+      `${baseURL}/users/${userId}/aggregatedWords?&filter={"$and": [{"group": ${group}}, {"page": ${page}}]}&wordsPerPage=20`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -127,7 +127,7 @@ export async function getUserHardWords(): Promise<ICards[]> {
   const { token } = localStorageUtil.getUserInfo();
   const { userId } = localStorageUtil.getUserInfo();
   const response: Response = await fetch(
-    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22hard%22%7D]%7D`,
+    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter={"$and":[{"userWord.difficulty":"hard"}]}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ export async function getUserStudiedWords(): Promise<ICards[]> {
   const { token } = localStorageUtil.getUserInfo();
   const { userId } = localStorageUtil.getUserInfo();
   const response: Response = await fetch(
-    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter=%7B%22$or%22:[%7B%22userWord.difficulty%22:%22learned%22%7D]%7D`,
+    `${baseURL}/users/${userId}/aggregatedWords?&wordsPerPage=3600&filter={"$and":[{"userWord.difficulty":"learned"}]}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

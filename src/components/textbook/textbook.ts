@@ -8,6 +8,7 @@ import { getWords, getUserHardWords } from '../api';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
 import { chapterDifficult } from '../consts';
+import textbookNavigation from './navigation';
 
 export class Cards {
   page: number;
@@ -32,10 +33,10 @@ export class Cards {
     textbookWrapper.innerHTML = '<div class="words-list"></div>';
     await fn
       .then((data: ICards[]) => {
+        textbookNavigation.checkPage();
         data.forEach((card: ICards) => {
           (textbookWrapper.firstElementChild as HTMLUListElement).append(new Card(card).render());
         });
-        this.checkPageIsLearned(data);
       })
       .then(() => {
         const selectPage = document.getElementById('select-page') as HTMLSelectElement;
@@ -53,17 +54,6 @@ export class Cards {
     setTimeout(() => {
       document.body.removeChild(div);
     }, 2000);
-  }
-
-  /// /доделать!!! Добавить фильтр в getWords
-  checkPageIsLearned(data: ICards[]) {
-    const hard = data.filter((x: ICards) => x.userWord?.difficulty === 'hard');
-    const learned = data.filter((x: ICards) => x.userWord?.difficulty === 'learned');
-    if (hard.length + learned.length === 20) {
-      console.log('Изучена полностью');
-    } else {
-      console.log('Не изучена');
-    }
   }
 }
 
