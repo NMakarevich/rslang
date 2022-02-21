@@ -268,23 +268,6 @@ h3 {
   }
 }
 
-.modal-window {
-  position: fixed;
-  width: 300px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  top: 60px;
-  left: calc(50% - 150px);
-  background-color: #6c75f8;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid white;
-  color: white;
-}
-
 #upButton {
   font-size: 40px;
   color: #9900cc;

@@ -45,16 +45,6 @@ export class Cards {
         selectChapter.value = `${this.group + 1}`;
       });
   };
-
-  showModalWindow() {
-    const div = document.createElement('div');
-    div.innerText = 'Это действие доступно только после регистрации';
-    div.className = 'modal-window';
-    document.body.appendChild(div);
-    setTimeout(() => {
-      document.body.removeChild(div);
-    }, 2000);
-  }
 }
 
 export const cards = new Cards();

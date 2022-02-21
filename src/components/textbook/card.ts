@@ -52,7 +52,9 @@ class Card {
     }
 
     let answers = '';
+    let buttonsClass = 'hidden';
     if (localStorageUtil.checkAuthorization()) {
+      buttonsClass = '';
       const array = this.data.userWord?.optional.answers.split('');
       if (this.data.userWord) {
         answers = `Ответы: правильные - ${array?.filter((x) => x === '1').length},
@@ -77,7 +79,7 @@ class Card {
         <p>${this.data.textExample}</p>
         <p>${this.data.textExampleTranslate}</p>
         <div class="answers">${answers}</div>
-        <div class="button-wrapper">
+        <div class="button-wrapper ${buttonsClass}">
         <button type="button" class="add-to-difficult  ${difficultClass} ${hideDifficultBtn}" id="${this.data.id}">${difficultButtonText}</button>
         <button type="button" class="add-to-studied ${studiedClass} ${hideStudiedBtn}" id="${this.data.id}">${studiedButtonText}</button>
         </div>
@@ -147,8 +149,6 @@ class Card {
           await textbookNavigation.checkPage();
         }
       }
-    } else {
-      this.showModalWindow();
     }
   };
 
@@ -182,8 +182,6 @@ class Card {
       button.previousElementSibling?.classList.add('hidden');
       button.innerText = 'Изученное слово';
       await textbookNavigation.checkPage();
-    } else {
-      this.showModalWindow();
     }
   };
 
@@ -219,16 +217,6 @@ class Card {
       };
     });
   };
-
-  showModalWindow() {
-    const div = document.createElement('div');
-    div.innerText = 'Это действие доступно только после регистрации';
-    div.className = 'modal-window';
-    document.body.appendChild(div);
-    setTimeout(() => {
-      document.body.removeChild(div);
-    }, 2000);
-  }
 }
 
 export default Card;
