@@ -18,9 +18,8 @@ class Dictionary {
         <div id="textbook-wrapper"></div>
       </div>
     </div>`;
-    textbookNavigation.render();
-    if (localStorageUtil.getChapter() === chapterDifficult
-    && localStorageUtil.checkAuthorization()) {
+    await textbookNavigation.render();
+    if (localStorageUtil.getChapter() === chapterDifficult && localStorageUtil.checkAuthorization()) {
       cards.render('difficult');
     } else {
       cards.render('usual');
