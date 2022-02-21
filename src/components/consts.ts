@@ -2,6 +2,7 @@ import { IStatistics, IUserWord } from './interfaces';
 
 export const baseURL = 'https://rslang-team32.herokuapp.com';
 export const pagesAmount = 30;
+export const wordsPerPage = 20;
 export const chapterDifficult = 6;
 export const answersCount = 5;
 

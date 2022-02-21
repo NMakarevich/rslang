@@ -7,7 +7,7 @@ import {
 import { ICards } from '../interfaces';
 import { localStorageUtil } from './localStorageUtil';
 import { chapterDifficult } from '../consts';
-// import { cards } from './textbook';
+import { cards } from './textbook';
 
 let isPlay = false;
 
@@ -103,11 +103,9 @@ class Card {
     this.soundButton.addEventListener('click', this.playAudio);
     this.difficultButton.addEventListener('click', () => {
       this.addToDifficult(this.difficultButton);
-      // cards.checkPageIsLearned();
     });
     this.studiedButton.addEventListener('click', () => {
       this.addToStudied(this.studiedButton);
-      // cards.checkPageIsLearned();
     });
   }
 
@@ -125,6 +123,7 @@ class Card {
         button.classList.add('restrict-events');
         button.nextElementSibling?.classList.add('hidden');
         button.innerText = 'Сложное слово';
+        await cards.checkPageIsLearned();
       }
       if (optionalData) {
         if (localStorageUtil.getChapter() === chapterDifficult) {
@@ -134,6 +133,7 @@ class Card {
             wordId: `${this.data.id}`,
             word: { difficulty: 'inProgress', optional: optionalData.optional },
           });
+          await cards.checkPageIsLearned();
         } else {
           await updateUserWord({
             userId: `${this.userID}`,
@@ -144,6 +144,7 @@ class Card {
           button.classList.add('restrict-events');
           button.nextElementSibling?.classList.add('hidden');
           button.innerText = 'Сложное слово';
+          await cards.checkPageIsLearned();
         }
       }
     } else {
@@ -161,12 +162,14 @@ class Card {
           wordId: `${this.data.id}`,
           word: { difficulty: 'learned', optional: { answers: ' ' } },
         });
+        await cards.checkPageIsLearned();
       } else {
         await updateUserWord({
           userId: `${this.userID}`,
           wordId: `${this.data.id}`,
           word: { difficulty: 'learned', optional: optionalData.optional },
         });
+        await cards.checkPageIsLearned();
       }
       const statistics = await getUserStatistics();
       if (statistics != null) {
@@ -179,6 +182,7 @@ class Card {
       button.classList.add('restrict-events');
       button.previousElementSibling?.classList.add('hidden');
       button.innerText = 'Изученное слово';
+      await cards.checkPageIsLearned();
     } else {
       this.showModalWindow();
     }

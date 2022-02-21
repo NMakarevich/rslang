@@ -46,7 +46,7 @@ export async function getWords(page: number, group: number): Promise<ICards[]> {
     const { token } = localStorageUtil.getUserInfo();
     const { userId } = localStorageUtil.getUserInfo();
     const response: Response = await fetch(
-      `${baseURL}/users/${userId}/aggregatedWords?page=${page}&group=${group}&wordsPerPage=20`,
+      `${baseURL}/users/${userId}/aggregatedWords?&filter={"$and": [{"group": ${group}}, {"page": ${page}}]}&wordsPerPage=20`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

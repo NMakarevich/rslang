@@ -101,6 +101,19 @@ h3 {
   /*   @media screen and (max-width: 910px) {
     width: 250px;
   } */
+  &.learned {
+    color: #df89fc;
+    option {
+      color: #560372;
+    }
+  }
+}
+
+#page-notification{
+  margin: 15px 0 0 0;
+  font-size: 22px;
+  text-align: center;
+
 }
 
 .game {
@@ -108,6 +121,13 @@ h3 {
   display: flex;
   gap: 10px;
   margin: 0 10px 5px 0;
+  &.inactive {
+      pointer-events: none;
+    *{
+      background-color: #df94f8;
+      color: #8306ad;
+    }
+  }
   &__link {
     font-family: "Roboto", sans-serif;
     width: 170px;
