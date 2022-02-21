@@ -35,7 +35,7 @@ export class Cards {
         data.forEach((card: ICards) => {
           (textbookWrapper.firstElementChild as HTMLUListElement).append(new Card(card).render());
         });
-        this.checkPageIsLearned();
+        this.checkP();
       })
       .then(() => {
         const selectPage = document.getElementById('select-page') as HTMLSelectElement;
@@ -55,34 +55,12 @@ export class Cards {
     }, 2000);
   }
 
-  /// /доделать!!! Добавить фильтр в getWords
-  checkPageIsLearned = async () => {
+  checkP = async () => {
     const data = await getWords(this.page, this.group);
     const hard = data.filter((x: ICards) => x.userWord?.difficulty === 'hard');
     const learned = data.filter((x: ICards) => x.userWord?.difficulty === 'learned');
-    if (hard.length + learned.length === wordsPerPage) {
-      if (document.getElementById('page-notification')?.classList.contains('hidden')) {
-        document.getElementById('page-notification')?.classList.remove('hidden');
-      }
-      if (!document.getElementById('select-page')?.classList.contains('learned')) {
-        document.getElementById('select-page')?.classList.add('learned');
-      }
-      if (!document.querySelector('.game')?.classList.contains('inactive')) {
-        document.querySelector('.game')?.classList.add('inactive');
-      }
-      console.log('Изучена полностью');
-    } else {
-      if (!document.getElementById('page-notification')?.classList.contains('hidden')) {
-        document.getElementById('page-notification')?.classList.add('hidden');
-      }
-      if (document.getElementById('select-page')?.classList.contains('learned')) {
-        document.getElementById('select-page')?.classList.remove('learned');
-      }
-      if (document.querySelector('.game')?.classList.contains('inactive')) {
-        document.querySelector('.game')?.classList.remove('inactive');
-      }
-      console.log('Не изучена');
-    }
+    const total = hard.length + learned.length;
+    return total === wordsPerPage;
   };
 }
 
