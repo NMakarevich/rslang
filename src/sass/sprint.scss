@@ -23,7 +23,8 @@
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	background-color: #F5C670;
+	// background-color: #F5C670;
+  border: 2px solid #d373f3;
 	opacity: 0.7;
 }
 .sprint__start__title {}
@@ -42,7 +43,8 @@
 .sprint__game {
 	display: flex;
 	flex-direction: column;
-	background-color: #73ADAC;
+	background-color: #6c7afc;
+  // opacity: 0.7;
 	/* opacity: 0.7; */
 	padding: 10px;
 	/* justify-content: center; */
@@ -129,7 +131,7 @@
 	cursor: pointer;
 } 
 
-.sprint__game__variant:hover, .sprint__game__voice:hover {
+.sprint__game__variant:hover, .sprint__game__voice:hover, .sprint__result__item__voice:hover {
   transform: scale(1.05);
 
 }
@@ -160,7 +162,8 @@
   flex-direction: column;
   width: 350px;
   align-self: center;
-  background-color: #F5C670;
+  border: 2px solid #d373f3;
+  background-color: white;
   /* opacity: 0.7; */
   padding: 20px;
   position: absolute;
@@ -186,7 +189,7 @@
 	margin-right: 10px;
 	background: url('../assets/svg/volume.svg') center center no-repeat;
 	background-size: cover;
-
+  cursor: pointer;
 }
 .sprint__result__item__text {}
 .sprint__result__item {}
@@ -242,7 +245,7 @@
 }
 .sprint__result__back, .sprint__result__again {
   margin: 10px;
-  background-color: #73ADAC;
+  background-color: #d373f3;
   color: white;
 }
 .sprint__result__btns {

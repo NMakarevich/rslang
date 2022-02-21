@@ -1,17 +1,33 @@
 import {
-  addAnswerYes, audio, changeWord, shuffle, addWords, wordStatistic, addAnswerNo, setTimer,
+  addAnswerYes, audio, changeWord, shuffle, addWords, wordStatistic, addAnswerNo,
 } from './function';
 
 import { baseURL } from '../consts';
 import Word from './word';
 import { ICards } from '../interfaces';
+import SprintResult from './sprint_results';
 
 class SprintGame {
+  right: Array<ICards> = [];
+
+  wrong: Array<ICards> = [];
+
   draw(data: Array<ICards>) {
     let arrWords = shuffle(data);
     let count: number = 0;
-    const right: Array<ICards> = [];
-    const wrong: Array<ICards> = [];
+    let second = 60;
+    const time = setInterval(() => {
+      if (second >= 0) {
+        const timerScore = document.querySelector('.sprint__game__timer');
+        (document.querySelector('.sprint__container') as HTMLElement).style.opacity = '1';
+        (timerScore as HTMLElement).innerHTML = `${second}`;
+        second -= 1;
+      } else {
+        clearInterval(time);
+        this.makeResult();
+      }
+      return second;
+    }, 1000);
     const sprintContainer = document.createElement('div');
     sprintContainer.classList.add('sprint__container');
     const sprintLevel = document.createElement('div');
@@ -23,7 +39,7 @@ class SprintGame {
     const sprintGameTimer = document.createElement('div');
     sprintGameTimer.classList.add('sprint__game__timer');
     (sprintContainer as HTMLElement).style.opacity = '0';
-    sprintGameTimer.innerHTML = String(setTimer(right, wrong));
+    sprintGameTimer.innerHTML = String(time);
     const sprintGameScore = document.createElement('div');
     sprintGameScore.classList.add('sprint__game__score');
     sprintGameScore.innerHTML = '0';
@@ -79,24 +95,29 @@ class SprintGame {
     sprintGameAnswerNo.innerHTML = 'Не верно';
     let point = 0;
     sprintGameVariant.onclick = async () => {
+      if ((arrWords.length - 1) === count || sprintGameTimer.innerHTML === '0') {
+        sprintContainer.appendChild(new SprintResult().draw(this.right, this.wrong));
+        clearInterval(time);
+      }
       if (!x) {
         if (point === 3) {
           point = 0;
         }
         point += 1;
-        addAnswerYes(right, point, arrWords[count]);
+        addAnswerYes(this.right, point, arrWords[count]);
       } else {
-        addAnswerNo(wrong, arrWords[count]);
+        addAnswerNo(this.wrong, arrWords[count]);
       }
       count += 1;
 
-      x = changeWord(count, arrWords);
       if (count === arrWords.length - 2) {
         arrWords = await addWords(arrWords);
       }
-      if (count === arrWords.length - 1) {
-        setTimer(right, wrong);
+      if ((arrWords.length - 1) === count) {
+        sprintContainer.appendChild(new SprintResult().draw(this.right, this.wrong));
+        clearInterval(time);
       }
+      x = changeWord(count, arrWords);
     };
     sprintGameVariantYes.onclick = async () => {
       if (x) {
@@ -104,19 +125,20 @@ class SprintGame {
           point = 0;
         }
         point += 1;
-        addAnswerYes(right, point, arrWords[count]);
+        addAnswerYes(this.right, point, arrWords[count]);
       } else {
         wordStatistic('sprint', 'wrong', arrWords[count]!);
-        wrong.push(arrWords[count]!);
+        this.wrong.push(arrWords[count]!);
       }
       count += 1;
       if (count === arrWords.length - 2) {
         arrWords = await addWords(arrWords);
       }
-      x = changeWord(count, arrWords);
-      if (count === arrWords.length - 1) {
-        // clearInterval(timer);
+      if ((arrWords.length - 1) === count) {
+        sprintContainer.appendChild(new SprintResult().draw(this.right, this.wrong));
+        clearInterval(time);
       }
+      x = changeWord(count, arrWords);
     };
     const sprintGameAnswerIconNo = document.createElement('div');
     sprintGameAnswerIconNo.classList.add('sprint__game_answerIcon', 'sprint__game_answerIcon_no');
@@ -152,8 +174,8 @@ class SprintGame {
             point = 0;
           }
           point += 1;
-          addAnswerYes(right, point, arrWords[count]);
-        } else wrong.push(arrWords[count]!);
+          addAnswerYes(this.right, point, arrWords[count]);
+        } else this.wrong.push(arrWords[count]!);
         count += 1;
         if (count === arrWords.length - 2) {
           arrWords = await addWords(arrWords);
@@ -166,8 +188,8 @@ class SprintGame {
             point = 0;
           }
           point += 1;
-          addAnswerYes(right, point, arrWords[count]);
-        } else wrong.push(arrWords[count]!);
+          addAnswerYes(this.right, point, arrWords[count]);
+        } else this.wrong.push(arrWords[count]!);
         count += 1;
         if (count === arrWords.length - 2) {
           arrWords = await addWords(arrWords);
@@ -176,6 +198,11 @@ class SprintGame {
       }
     });
     return sprintContainer;
+  }
+
+  makeResult() {
+    const sprintContainer = document.querySelector('.sprint__container');
+    (sprintContainer as HTMLElement).appendChild(new SprintResult().draw(this.right, this.wrong));
   }
 }
 

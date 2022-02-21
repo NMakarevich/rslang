@@ -1,5 +1,5 @@
 import main from '../main';
-import Statistic from '../statistic/ststistic';
+import Statistic from '../statistic/statistic';
 
 const statistic = {
   render: async () => {

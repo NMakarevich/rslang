@@ -1,5 +1,4 @@
 import { ICards } from '../interfaces';
-// eslint-disable-next-line import/no-cycle
 import { rigthSeries } from './function';
 import WordResult from './word_result';
 
