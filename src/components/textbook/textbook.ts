@@ -8,6 +8,7 @@ import { getWords, getUserHardWords } from '../api';
 import { localStorageUtil } from './localStorageUtil';
 import Card from './card';
 import { chapterDifficult } from '../consts';
+import textbookNavigation from './navigation';
 
 export class Cards {
   page: number;
@@ -32,6 +33,7 @@ export class Cards {
     textbookWrapper.innerHTML = '<div class="words-list"></div>';
     await fn
       .then((data: ICards[]) => {
+        textbookNavigation.checkPage();
         data.forEach((card: ICards) => {
           (textbookWrapper.firstElementChild as HTMLUListElement).append(new Card(card).render());
         });
