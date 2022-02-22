@@ -1,0 +1,110 @@
+.main {
+  &__title-link {
+    color: #9900CC;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #9900CC;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  &__registration,
+  &__login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  &__form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 400px;
+    font-size: 25px;
+    @media screen and (max-width: 600px) {
+      width: 280px;
+      gap: 5px;
+    }
+    input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #6c7afc;
+      font-size: 25px;
+      font-family: 'Neucha', cursive;
+      color: #9900CC;
+      width: 100%;
+
+      &:focus {
+        outline-color: #C263E2;
+        color: #9900CC;
+        -webkit-autofill: {
+          color: #9900CC;
+          font-size: 25px;
+        }
+      }
+
+      &:-webkit-writing-mode {
+          color: #9900CC;
+      }
+      &:-webkit-autofill:focus {
+        -webkit-text-fill-color: #9900CC;
+        font-size: 25px;
+      }
+      &:-webkit-autofill {
+        -webkit-text-fill-color: #9900CC;
+        font-size: 25px;
+      }
+      &::-webkit-input-placeholder {
+        text-transform: uppercase;
+        color: #6c7afc;
+      }
+      &[type=submit] {
+        background-color: #C263E2;
+        border: 2px solid #C263E2;
+        color: white;
+        font-family: 'Neucha', cursive;
+        text-transform: uppercase;
+        font-size: 20px;
+        cursor: pointer;
+        &:hover {
+          transition: 1s;
+          border: 2px solid #6c7afc;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        padding: 5px;
+      }
+      
+    }
+  }
+  .form__error {
+    position: absolute;
+    bottom: -40px;
+    font-family: 'Neucha', cursive;
+    margin-top: 5px;
+    color: #9900CC;
+    font-size: 20px;
+  }
+}
+.content-wrapper{
+  margin-top: 50px;
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  background-image: url('../assets/svg/bg-element.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9900CC;
+  font-family: 'Neucha', cursive;
+  text-transform: uppercase;
+  @media screen and (max-width: 500px) {
+    background-color: #ffffff;
+    min-height: 300px;
+    border-radius: 20px;
+  }
+}

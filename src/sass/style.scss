@@ -1,0 +1,60 @@
+@import 'header';
+@import 'footer';
+@import 'forms';
+@import 'games';
+@import 'team';
+@import 'sprint';
+@import 'question';
+@import 'audiocall';
+@import 'main-page';
+@import 'statistic';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+
+
+.main {
+  background-color: #d373f3;
+  flex: 1;
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+    flex-direction: column;
+    h2 {
+      color: white;
+    }
+  }
+  &.bg-white {
+    background-color: #ffffff;
+    h2 {
+      color:#d373f3;
+    }
+  }
+}
+
+.nav__list {
+  margin: 0;
+  padding: 0;
+}

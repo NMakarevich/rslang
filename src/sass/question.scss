@@ -1,0 +1,44 @@
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  &__listen {
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    background-image: url('../assets/svg/sound.svg');
+    background-size: contain;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 10px green;
+    }
+  }
+  &__answers {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+  }
+  &__answer {
+    padding: 10px;
+    background-image: url('../assets/svg/ellipse.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    color: #6c7afc;
+    cursor: pointer;
+    &:hover {
+      filter: drop-shadow(0 0 15px #6c7afc);
+    }
+  }
+  &__correct {
+    filter: drop-shadow(0 0 10px green);
+  }
+  
+  &__wrong {
+    filter: drop-shadow(0 0 10px red);
+  }
+}
+

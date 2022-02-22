@@ -1,0 +1,28 @@
+.main__games {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+.games {
+  flex: 1;
+  display: flex;
+  gap: 40px;
+  &__link {
+    display: flex;
+    width: 200px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    color: #6c7afc;
+    font-size: 30px;
+    text-decoration: none;
+    background-image: url('../assets/svg/ellipse.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    &:hover {
+      filter: drop-shadow(0 0 20px #6c7afc);
+    }
+  }
+}
