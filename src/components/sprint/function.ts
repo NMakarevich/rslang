@@ -1,8 +1,6 @@
-import {
-  createUserWord, getUserStatistics, getUserWord, getWords, updateUserStatistics, updateUserWord,
-} from '../api';
+import { createUserWord, getUserStatistics, getUserWord, getWords, updateUserStatistics, updateUserWord } from '../api';
 import { Difficulty, emptyUserWord } from '../consts';
-import { ICards, IGameStatistic, IStatistics } from '../interfaces';
+import { ICards, IGamesStatistic, IGameStatistic, IStatistics } from '../interfaces';
 import { localStorageUtil } from '../textbook/localStorageUtil';
 import Word from './word';
 
@@ -224,9 +222,11 @@ export async function addAnswerNo(wrong: Array<ICards>, data?: ICards) {
 
 export async function rigthSeries(rigth: Array<ICards>) {
   if (localStorageUtil.checkAuthorization()) {
-    const statistics = await getUserStatistics() as IStatistics;
+    const statistics = (await getUserStatistics()) as IStatistics;
     delete statistics.id;
-    const rightSequence = statistics.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
+    const rightSequence = statistics.optional.games.sprint.filter(
+      (item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')
+    );
     if (rightSequence[0]!.rightSequence < rigth.length) {
       rightSequence[0]!.rightSequence = rigth.length;
     } else rightSequence[0]!.rightSequence = rigth.length;
@@ -234,22 +234,28 @@ export async function rigthSeries(rigth: Array<ICards>) {
   }
 }
 
-export async function getPercent() {
-  const statistics = await getUserStatistics() as IStatistics;
+export async function getPercent(game: string) {
+  const statistics = (await getUserStatistics()) as IStatistics;
   delete statistics.id;
-  const rightSequence = statistics.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
+  const rightSequence = statistics.optional.games[game as keyof IGamesStatistic].filter(
+    (item: IGameStatistic) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')
+  );
   if (rightSequence[0]) {
     const rightWords = rightSequence[0].right;
     const wrongWords = rightSequence[0].wrong;
     const percentWords = `${Math.round((rightWords / (rightWords + wrongWords)) * 100)}%`;
     return percentWords;
-  } return '0';
+  }
+  return '0';
 }
 
-export async function getSeries() {
-  const series = await getUserStatistics() as IStatistics;
-  const rightSequence = series.optional.games.sprint.filter(((item) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')));
+export async function getSeries(game: string) {
+  const series = (await getUserStatistics()) as IStatistics;
+  const rightSequence = series.optional.games[game as keyof IGamesStatistic].filter(
+    (item: IGameStatistic) => item.date === new Date().toLocaleDateString('ru-RU').split('.').join('-')
+  );
   if (rightSequence[0]) {
     return rightSequence[0].rightSequence;
-  } return 0;
+  }
+  return 0;
 }
