@@ -2,15 +2,6 @@ html {
   scroll-behavior: smooth;
 }
 
-body,
-p,
-h1,
-h3 {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-size: 17px;
-}
 .textbook {
   font-family: "Roboto", sans-serif;
   margin: 0 auto;
@@ -173,6 +164,7 @@ h3 {
   justify-content: space-between;
   column-gap: 10px;
   border-radius: 10px;
+  font-size: 17px;
   @media screen and (max-width: 1000px) {
     display: flex;
     flex-direction: column;

@@ -56,17 +56,15 @@ class GameScreen {
     return this.container.querySelector('.button__next') as HTMLButtonElement;
   }
 
-  resultButton(): HTMLButtonElement {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.disabled = false;
-    button.classList.add('button__results');
-    button.textContent = 'Показать результаты';
-    button.addEventListener('click', () => {
+  resultButton(): void {
+    this.nextButton.classList.remove('next__button');
+    this.nextButton.classList.add('button__results');
+    this.nextButton.textContent = 'Показать результаты';
+    this.nextButton.removeEventListener('click', this.nextQuestion);
+    this.nextButton.addEventListener('click', () => {
       const results = new AudiocallResults(this.correctAnswers, this.wrongAnswers);
       this.container.replaceWith(results.render());
     });
-    return button;
   }
 
   nextQuestion = (): void => {
@@ -88,8 +86,9 @@ class GameScreen {
     }
     this.nextButton.disabled = false;
     if (this.questionNum === this.words.length - 1) {
-      this.nextButton.replaceWith(this.resultButton());
+      this.resultButton();
     }
+    this.nextButton.focus();
   };
 
   eventListeners() {

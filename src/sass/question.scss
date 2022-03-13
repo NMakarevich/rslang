@@ -19,8 +19,11 @@
   }
   &__answers {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
     list-style: none;
+    font-size: 20px;
   }
   &__answer {
     padding: 10px;

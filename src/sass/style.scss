@@ -45,6 +45,10 @@ body {
     h2 {
       color: white;
     }
+    .main__login h2,
+    .main__registration h2 {
+      color: #9900CC;
+    }
   }
   &.bg-white {
     background-color: #ffffff;

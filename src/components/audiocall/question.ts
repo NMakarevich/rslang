@@ -102,6 +102,8 @@ class Question {
       if (userWord.optional.answers.includes('111') && userWord.difficulty !== Difficulty.learned) {
         userWord.difficulty = Difficulty.learned;
         isLearned = true;
+      } else if (userWord.difficulty === Difficulty.learned && answer === '0') {
+        userWord.difficulty = Difficulty.inProgress;
       }
       await updateUserWord({
         userId,
