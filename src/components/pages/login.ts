@@ -22,7 +22,7 @@ class Login {
     }
     main.mainContainer.innerHTML = `
     <div class='main__login content-wrapper'>
-      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#/registration'>Регистрация</a></h2>
+      <h2 сlass='main__title'>Вход / <a class='main__title-link' href='#registration'>Регистрация</a></h2>
       <form class='main__form'>
         ${this.insertInputs()}
       </form>

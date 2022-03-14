@@ -16,7 +16,7 @@ class Registration extends Login {
     }
     main.mainContainer.innerHTML = `
     <div class='main__registration content-wrapper'>
-      <h2 сlass='main__title'><a class='main__title-link' href='#/login'>Вход</a> / Регистрация</h2>
+      <h2 сlass='main__title'><a class='main__title-link' href='#login'>Вход</a> / Регистрация</h2>
       <form class='main__form'>
         ${this.insertInputs()}
       </form>

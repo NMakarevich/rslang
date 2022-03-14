@@ -7,10 +7,10 @@ class Router {
     this.loadComponent(id);
 
     window.addEventListener('hashchange', () => {
-      const pageId = window.location.hash.slice(2) || '/';
+      const pageId = window.location.hash.slice(1) || '/';
       main.pages[0] = main.pages[1] as string;
       main.pages[1] = pageId;
-      this.pushToHistory(pageId);
+      this.loadComponent(pageId);
     });
   };
 
@@ -24,11 +24,6 @@ class Router {
     }
 
     route?.component?.render();
-  }
-
-  pushToHistory(id: string) {
-    this.loadComponent(id);
-    window.history.pushState({ id }, `${id}`);
   }
 }
 
