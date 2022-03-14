@@ -27,8 +27,8 @@ class TextbookNavigation {
                     </div>
                   </div>
                   <div class="game">
-                      <a class="game__link" href="#/games/audio">Игра "Аудиовызов"</a>
-                      <a class="game__link" href="#/games/sprint">Игра "Спринт"</a>
+                      <a class="game__link" href="#games/audio">Игра "Аудиовызов"</a>
+                      <a class="game__link" href="#games/sprint">Игра "Спринт"</a>
                   </div>`;
     const textbookHeader = document.getElementById('textbook-header');
     if (!textbookHeader) return;

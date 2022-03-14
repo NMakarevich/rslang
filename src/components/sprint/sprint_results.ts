@@ -39,11 +39,11 @@ class SprintResult {
     sprintResultBtnBack.classList.add('sprint__result__back');
     const sprintResultBtnBackLink = document.createElement('a');
     sprintResultBtnBackLink.classList.add('sprint__result__back__link');
-    sprintResultBtnBackLink.href = '#/games';
+    sprintResultBtnBackLink.href = '#games';
     sprintResultBtnBack.innerHTML = 'К списку игр';
     const sprintResultBtnAgainLink = document.createElement('a');
     sprintResultBtnAgainLink.classList.add('sprint__result__again__link');
-    sprintResultBtnAgainLink.href = '#/games/sprint';
+    sprintResultBtnAgainLink.href = '#games/sprint';
     sprintResultBtnBackLink.appendChild(sprintResultBtnBack);
     sprintResultBtnBtns.append(sprintResultBtnBackLink);
     sprintResult.appendChild(sprintResultTitle);

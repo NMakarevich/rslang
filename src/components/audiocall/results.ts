@@ -28,8 +28,8 @@ class AudiocallResults {
       </div>
     </div>
     <div class='audiocall__links'>
-      <a class='audiocall__link' href='#/dictionary'>К учебнику</a>
-      <a class='audiocall__link' href='#/games'>К играм</a>
+      <a class='audiocall__link' href='#dictionary'>К учебнику</a>
+      <a class='audiocall__link' href='#games'>К играм</a>
     </div>      
     `;
     return this.container;
